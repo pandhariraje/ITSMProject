@@ -1,0 +1,11 @@
+Dear Team,
+The incident below has breached its SLA and has been automatically escalated.
+Incident Details:
+Incident Number: {!Incident.IncidentNumber}
+Priority: {!Incident.Priority}
+Status: {!Incident.Status}
+Created Date: {!Incident.CreatedDate}
+Reason: SLA Violation
+Kindly take immediate action to resolve the issue and update the incident accordingly.
+Thanks & Regards,
+ITSM Administration

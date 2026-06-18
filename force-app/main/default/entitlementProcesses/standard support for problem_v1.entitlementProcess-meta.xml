@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Problem</SObjectType>
+    <active>true</active>
+    <businessHours>Default</businessHours>
+    <description>Standard Support for Problem</description>
+    <entitlementRules>
+        <criteriaFilterItems>
+            <field>Problem.Subject</field>
+            <operation>notEqual</operation>
+            <value>!iw6vnffW1Pt:CQbS/0cwh!17G, Gj##H</value>
+        </criteriaFilterItems>
+        <entitlementName>Standard Support for Problem</entitlementName>
+        <order>2</order>
+    </entitlementRules>
+    <entryStartDateField>Problem.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Problem.IsClosed</field>
+        <operation>equals</operation>
+        <value>true</value>
+    </exitCriteriaFilterItems>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <agreementType>SLA</agreementType>
+        <isDisplayedOnLinkedEntity>false</isDisplayedOnLinkedEntity>
+        <milestoneCompletionCriteria>
+            <criteriaBooleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</criteriaBooleanFilter>
+            <criteriaObjectType>Rule</criteriaObjectType>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Fix In Progress</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Resolved</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Closed</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Known Error</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Work In Progress</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Pending Change</value>
+            </milestoneCriteriaFilterItems>
+        </milestoneCompletionCriteria>
+        <milestoneCriteriaFilterItems>
+            <field>Problem.Priority</field>
+            <operation>equals</operation>
+            <value>Critical</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Root Cause Analysis Complete</milestoneName>
+        <minutesToComplete>1440</minutesToComplete>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <agreementType>SLA</agreementType>
+        <isDisplayedOnLinkedEntity>false</isDisplayedOnLinkedEntity>
+        <milestoneCompletionCriteria>
+            <criteriaBooleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</criteriaBooleanFilter>
+            <criteriaObjectType>Rule</criteriaObjectType>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Fix In Progress</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Resolved</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Closed</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Known Error</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Work In Progress</value>
+            </milestoneCriteriaFilterItems>
+            <milestoneCriteriaFilterItems>
+                <field>Problem.Status</field>
+                <operation>equals</operation>
+                <value>Pending Change</value>
+            </milestoneCriteriaFilterItems>
+        </milestoneCompletionCriteria>
+        <milestoneCriteriaFilterItems>
+            <field>Problem.Priority</field>
+            <operation>equals</operation>
+            <value>High</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Root Cause Analysis Complete</milestoneName>
+        <minutesToComplete>2880</minutesToComplete>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>Standard Support for Problem</name>
+    <versionMaster>552Bi000001jmKs</versionMaster>
+    <versionNumber>1</versionNumber>
+</EntitlementProcess>

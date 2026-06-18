@@ -1,0 +1,25 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelId" : {
+      "title" : "Slack channel ID",
+      "description" : "The new Slack channel ID.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The new Slack channel ID.",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "channelUrl" : {
+      "title" : "Slack channel URL",
+      "description" : "The new Slack channel URL.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The new Slack channel URL.",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

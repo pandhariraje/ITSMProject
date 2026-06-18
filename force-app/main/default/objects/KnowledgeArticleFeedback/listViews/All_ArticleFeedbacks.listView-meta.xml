@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_ArticleFeedbacks</fullName>
+    <columns>Name</columns>
+    <columns>KnowledgeArticleVersionTitle</columns>
+    <columns>IsLiked</columns>
+    <columns>FeedbackSubmitter</columns>
+    <columns>AssignedTo</columns>
+    <columns>ReviewDueDate</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Article Feedback</label>
+</ListView>

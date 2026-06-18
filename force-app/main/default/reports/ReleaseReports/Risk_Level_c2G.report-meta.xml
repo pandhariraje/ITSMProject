@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Release$RiskLevel</field>
+    </columns>
+    <columns>
+        <field>Release$Name</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Risk Level</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Release_report__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Release$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

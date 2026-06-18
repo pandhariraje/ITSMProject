@@ -1,0 +1,16 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "workspaces" : {
+      "title" : "Slack workspace information",
+      "description" : "JSON array containing names and workspace IDs.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "JSON array containing names and workspace IDs.",
+      "lightning:isPII" : true,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

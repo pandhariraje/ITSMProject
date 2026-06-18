@@ -1,0 +1,16 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "emptyInput" : {
+      "title" : "Empty Input",
+      "description" : "Empty Input.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "Empty Input.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

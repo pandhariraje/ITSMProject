@@ -1,0 +1,18 @@
+{
+  "required" : [ "Input:Incident" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Input:Incident" : {
+      "title" : "Incident",
+      "description" : "The incident record reported by the employee for which a summary is generated.",
+      "lightning:type" : "lightning__recordInfoType",
+      "lightning:sObjectInfo" : {
+        "apiName" : "Incident"
+      },
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

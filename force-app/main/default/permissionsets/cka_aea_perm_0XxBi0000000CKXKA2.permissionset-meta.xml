@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentAccesses>
+        <agentName>IT_Service_Employee</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
+    <agentAccesses>
+        <agentName>IT_Service_Employee1</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
+    <agentAccesses>
+        <agentName>slack_cka_aea</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
+    <description>Allows custom permissions for Agentforce Agent : slack_cka_aea&apos;s agent user : slack_cka_aea@00dbi000003sofimaw.ext.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>slack_cka_aea_0XxBi0000000CKXKA2 Permissions</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Incident</object>
+        <viewAllFields>true</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <tabSettings>
+        <tab>standard-Incident</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

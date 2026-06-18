@@ -1,0 +1,25 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelId" : {
+      "title" : "Slack Channel ID",
+      "description" : "The Slack record channel ID for the provided Salesforce record ID.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The Slack record channel ID for the provided Salesforce record ID.",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : false
+    },
+    "channelUrl" : {
+      "title" : "Slack Channel URL",
+      "description" : "The Slack record channel URL for the provided Salesforce record ID.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The Slack record channel url for the provided Salesforce record ID.",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

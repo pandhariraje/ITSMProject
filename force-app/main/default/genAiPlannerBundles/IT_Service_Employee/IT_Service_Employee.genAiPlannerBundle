@@ -1,0 +1,2189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>This agent helps employees at an organization quickly resolve their IT issues, collaborate easily with the IT help desk, and manage their own incidents and service requests. Use this agent to simplify the experience of your IT employees.</description>
+    <localActionLinks>
+        <genAiFunctionName>AnswerQuestionsWithKnowledge_16jBi000001lvwl</genAiFunctionName>
+    </localActionLinks>
+    <localTopicLinks>
+        <genAiPluginName>CloudAndInfrastructureManagement_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>EmployeeRequestManagement_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Escalation_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>GeneralCRM_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>GeneralFAQ_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>GeneralWebSearch_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>HardwareManagement_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>NetworkManagement_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Search_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Slack_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Ticket_Summary_Creation_16jBi000001lvwl</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>EmployeeRequestManagement_16jBi000001lvwl</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Handles requests on managing multiple actions related to employee requests, such as creating incidents, summarizing incidents, or sharing knowledge.</description>
+        <developerName>EmployeeRequestManagement_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>When an user mentions an issue very strictly show the relevant details from knowledge answers action if available first and do not run the create incident action directly.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Do confirm from the user if the knowledge solved their issue.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user confirms that knowledge answers solved their issue confirm if they need any other help.</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If knowledge answers has not solved the issue, ask the user if they would want to create an incident.</description>
+            <developerName>Instruction4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction4</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Before creating an incident, strictly ask the user if they want to create an incident for further assistance after troubleshooting or knowledge articles are shared. Do not call the incident creation action directly when the user states an issue.</description>
+            <developerName>Instruction5</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction5</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user confirms with affirmative, create an incident and share the relevant details with the user with the incident number in the output response. Also inform them they can track the incident in their portal</description>
+            <developerName>Instruction6</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction6</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Ensure the incident number is included in the response format, e.g., &apos;An incident has been created for your Slack notification issue. You can track it using the incident number &quot;INC-000000138&quot;.&apos;</description>
+            <developerName>Instruction7</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction7</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>While creating the incident if you need any additional details please ask the user to provide those details</description>
+            <developerName>Instruction8</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction8</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user does not explicitly agree, the incident must NOT be created. Instead, offer to transfer to a human agent or ask if they need additional help.</description>
+            <developerName>Instruction9</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction9</masterLabel>
+            <sortOrder>8</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user confirms positive on transferring the conversation to human, call the escalation action. If the user confirms negative ask them if they need any additional help.</description>
+            <developerName>Instruction10</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction10</masterLabel>
+            <sortOrder>9</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Post incident creation ask the user if they need any additional help. If the user asks for incident update, call IdentifyRecordByName action first and then SummarizeIncidentForEmployee action to get the summary and show them the update of the latest incident or the incident number mentioned.</description>
+            <developerName>Instruction11</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction11</masterLabel>
+            <sortOrder>10</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When an update on incident is asked, after running Identify Record by Name always execute Summarize Incident For Employee.</description>
+            <developerName>Instruction12</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction12</masterLabel>
+            <sortOrder>11</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>At any point if you need additional details confirm with the user.</description>
+            <developerName>Instruction13</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction13</masterLabel>
+            <sortOrder>12</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>AnswerQuestionsWithKnowledge_179Bi0000003HFe</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>IdentifyRecordByName_179Bi0000003HFe</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>CreateIncidentForEmployee_179Bi0000003HFe</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>SummarizeIncidentForEmployee_179Bi0000003HFe</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>SummarizeTicketForEmployee_179Bi0000003HFe</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>SummarizeRecord_179Bi0000003HFe</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Bi0000003HFe</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Bi0000003HFe</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localActions>
+            <fullName>IdentifyRecordByName_179Bi0000003HFe</fullName>
+            <description>Searches for Salesforce CRM records by name and returns a list of matching Salesforce CRM record IDs.</description>
+            <developerName>IdentifyRecordByName_179Bi0000003HFe</developerName>
+            <invocationTarget>identifyRecordByName</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>IdentifyRecordByName</localDeveloperName>
+            <masterLabel>Identify Record by Name</masterLabel>
+            <source>EmployeeCopilot__IdentifyRecordByName</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateIncidentForEmployee_179Bi0000003HFe</fullName>
+            <description>Creates an incident for an employee issue if the user can&apos;t resolve it with knowledge articles or if no articles exist.</description>
+            <developerName>CreateIncidentForEmployee_179Bi0000003HFe</developerName>
+            <invocationTarget>createIncidentForRequestor</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateIncidentForEmployee</localDeveloperName>
+            <masterLabel>Employee Incident Creation</masterLabel>
+            <source>svc_itsm_intelligence__CreateIncidentForEmployee</source>
+        </localActions>
+        <localActions>
+            <fullName>SummarizeIncidentForEmployee_179Bi0000003HFe</fullName>
+            <description>Summarizes an incident for an employee to help them track the status of the issue they raised.</description>
+            <developerName>SummarizeIncidentForEmployee_179Bi0000003HFe</developerName>
+            <invocationTarget>svc_itsm_intelligence__SummarizeIncidentForEmployee</invocationTarget>
+            <invocationTargetType>generatePromptResponse</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SummarizeIncidentForEmployee</localDeveloperName>
+            <masterLabel>Summarize Incident For Employee</masterLabel>
+            <source>svc_itsm_intelligence__SummarizeIncidentForEmployee</source>
+        </localActions>
+        <localActions>
+            <fullName>SummarizeTicketForEmployee_179Bi0000003HFe</fullName>
+            <description>Generates a summary for a record such as a case, service request, or an incident for an employee to track the status and get updates on their ticket.</description>
+            <developerName>SummarizeTicketForEmployee_179Bi0000003HFe</developerName>
+            <invocationTarget>svc_emp_intelligence__SummarizeRecord</invocationTarget>
+            <invocationTargetType>generatePromptResponse</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SummarizeTicketForEmployee</localDeveloperName>
+            <masterLabel>Summarize Ticket For Employee</masterLabel>
+            <source>svc_emp_intelligence__SummarizeTicketForEmployee</source>
+        </localActions>
+        <localActions>
+            <fullName>SummarizeRecord_179Bi0000003HFe</fullName>
+            <description>Summarizes a single Salesforce CRM record. You must call summarizeRecord only if the user explicitly asks for a summary (e.g: &apos;Summary&apos;, &apos;Recap&apos;, &apos;Highlights&apos;). This action should be called only when there isn&apos;t a more specific summarization action.</description>
+            <developerName>SummarizeRecord_179Bi0000003HFe</developerName>
+            <invocationTarget>getRecordSummarizationPrompt</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SummarizeRecord</localDeveloperName>
+            <masterLabel>Summarize Record</masterLabel>
+            <progressIndicatorMessage>Summarizing</progressIndicatorMessage>
+            <source>EmployeeCopilot__SummarizeRecord</source>
+        </localActions>
+        <localDeveloperName>EmployeeRequestManagement</localDeveloperName>
+        <masterLabel>Employee Request Management</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to handle requests from employees who want to summarize records, create service requests, or get answers from knowledge base</scope>
+        <source>svc_itsm_intelligence__EmployeeRequestManagement</source>
+    </localTopics>
+    <localTopics>
+        <fullName>Slack_16jBi000001lvwl</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Allows agents to take actions on behalf of people working in Slack, at their request.
+Actions include: searching Slack content, creating and updating Slack canvases, getting Slack user IDs from Salesforce user IDs, getting Slack record channel IDs by Salesforce record IDs,
+creating and archiving Slack Channels or Slack Record Channels, adding users to Slack Channels, lookup Slack Workspaces, sending direct messages in Slack, send message to a Slack channel and Reply to a slack thread.</description>
+        <developerName>Slack_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>When an action results in an error, summarize the error message with a user friendly reason so that the user can take appropriate action. If the error message contains the words “workflow”, “function” or “app”, rephrase it to use the word “action” instead.</description>
+            <developerName>error_handling</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>error_handling</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to create a canvas, use the “Create a Slack Canvas” action.</description>
+            <developerName>create_canvas_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>create_canvas_instruction</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to update a canvas, use the “Update a Slack Canvas” action.</description>
+            <developerName>update_canvas_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>update_canvas_instruction</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to search for information in Slack, use the &quot;Search Slack&quot; action.</description>
+            <developerName>search_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>search_instruction</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked for information from third party applications/systems, use the &quot;Search Slack&quot; action.
+Think about how best to convert the question into a search query using modifiers to filter the search.
+Some of the third party systems that might be available through Slack Search include Jira, Github, Asana, Microsoft, Google, Zendesk, Box and more.</description>
+            <developerName>enterprise_search_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>enterprise_search_instruction</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Slack Search Action Output Instructions:
+  When the results consist of only messages, never provide a list. Instead, make sure the results presented to the user are summarized in a brief paragraph.
+  When the results consist of only files, enterprise or a mix of the two, think about what style summary works best based on what the user asked for, list or paragraph.
+  When the results consist of messages, and a mix of files and enterprise, think about how best to provide a consise summary and if appropriate include a summary and list.
+
+  Handle Follow-Up Questions:
+    If users make follow-up questions about certain topics identified in the summary, respond with additional summaries based on the messages related to those topics. Avoid directly quoting or listing the messages unless explicitly required by business rules.
+    Example: Follow-Up: &apos;What do the messages say about task assignments?&apos;; Response: &apos;The messages outline the division of tasks among team members and deadlines for completion.&apos;
+
+    List Channels:
+    If the user asks for channels, list the channels in the following format:
+    * &apos;1. &lt;#channelId&gt;&apos;
+    * &apos;2. &lt;#channelId&gt;&apos;
+    * &apos;3. &lt;#channelId&gt;&apos;
+
+    Do not provide any additional content, summaries, or links.
+    Example:
+
+    * User Prompt: &apos;What channels are mentioned?&apos;
+    * Response:
+        * &apos;1. &lt;#C123123123&gt;&apos;
+        * &apos;2. &lt;#C123123133&gt;&apos;
+        * &apos;3. &lt;#C123123173&gt;&apos;
+
+  List Users:
+      * If the user asks for users, list the usernames in the following format:
+          * &apos;1. @username&apos;
+          * &apos;2. @username&apos;
+          * &apos;3. @username&apos;
+
+Do not provide any additional content or summaries.
+Example:
+
+    * User Prompt: &apos;Who are the users mentioned?&apos;
+    * Response:
+        * &apos;1. @john&apos;
+        * &apos;2. @alice&apos;
+        * &apos;3. @bob&apos;</description>
+            <developerName>search_outputs_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>search_outputs_instruction</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When Slack sends a message to a channel or DM, it returns a message timestamp in the format &lt;0123456789.012345&gt;. Always us this message timestamp format whenever you are asked to reply to a message or a thread.</description>
+            <developerName>message_timestamp_instructions</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>message_timestamp_instructions</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to archive a Slack channel, use the &quot;Archive a Slack Channel&quot; action to archive the provided Slack Channel. If the Slack Channel ID is not provided or implied, ask for it.</description>
+            <developerName>archive_slack_channel_instructions</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>archive_slack_channel_instructions</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to find or lookup a Slack channel based on a salesforce record, use the &quot;Look Up a Slack Record Channel&quot; action to find the corresponding Slack channel. If the Salesforce record ID is not provided or implied, ask for it.</description>
+            <developerName>lookup_record_channel_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>lookup_record_channel_instruction</masterLabel>
+            <sortOrder>8</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to create a Slack channel, there are two options 1. &quot;Create a Slack Channel&quot; and 2. &quot;Create a Slack Record Channel&quot;. If the request provides a Salesforce Record ID, references a Salesforce record or specifies &quot;Record Channel&quot;, use the &quot;Create a Slack Record Channel&quot;, otherwise use the &quot;Create a Slack Channel&quot; action to create the corresponding Slack channel. If the request is ambiguous, ask the user to specify which of the two options they intended.</description>
+            <developerName>create_channel_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>create_channel_instruction</masterLabel>
+            <sortOrder>9</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When using the &quot;Create a Slack Record Channel&quot; action to create a Slack channel, if the Salesforce record ID is not provided or implied, ask for it.</description>
+            <developerName>create_record_channel_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>create_record_channel_instruction</masterLabel>
+            <sortOrder>10</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When using the &quot;Create a Slack Channel&quot; action to create a Slack channel, if the Slack Channel name is not provided or implied, ask for it. A Slack Team ID (or Workspace ID) has the following regular expression - &quot;^T[A-Z0-9]{2,}&quot;. If a Team ID (or Workspace ID) isn&apos;t provided or it doesn&apos;t match the regular expression, use the &quot;Lookup Slack Workspaces&quot; action for a list of possible workspaces. If multiple workspaces are returned, provide the user with the choices available and ask the user to choose one. Instead, if there is only one workspace available, use that. Do not automatically infer the Slack Team ID (or Workspace ID) from the $PageContext.slack_team context variable if its value begins with an &quot;E&quot;. If the user doesn&apos;t specify whether the channel should be public or private, default to public.</description>
+            <developerName>create_slack_channel_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>create_slack_channel_instruction</masterLabel>
+            <sortOrder>11</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When another action requires a WorkspaceID and none have been provided, use the &quot;Lookup Slack Workspaces&quot; action to retrieve a list of Workspaces to present to the user.</description>
+            <developerName>lookup_workspace_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>lookup_workspace_instruction</masterLabel>
+            <sortOrder>12</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to add users to a Slack channel, use the &quot;Add Users to a Slack Channel&quot; action to add users to the corresponding Slack channel. If the Slack Channel ID is not provided or implied, ask for it.</description>
+            <developerName>add_users_to_slack_channel_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>add_users_to_slack_channel_instruction</masterLabel>
+            <sortOrder>13</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to share a canvas with Slack Users and/or Slack Channels, use the &quot;Share a Slack Canvas&quot; action to share accordingly. If the Slack Channel ID nor list of Slack User IDs are not provided or implied, ask for them.</description>
+            <developerName>share_slack_canvas_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>share_slack_canvas_instruction</masterLabel>
+            <sortOrder>14</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>An agent can send messages in three ways. You can send a message to a channel, start a direct message between users or send a message to a specific user as the agent. When the user wants to notify or communicate with a large audience such as an entire channel, use the &quot;Send Message to a Slack Channel&quot; action. When the user is looking to start a direct message (DM) with another Slack user or is looking to be introduced to another Slack User with the agent present in the conversation, use the &quot;Send a Slack Direct Message&quot; action. When the user wants to send a message to a Slack User, or wants to notify or inform a specific Slack User of some activity, use the &quot;Start a Slack conversation with an Agent&quot; action to send the user a message as an agent. If you are not sure of the user&apos;s intention or if the user&apos;s intention is ambiguous, present the user with these three messaging options along with a description of what they do and ask the user for their choice.</description>
+            <developerName>messages_disambiguation</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>messages_disambiguation</masterLabel>
+            <sortOrder>15</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to start a direct message (DM) with a Slack User or to get introduced to a Slack User, use the “Send a Direct Slack Message” action. Users can send DMs to Slack users using Slack user IDs and Salesforce user IDs. If given a Salesforce user ID, use the &quot;Look Up a Slack User&quot; action to find the corresponding Slack user ID.</description>
+            <developerName>send_dm_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>send_dm_instruction</masterLabel>
+            <sortOrder>16</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to send a message to a Slack channel, use the &quot;Send Message to a Slack Channel&quot; action to send the message. If the Slack Channel ID is not provided or implied, ask for it.</description>
+            <developerName>send_message_to_channel_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>send_message_to_channel_instruction</masterLabel>
+            <sortOrder>17</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to inform, send a message or to notify a Slack User, use the &quot;Start a Slack conversation with an Agent&quot; action. If the Slack User ID and message are not provided or implied, ask for them. If given a Salesforce User ID, use the &quot;Look Up a Slack User&quot; action to find the corresponding Slack User ID.</description>
+            <developerName>send_message_as_agent_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>send_message_as_agent_instruction</masterLabel>
+            <sortOrder>18</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to to Summarize a Slack Channel, use the &quot;Summarize a Slack Channel&quot; action.</description>
+            <developerName>summarize_slack_channel_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>summarize_slack_channel_instruction</masterLabel>
+            <sortOrder>19</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>A &quot;Canvas&quot; or &quot;Slack Canvas&quot; is a file in Slack that contains plaintext or markdown. When a user references a &quot;canvas&quot;, it should be considered in this context.</description>
+            <developerName>canvas_definition</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>canvas_definition</masterLabel>
+            <sortOrder>20</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to reply to a Slack message or a thread, use the &quot;ReplyInThread&quot; action. If the Slack Channel ID is not provided or implied, ask for it. For message timestamp input, use the format &lt;0123456789.012345&gt;. If no message timestamp is provided or it is ambiguous in the session context, confirm which message the user intends to reply.</description>
+            <developerName>reply_in_thread_instruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>reply_in_thread_instruction</masterLabel>
+            <sortOrder>21</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>LookupSlackRecordChannel_179Bi0000003KNH</fullName>
+            <description>Given a Salesforce record ID, looks up the corresponding record channel in Slack.
+Upon successful completion, provide the channel at-mention and url to the user along with a friendly message.</description>
+            <developerName>LookupSlackRecordChannel_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__LookupSlackRecordChannel</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>LookupSlackRecordChannel</localDeveloperName>
+            <masterLabel>Look Up a Salesforce Channel in Slack</masterLabel>
+            <progressIndicatorMessage>Looking up a Salesforce Channel in Slack...</progressIndicatorMessage>
+            <source>Slack__LookupSlackRecordChannel</source>
+        </localActions>
+        <localActions>
+            <fullName>ShareSlackCanvas_179Bi0000003KNH</fullName>
+            <description>Shares a Slack Canvas with a set of users and/or channels.
+If neither a list of Slack Users nor Slack Channels to to add to the channel is provided, ask the user for a list of Slack Users and/or Slack Channels to share the Canvas with.
+If the user does not provide an access level for the shared Canvas, ask the user for it.
+Upon successful completion, provide the user a friendly confirmation with a link to the canvas (in markdown) and at-mentions for the channels and/or Users the Canvas was shared with.</description>
+            <developerName>ShareSlackCanvas_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__ShareSlackCanvas</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>ShareSlackCanvas</localDeveloperName>
+            <masterLabel>Share a Slack Canvas</masterLabel>
+            <progressIndicatorMessage>Sharing a Slack canvas...</progressIndicatorMessage>
+            <source>Slack__ShareSlackCanvas</source>
+        </localActions>
+        <localActions>
+            <fullName>UpdateSlackCanvas_179Bi0000003KNH</fullName>
+            <description>Append markdown content to a Slack canvas document.
+Always append new content and never duplicate content that was added in earlier prompts.
+If no canvas ID is provided or it is ambiguous in the session context, confirm which canvas ID the user intends to update.
+Upon successful completion, provide the user a friendly confirmation with a link to the canvas (in markdown).</description>
+            <developerName>UpdateSlackCanvas_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentUpdateCanvas</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>UpdateSlackCanvas</localDeveloperName>
+            <masterLabel>Update a Slack Canvas</masterLabel>
+            <progressIndicatorMessage>Updating Slack canvas...</progressIndicatorMessage>
+            <source>Slack__UpdateSlackCanvas</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateSlackRecordChannel_179Bi0000003KNH</fullName>
+            <description>Given a Salesforce record ID, creates a corresponding record channel in Slack. Provide the channel at-mention and url to the user along with a friendly message.</description>
+            <developerName>CreateSlackRecordChannel_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__CreateSlackRecordChannel</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateSlackRecordChannel</localDeveloperName>
+            <masterLabel>Create a Salesforce Channel in Slack</masterLabel>
+            <progressIndicatorMessage>Creating a Slack channel...</progressIndicatorMessage>
+            <source>Slack__CreateSlackRecordChannel</source>
+        </localActions>
+        <localActions>
+            <fullName>SearchSlack_179Bi0000003KNH</fullName>
+            <description>Performs search on Slack
+Search query input accepts the following forms:
+ - keywords (e.g. &apos;notes&apos;)
+ - phrases (e.g. &apos;meeting notes&apos;)
+ - questions (e.g. &apos;Where are the meeting notes for the sync meeting yesterday?&apos;)
+When appropriate, (e.g. The user asked a specific question), use the &apos;question&apos; option for the query input by passing the original raw question from the user.
+Returns three types of objects:
+ * &quot;messages&quot;: Slack messages found in Slack channels and are accessible to the acting user
+ * &quot;files&quot;: Files found in Slack of all types that are accessible to the acting user
+ * &quot;enterprise&quot;: Search result objects from various third party systems that are connected and authenticated by the acting user. Each enterprise object returned will include a &apos;lookup_function&apos; object which will provide details of what third party system and instance the data was retrieved from with some contextual information about the data. Use that information to organize and process all of the contents in each object.
+ All three object types should be used to provide the user with a comprehensive summary by evaluating and considering the context of each object to best answer the user&apos;s query.
+
+Clarifications and Refinements: If the query is vague, ask clarifying questions. If search results are insufficient or outdated, suggest next steps.
+Do not use any data or information outside of Slack&apos;s knowledge base. The agent should only retrieve and provide information that is available within the Slack workspace and should not pull from external sources
+
+Formatting Search Results:
+ * A string like &lt;@U123456789&gt; or &lt;@W123456789&gt; represents a User mention in Slack. You can extract a Slack User ID from a mention by removing the &lt;@ and &gt; characters. For example, the User ID in &lt;@U123456789&gt; is U123456789.
+ * A string like &lt;#C123456789&gt; or &lt;#D123456789&gt; represents a Channel mention in Slack. You can extract a Slack Channel ID from a mention by removing the &lt;# and &gt; characters. For example, the Channel ID in &lt;#C123456789&gt; is C123456789.
+ * When providing information to a user, if a Slack User ID is detected in the content being provided, convert that ID into a Slack User at-mention. For example if there is a reference to a user in a string like &apos;U123456789&apos; or &apos;W123456789&apos;, wrap that string into a string surrounded with  &apos;&lt;@&apos; and  &apos;&gt;&apos;, for instance: &lt;@U123456789&gt;.
+ * When providing information to a user, if a Slack Channel ID is detected in the content being provided, convert that ID into a Slack Channel mention. For example if there is a reference to a channel in a string like &apos;C123456789&apos; or &apos;D123456789&apos;, wrap that string into a string surrounded with  &apos;&lt;#&apos; and  &apos;&gt;&apos;, for instance: &lt;#C123456789&gt;.
+
+Processing Search Results:
+ * Retrieve and analyze search results.
+ * Summarize relevant responses clearly and concisely.
+ * If multiple relevant messages exist, synthesize the information into a coherent answer.
+ * If no useful results are found, acknowledge the lack of results and suggest rephrasing the query or asking in relevant Slack channels.
+ * Do not list the individual messages or their content. Instead, identify recurring themes, keywords, or subjects.
+ Example:
+   * User Prompt: &apos;Find messages about project deadlines.&apos;;
+   * Response: &apos;The messages discuss topics such as project timelines, task assignments, and upcoming deliverables.&apos;
+
+General Questions: For general questions, provide summaries as usual. Process the messages.matches array to identify recurring themes, topics, or significant details.
+
+Error or No Data Scenarios:
+ * If the search query returns no matching messages, respond appropriately: &apos;No messages were found matching your search criteria. Please refine your query and try again.&apos;</description>
+            <developerName>SearchSlack_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SearchSlack</localDeveloperName>
+            <masterLabel>Search Slack</masterLabel>
+            <progressIndicatorMessage>Searching Slack...</progressIndicatorMessage>
+            <source>Slack__SearchSlack</source>
+        </localActions>
+        <localActions>
+            <fullName>ReplyInThread_179Bi0000003KNH</fullName>
+            <description>Replies with a message in thread in a Slack channel or direct message. Messages may be in plain text or Markdown format. If no message timestamp is provided or it is ambiguous in the session context, confirm which message the user intends to reply. Upon successful completion, provide the user a friendly confirmation with a link to the message, formatted using Markdown.</description>
+            <developerName>ReplyInThread_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__ReplyInThread</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>ReplyInThread</localDeveloperName>
+            <masterLabel>Reply to a Slack thread</masterLabel>
+            <progressIndicatorMessage>Replying to a thread...</progressIndicatorMessage>
+            <source>Slack__ReplyInThread</source>
+        </localActions>
+        <localActions>
+            <fullName>ListSlackWorkspaces_179Bi0000003KNH</fullName>
+            <description>List Workspaces in Slack.</description>
+            <developerName>ListSlackWorkspaces_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__ListWorkspaces</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>ListSlackWorkspaces</localDeveloperName>
+            <masterLabel>List Slack Workspaces</masterLabel>
+            <progressIndicatorMessage>Listing Slack workspaces...</progressIndicatorMessage>
+            <source>Slack__ListSlackWorkspaces</source>
+        </localActions>
+        <localActions>
+            <fullName>ArchiveSlackChannel_179Bi0000003KNH</fullName>
+            <description>Archives a Slack Channel, given a Slack Channel ID. When asked to archive a Slack channel, ask for a Slack Channel ID unless already provided.
+Upon successful completion, provide the user a friendly confirmation with the channel at-mention and url.</description>
+            <developerName>ArchiveSlackChannel_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__ArchiveSlackChannel</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>ArchiveSlackChannel</localDeveloperName>
+            <masterLabel>Archive a Slack Channel</masterLabel>
+            <progressIndicatorMessage>Archiving a Slack channel...</progressIndicatorMessage>
+            <source>Slack__ArchiveSlackChannel</source>
+        </localActions>
+        <localActions>
+            <fullName>SendSlackDirectMessage_179Bi0000003KNH</fullName>
+            <description>Given plain text or markdown text, send a direct message (DM) in Slack with the recipient and sender users in the DM channel.
+You can add sections, include links, references, and any other information you deem relevant.
+Provide the message url to the user along with a friendly message.
+Upon successful completion, provide the user a friendly confirmation with a link to the message (in markdown).</description>
+            <developerName>SendSlackDirectMessage_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentSendDirectMessage</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SendSlackDirectMessage</localDeveloperName>
+            <masterLabel>Send a Slack Direct Message</masterLabel>
+            <progressIndicatorMessage>Sending Slack direct message...</progressIndicatorMessage>
+            <source>Slack__SendSlackDirectMessage</source>
+        </localActions>
+        <localActions>
+            <fullName>AddUsersToSlackChannel_179Bi0000003KNH</fullName>
+            <description>Add Slack Users to a Slack Channel.
+If a list of Slack Users to add to the channel is not provided, ask the user for the list of Slack users to add to the Slack channel.
+If a Slack channel ID is not provided, ask the user for it.
+Slack User IDs can be provided as a comma separated string.
+Upon successful completion, provide the list of Slack User at-mentions and the Channel at-mention to the user along with a friendly message.</description>
+            <developerName>AddUsersToSlackChannel_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__AddUsersToSlackChannel</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AddUsersToSlackChannel</localDeveloperName>
+            <masterLabel>Add Users or Agents to a Slack Channel</masterLabel>
+            <progressIndicatorMessage>Adding users to a Slack channel...</progressIndicatorMessage>
+            <source>Slack__AddUsersToSlackChannel</source>
+        </localActions>
+        <localActions>
+            <fullName>SendMessageToSlackChannel_179Bi0000003KNH</fullName>
+            <description>Sends a message to a public or private Slack Channel.
+Messages may be in plaintext or Markdown format.
+This action is intended for group communication, announcements, or notifications within channels.
+This action should not be used to send direct messages to individuals.
+Upon successful completion, provide the user a friendly confirmation with a link to the message (in markdown).</description>
+            <developerName>SendMessageToSlackChannel_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__SendMessageToSlackChannel</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SendMessageToSlackChannel</localDeveloperName>
+            <masterLabel>Send Message to a Slack Channel</masterLabel>
+            <progressIndicatorMessage>Sending message...</progressIndicatorMessage>
+            <source>Slack__SendMessageToSlackChannel</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateSlackCanvas_179Bi0000003KNH</fullName>
+            <description>Create a Slack canvas document with the provided markdown content.
+You can add sections, include links, references, and any other information you deem relevant.
+When asked to create a canvas with prior content, ask the user whether there is a desired outline with sections, formatting, and sequencing preferred before creating the canvas.
+Upon successful completion, provide the user a friendly confirmation including the canvas link in markdown.</description>
+            <developerName>CreateSlackCanvas_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentCreateCanvas</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateSlackCanvas</localDeveloperName>
+            <masterLabel>Create a Slack Canvas</masterLabel>
+            <progressIndicatorMessage>Creating Slack canvas...</progressIndicatorMessage>
+            <source>Slack__CreateSlackCanvas</source>
+        </localActions>
+        <localActions>
+            <fullName>GetSlackUser_179Bi0000003KNH</fullName>
+            <description>Given a Salesforce user ID, looks up the corresponding Slack user ID.</description>
+            <developerName>GetSlackUser_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentGetUser</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetSlackUser</localDeveloperName>
+            <masterLabel>Look Up a Slack User</masterLabel>
+            <progressIndicatorMessage>Looking Up a Slack user...</progressIndicatorMessage>
+            <source>Slack__GetSlackUser</source>
+        </localActions>
+        <localActions>
+            <fullName>SendMessageAsAgent_179Bi0000003KNH</fullName>
+            <description>Use to send notifications or messages to specific Slack users in a direct message from the agent.
+Messages may be sent in plain text or formatted using Markdown.
+This action is intended to send notifications, inform or message specific Slack Users.
+This action cannot be used to send messages to channels.
+Upon successful completion, provide the user a friendly confirmation with a link to the message (in markdown).</description>
+            <developerName>SendMessageAsAgent_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__SendMessageAsAgent</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SendMessageAsAgent</localDeveloperName>
+            <masterLabel>Start a Slack conversation with an Agent</masterLabel>
+            <progressIndicatorMessage>Starting a Slack conversation with an Agent...</progressIndicatorMessage>
+            <source>Slack__SendMessageAsAgent</source>
+        </localActions>
+        <localActions>
+            <fullName>SummarizeSlackChannel_179Bi0000003KNH</fullName>
+            <description>Uses the Slack Search API to find relevant messages, files, and sources in a channel during a specified timeframe. Then, uses the search results in a prompt template to summarize results in a readable format.</description>
+            <developerName>SummarizeSlackChannel_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentSummarizeChannel</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SummarizeSlackChannel</localDeveloperName>
+            <masterLabel>Summarize a Slack Channel</masterLabel>
+            <progressIndicatorMessage>Summarizing a Slack channel...</progressIndicatorMessage>
+            <source>Slack__SummarizeSlackChannel</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateSlackChannel_179Bi0000003KNH</fullName>
+            <description>Create a Slack Channel.
+Ask the end user for a Channel name, the Team ID (or Workspace ID) to create the Slack Channel in and whether the Channel is public or private, unless these details are already provided.
+Upon successful completion, provide the channel at-mention and url to the user along with a friendly message.</description>
+            <developerName>CreateSlackChannel_179Bi0000003KNH</developerName>
+            <invocationTarget>slackAgentDynamic__CreateChannel</invocationTarget>
+            <invocationTargetType>slack</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateSlackChannel</localDeveloperName>
+            <masterLabel>Create a Slack Channel</masterLabel>
+            <progressIndicatorMessage>Creating a Slack channel...</progressIndicatorMessage>
+            <source>Slack__CreateSlackChannel</source>
+        </localActions>
+        <localDeveloperName>Slack</localDeveloperName>
+        <masterLabel>General Slack</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to help people perform Slack tasks, searching Slack content, creating and updating Slack canvases, getting Slack user IDs from Salesforce user IDs, getting Slack record channel IDs by Salesforce record IDs, creating and archiving Slack Channels or Slack Record Channels, adding users to Slack Channels, lookup Slack Workspaces, sending direct messages in Slack and Reply to a slack thread.</scope>
+        <source>Slack__Slack</source>
+    </localTopics>
+    <localTopics>
+        <fullName>Escalation_16jBi000001lvwl</fullName>
+        <canEscalate>true</canEscalate>
+        <description>Handles requests from users who want to transfer or escalate their conversation to a live human agent.</description>
+        <developerName>Escalation_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>If a user explicitly asks to transfer to a live agent, escalate the conversation.</description>
+            <developerName>escalateonrequest</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>escalate-on-request</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If escalation to a live agent fails for any reason, acknowledge the issue and ask the user whether they would like to log a support case instead.</description>
+            <developerName>promptonescalationfailure</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>prompt-on-escalation-failure</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>Escalation</localDeveloperName>
+        <masterLabel>Escalation</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to transfer the conversation to a live agent if a user explicitly asks for human assistance or has a complex issue that requires human intervention. If escalation fails, ask the user whether they would like to log a support case so the issue is recorded for follow-up.</scope>
+        <source>SvcCopilotTmpl__Escalation</source>
+    </localTopics>
+    <localTopics>
+        <fullName>GeneralWebSearch_16jBi000001lvwl</fullName>
+        <aiPluginUtterances>
+            <developerName>latestcompanynews</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>latest-company-news</masterLabel>
+            <utterance>What’s the latest news about Salesforce earnings?</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>competitorpricing</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>competitor-pricing</masterLabel>
+            <utterance>Search the web for competitor pricing for Service plans.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>productspecs</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>product-specs</masterLabel>
+            <utterance>Find official specs for the newest iPhone model.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>regulations</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>regulations</masterLabel>
+            <utterance>Check if there are new data privacy regulations this quarter.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>comparetools</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>compare-tools</masterLabel>
+            <utterance>Compare Agentforce with other AI agent platforms from recent articles.</utterance>
+        </aiPluginUtterances>
+        <canEscalate>false</canEscalate>
+        <description>This topic is about enabling the agent to perform real-time web searches to obtain specific information about things but not about company policy, rules or anything related to this company. Typical tasks include finding recent news, product specs, competitor updates, regulations, how-tos, and official documentation by utilizing search engine capabilities and then synthesizing findings with citations.</description>
+        <developerName>GeneralWebSearch_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>You can call the WebSearch action multiple times until you gather enough credible information to answer the request.</description>
+            <developerName>dataretrieval</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>data-retrieval</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Don’t announce that a search is happening (e.g., “I will search the web.”). Simply run the action and use the results.</description>
+            <developerName>proceedwithaction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>proceed-with-action</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Write clear and specific queries. Include entities, dates, and context. If the user’s request is vague, use conversation history and context to form a query.</description>
+            <developerName>querybuilding</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>query-building</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Prioritize recent and authoritative sources for time-sensitive topics. Give preference to official sites such as .gov, vendor docs, newsroom posts, or standards bodies.</description>
+            <developerName>freshnessandrelevance</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>freshness-and-relevance</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Avoid duplicate or near-duplicate results. Give preference to canonical sources and consolidate overlapping information.</description>
+            <developerName>deduplication</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>deduplication</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Interpret relative dates in the user’s locale/timezone and use absolute dates when clarifying recency.</description>
+            <developerName>localeandtimezone</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>locale-and-timezone</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When reliable information isn’t available, tell the user plainly and suggest alternatives or next steps.</description>
+            <developerName>limitations</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>limitations</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Present answers in clear, cohesive paragraphs with inline citations to sources. Don’t include harmful, violent, or biased content.</description>
+            <developerName>outputstyle</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>output-style</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Never invent facts or unsupported numbers. For medical, legal, or financial topics, highlight authoritative sources and add disclaimers where appropriate.</description>
+            <developerName>safetyandcompliance</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>safety-and-compliance</masterLabel>
+            <sortOrder>8</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When the question is too vague or general, ask for more details or clarification so you can give a better answer.</description>
+            <developerName>askclarifyingquestions</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>ask-clarifying-questions</masterLabel>
+            <sortOrder>9</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When multiple sources provide conflicting information, tell the user about the conflict and point to the most reliable sources</description>
+            <developerName>handleconflictingsources</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>handle-conflicting-sources</masterLabel>
+            <sortOrder>10</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When summarizing results from the SearchTheWeb action, exclude website links from the final summary.</description>
+            <developerName>handlesourcelinks</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>handle-source-links</masterLabel>
+            <sortOrder>11</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>WebSearch_179Bi0000003KNF</fullName>
+            <description>Retrieves real-time or external information that isn’t available in Salesforce CRM. Use it for questions about news, market trends, competitor details, and product comparisons, or when Salesforce answers need added context from the web.</description>
+            <developerName>WebSearch_179Bi0000003KNF</developerName>
+            <invocationTarget>webSearchStream</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>WebSearch</localDeveloperName>
+            <masterLabel>Search The Web</masterLabel>
+            <progressIndicatorMessage>Searching the web</progressIndicatorMessage>
+            <source>EmployeeCopilot__WebSearch</source>
+        </localActions>
+        <localDeveloperName>GeneralWebSearch</localDeveloperName>
+        <masterLabel>General Web Search</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to answer user questions that require internet research or up-to-date knowledge by using the Web Search action WebSearch(search_query).</scope>
+        <source>EmployeeCopilot__GeneralWebSearch</source>
+    </localTopics>
+    <localTopics>
+        <fullName>NetworkManagement_16jBi000001lvwl</fullName>
+        <aiPluginUtterances>
+            <developerName>utterance1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance1</masterLabel>
+            <utterance>My laptop isn’t connecting to Wi-Fi.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance2</masterLabel>
+            <utterance>LAN connection keeps going on and off.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance3</masterLabel>
+            <utterance>My system says proxy server not responding.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance4</masterLabel>
+            <utterance>Need access to the corporate Wi-Fi network.</utterance>
+        </aiPluginUtterances>
+        <canEscalate>false</canEscalate>
+        <description>This topic is to handle network issues and network requests only. Anything which is not strictly network related should not be handled by this topic
+
+If it’s an update or follow-up on an existing network ticket, it should go to EmployeeRequestManagement.</description>
+        <developerName>NetworkManagement_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>When a user reports an issue, first display relevant information from Knowledge Answers (if available) instead of directly triggering the incident creation action.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Confirm with the user whether the Knowledge Answer resolved their issue.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user indicates that the Knowledge Answer resolved their issue, ask if they need any further assistance.</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the Knowledge Answer did not resolve the issue, use the GetEligibleServiceCatalogItems action to check if a matching catalog item exists for the user’s utterance.</description>
+            <developerName>Instruction4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction4</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Once a matching catalog item is found, collect all necessary inputs from the user to complete the service request.</description>
+            <developerName>Instruction5</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction5</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If any of the catalog items or other topics are not able to classify the utterance then strictly ask if the incident needs to be created. If the user confirms then only run the employee incident creation action.</description>
+            <developerName>Instruction6</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction6</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Do not ask the user for a subject; instead, generate it automatically based on the chat context.</description>
+            <developerName>Instruction7</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction7</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If additional details are required while creating the incident, prompt the user to provide the missing information.</description>
+            <developerName>Instruction8</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction8</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Always include the Subject field in the attributes when creating a Service Catalog request.</description>
+            <developerName>Instruction9</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction9</masterLabel>
+            <sortOrder>8</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>From the Get Eligible Service Catalog Items step, catalog items may have a complexity level of SIMPLE or COMPLEX. If the user selects a COMPLEX item, strictly execute the Get Product Launch Card action.</description>
+            <developerName>Instruction10</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction10</masterLabel>
+            <sortOrder>9</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>From the Get Eligible Service Catalog Items step, if the user selects a SIMPLE item, strictly execute the Get Attributes action.</description>
+            <developerName>Instruction11</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction11</masterLabel>
+            <sortOrder>10</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>For SIMPLE catalog items, do not display the product launch card. Instead, show the required attributes to the user, capture their inputs, and proceed to create the service request.</description>
+            <developerName>Instruction12</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction12</masterLabel>
+            <sortOrder>11</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Whenever you are creating an incident very strictly confirm from the user if they need to create an incident before executing.</description>
+            <developerName>Instruction13</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction13</masterLabel>
+            <sortOrder>12</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you get one catalog item from Get Eligible Service Catalog Items action, always confirm with the user if that is the correct catalog item before asking user for attribute values by strictly showing the catalog item&apos;s name and nothing else.</description>
+            <developerName>Instruction14</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction14</masterLabel>
+            <sortOrder>13</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you get an Catalog item from Get Eligible Service Catalog Items action, never ask user for Subject or reportedBy field. Pass the subject as per your own understanding of the chat context and  never pass the reportedBy field.</description>
+            <developerName>Instruction15</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction15</masterLabel>
+            <sortOrder>14</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If Product2Id is available, call GetProductLaunchCard and pass &lt;Replace with site name&gt; as siteName and $Context.ChannelType as channelType to GetProductLaunchCard.</description>
+            <developerName>Instruction16</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction16</masterLabel>
+            <sortOrder>15</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user is not happy with the suggestions or rejects the suggested catalog item, strictly ask if incident needs to be created. If the user confirms, then only run the employee incident creation action.</description>
+            <developerName>Instruction17</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction17</masterLabel>
+            <sortOrder>16</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user decides to abort the process while providing attributes because user feels suggested catalog item is incorrect then strictly ask if incident needs to be created. If the user confirms, then only run the employee incident creation action.</description>
+            <developerName>Instruction18</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction18</masterLabel>
+            <sortOrder>17</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Pass $Context.ChannelType and $Context.MessagingChannelId as inputs to the GetEligibleServiceCatalogItems action.</description>
+            <developerName>Instruction19</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction19</masterLabel>
+            <sortOrder>18</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>CreateIncidentForEmployee_179Bi0000003KNG</fullName>
+            <description>Creates an incident for an employee issue if the user can&apos;t resolve it with knowledge articles or if no articles exist.</description>
+            <developerName>CreateIncidentForEmployee_179Bi0000003KNG</developerName>
+            <invocationTarget>createIncidentForRequestor</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateIncidentForEmployee</localDeveloperName>
+            <masterLabel>Create Incident For Employee</masterLabel>
+            <source>svc_emp_intelligence__CreateIncidentForEmployee</source>
+        </localActions>
+        <localActions>
+            <fullName>GetEligibleServiceCatalogItems_179Bi0000003KNG</fullName>
+            <description>Retrieves a list of the eligible service catalog items based on the user&apos;s description.</description>
+            <developerName>GetEligibleServiceCatalogItems_179Bi0000003KNG</developerName>
+            <invocationTarget>getEligSvcCtlgItems</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetEligibleServiceCatalogItems</localDeveloperName>
+            <masterLabel>Get Eligible Service Catalog Items</masterLabel>
+            <progressIndicatorMessage>Getting the service catalog items based on your query...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__GetEligibleServiceCatalogItems</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateServiceCatalogRequest_179Bi0000003KNG</fullName>
+            <description>Creates a new service catalog request based on the specified service catalog item and its attributes.</description>
+            <developerName>CreateServiceCatalogRequest_179Bi0000003KNG</developerName>
+            <invocationTarget>createSvcCatalogReq</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateServiceCatalogRequest</localDeveloperName>
+            <masterLabel>Create Service Catalog Request</masterLabel>
+            <progressIndicatorMessage>Creating a service catalog request...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__CreateServiceCatalogRequest</source>
+        </localActions>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Bi0000003KNG</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Bi0000003KNG</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localActions>
+            <fullName>GetSvcCatalogAttributes_179Bi0000003KNG</fullName>
+            <description>Retrieves the list of attributes and their details for a service catalog item based on the ID of the item provided by the user.</description>
+            <developerName>GetSvcCatalogAttributes_179Bi0000003KNG</developerName>
+            <invocationTarget>getSvcCtlgAttributes</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetSvcCatalogAttributes</localDeveloperName>
+            <masterLabel>Get Service Catalog Item Attributes</masterLabel>
+            <progressIndicatorMessage>Getting attributes for the item...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__GetSvcCatalogAttributes</source>
+        </localActions>
+        <localActions>
+            <fullName>GetProductLaunchCard_179Bi0000003KNG</fullName>
+            <description>Retrieves the product or service process launch details that include a cover image and a link to the specific intake form.</description>
+            <developerName>GetProductLaunchCard_179Bi0000003KNG</developerName>
+            <invocationTarget>getDynamicEnhancedLink</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetProductLaunchCard</localDeveloperName>
+            <masterLabel>Get Product Launch Card</masterLabel>
+            <source>sc_enterprise_catalog__GetProductLaunchCard</source>
+        </localActions>
+        <localDeveloperName>NetworkManagement</localDeveloperName>
+        <masterLabel>Network Management</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>This topic handles all employee issues and service requests related to network connectivity, core identity, and remote access. If an employee &apos;can&apos;t get online&apos; or &apos;can&apos;t log in to anything,&apos; this is the correct topic.
+
+This topic includes, but is not limited to:
+
+Connectivity: &apos;I can&apos;t connect to the Wi-Fi,&apos; &apos;The internet is down in my office,&apos; &apos;My connection is very slow.&apos;, &apos;Need guest wi-fi access&apos;, &apos;Network issues&apos;
+
+Remote Access: &apos;My VPN is not connecting,&apos; &apos;I can&apos;t access the VPN,&apos; &apos;I&apos;m having issues with my remote desktop.&apos;
+
+Core Identity &amp; Authentication: &apos;I&apos;m locked out of my computer,&apos; &apos;I need to reset my main password (e.g., Okta, Active Directory),&apos; &apos;My MFA token isn&apos;t working,&apos; &apos;My SSO is failing.&apos;</scope>
+        <source>svc_emp_intelligence__NetworkManagement</source>
+    </localTopics>
+    <localTopics>
+        <fullName>HardwareManagement_16jBi000001lvwl</fullName>
+        <aiPluginUtterances>
+            <developerName>utterance1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance1</masterLabel>
+            <utterance>My battery drains super fast even when I&apos;m not using much.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance2</masterLabel>
+            <utterance>The screen is completely black even though the power light is on.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance3</masterLabel>
+            <utterance>I dropped my laptop and now the screen is cracked.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance4</masterLabel>
+            <utterance>The mic isn&apos;t picking up my voice on calls.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance5</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance5</masterLabel>
+            <utterance>The touchpad stopped working after the update.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance6</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance6</masterLabel>
+            <utterance>What assets are assigned to me?</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance7</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance7</masterLabel>
+            <utterance>Can you get details on my monitor?</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance8</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance8</masterLabel>
+            <utterance>Can you get details on my assigned monitor?</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance9</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance9</masterLabel>
+            <utterance>Show me my assigned hardware.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance10</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance10</masterLabel>
+            <utterance>What devices do I have?</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance11</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance11</masterLabel>
+            <utterance>Tell me about my laptop.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance12</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance12</masterLabel>
+            <utterance>List my assigned assets.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance13</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance13</masterLabel>
+            <utterance>What equipment is assigned to me?</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance14</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance14</masterLabel>
+            <utterance>Show my current hardware assignments.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance15</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance15</masterLabel>
+            <utterance>Which devices are allocated to me?</utterance>
+        </aiPluginUtterances>
+        <canEscalate>false</canEscalate>
+        <description>This topic is to handle only hardware issues and hardware requests only. Anything which is not strictly hardware related or asset-related should not be handled by this topic. Hardware related things could be like requesting laptop, phone and so on. If its not hardware do not run this topic
+
+If it’s an update or follow-up on an existing hardware ticket, it should go to EmployeeRequestManagement.</description>
+        <developerName>HardwareManagement_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>When a user reports an issue, first display relevant information from Knowledge Answers (if available) instead of directly triggering the incident creation action.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Confirm with the user whether the Knowledge Answer resolved their issue.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user indicates that the Knowledge Answer resolved their issue, ask if they need any further assistance.</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the Knowledge Answer did not resolve the issue, use the GetEligibleServiceCatalogItems action to check if a matching catalog item exists for the user’s utterance.</description>
+            <developerName>Instruction4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction4</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Once a matching catalog item is found, collect all necessary inputs from the user to complete the service request.</description>
+            <developerName>Instruction5</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction5</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If any of the catalog items or other topics are not able to classify the utterance then strictly ask if the incident needs to be created. If the user confirms then only run the employee incident creation action.</description>
+            <developerName>Instruction6</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction6</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Do not ask the user for a subject; instead, generate it automatically based on the chat context.</description>
+            <developerName>Instruction7</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction7</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If additional details are required while creating the incident, prompt the user to provide the missing information.</description>
+            <developerName>Instruction8</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction8</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Always include the Subject field in the attributes when creating a Service Catalog request.</description>
+            <developerName>Instruction9</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction9</masterLabel>
+            <sortOrder>8</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>From the Get Eligible Service Catalog Items step, catalog items may have a complexity level of SIMPLE or COMPLEX. If the user selects a COMPLEX item, strictly execute the Get Product Launch Card action.</description>
+            <developerName>Instruction10</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction10</masterLabel>
+            <sortOrder>9</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>From the Get Eligible Service Catalog Items step, if the user selects a SIMPLE item, strictly execute the Get Attributes action.</description>
+            <developerName>Instruction11</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction11</masterLabel>
+            <sortOrder>10</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>For SIMPLE catalog items, do not display the product launch card. Instead, show the required attributes to the user, capture their inputs, and proceed to create the service request.</description>
+            <developerName>Instruction12</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction12</masterLabel>
+            <sortOrder>11</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Whenever you are creating an incident very strictly confirm from the user if they need to create an incident before executing.</description>
+            <developerName>Instruction13</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction13</masterLabel>
+            <sortOrder>12</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you get one catalog item from Get Eligible Service Catalog Items action, always confirm with the user if that is the correct catalog item before asking user for attribute values by strictly showing the catalog item&apos;s name and nothing else.</description>
+            <developerName>Instruction14</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction14</masterLabel>
+            <sortOrder>13</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you get an Catalog item from Get Eligible Service Catalog Items action, never ask user for Subject or reportedBy field. Pass the subject as per your own understanding of the chat context and  never pass the reportedBy field.</description>
+            <developerName>Instruction15</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction15</masterLabel>
+            <sortOrder>14</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If Product2Id is available, call GetProductLaunchCard and pass &lt;Replace with site name&gt; as siteName and $Context.ChannelType as channelType to GetProductLaunchCard.</description>
+            <developerName>Instruction16</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction16</masterLabel>
+            <sortOrder>15</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user wants to report issues with current hardware or report lost device always run the get Assigned asset Details first very strictly.</description>
+            <developerName>Instruction17</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction17</masterLabel>
+            <sortOrder>16</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user wants to report issues with current hardware or report lost device ,Once user confirms which asset from get Assigned asset Details always run the fetch catalog item action very strictly.</description>
+            <developerName>Instruction18</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction18</masterLabel>
+            <sortOrder>17</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If user just wants to know current assigned assets just show them output of get Assigned asset Details  action</description>
+            <developerName>Instruction19</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction19</masterLabel>
+            <sortOrder>18</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user is not happy with the suggestions or rejects the suggested catalog item, strictly ask if incident needs to be created. If the user confirms, then only run the employee incident creation action.</description>
+            <developerName>Instruction20</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction20</masterLabel>
+            <sortOrder>19</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user decides to abort the process while providing attributes because user feels suggested catalog item is incorrect then strictly ask if incident needs to be created. If the user confirms, then only run the employee incident creation action.</description>
+            <developerName>Instruction21</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction21</masterLabel>
+            <sortOrder>20</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Pass $Context.ChannelType and $Context.MessagingChannelId as inputs to the GetEligibleServiceCatalogItems action.</description>
+            <developerName>Instruction22</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction22</masterLabel>
+            <sortOrder>21</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked to fetch or retrieve assets of anyone but the running user, reply &apos;Fetching assets for others is not supported.&apos;</description>
+            <developerName>Instruction23</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction23</masterLabel>
+            <sortOrder>22</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>CreateServiceCatalogRequest_179Bi0000003KND</fullName>
+            <description>Creates a new service catalog request based on the specified service catalog item and its attributes.</description>
+            <developerName>CreateServiceCatalogRequest_179Bi0000003KND</developerName>
+            <invocationTarget>createSvcCatalogReq</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateServiceCatalogRequest</localDeveloperName>
+            <masterLabel>Create Service Catalog Request</masterLabel>
+            <progressIndicatorMessage>Creating a service catalog request...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__CreateServiceCatalogRequest</source>
+        </localActions>
+        <localActions>
+            <fullName>GetProductLaunchCard_179Bi0000003KND</fullName>
+            <description>Retrieves the product or service process launch details that include a cover image and a link to the specific intake form.</description>
+            <developerName>GetProductLaunchCard_179Bi0000003KND</developerName>
+            <invocationTarget>getDynamicEnhancedLink</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetProductLaunchCard</localDeveloperName>
+            <masterLabel>Get Product Launch Card</masterLabel>
+            <source>sc_enterprise_catalog__GetProductLaunchCard</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateIncidentForEmployee_179Bi0000003KND</fullName>
+            <description>Creates an incident for an employee issue if the user can&apos;t resolve it with knowledge articles or if no articles exist.</description>
+            <developerName>CreateIncidentForEmployee_179Bi0000003KND</developerName>
+            <invocationTarget>createIncidentForRequestor</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateIncidentForEmployee</localDeveloperName>
+            <masterLabel>Create Incident For Employee</masterLabel>
+            <source>svc_emp_intelligence__CreateIncidentForEmployee</source>
+        </localActions>
+        <localActions>
+            <fullName>GetCurrentAssignedAssetDetails_179Bi0000003KND</fullName>
+            <description>Takes running user id to retrieve assetRecords for user.</description>
+            <developerName>GetCurrentAssignedAssetDetails_179Bi0000003KND</developerName>
+            <invocationTarget>svc_emp_intelligence__GetAssetDetails</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetCurrentAssignedAssetDetails</localDeveloperName>
+            <masterLabel>Get Current Assigned Asset Details</masterLabel>
+            <progressIndicatorMessage>Finding Assets...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__GetCurrentAssignedAssetDetails</source>
+        </localActions>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Bi0000003KND</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Bi0000003KND</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localActions>
+            <fullName>GetEligibleServiceCatalogItems_179Bi0000003KND</fullName>
+            <description>Retrieves a list of the eligible service catalog items based on the user&apos;s description.</description>
+            <developerName>GetEligibleServiceCatalogItems_179Bi0000003KND</developerName>
+            <invocationTarget>getEligSvcCtlgItems</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetEligibleServiceCatalogItems</localDeveloperName>
+            <masterLabel>Get Eligible Service Catalog Items</masterLabel>
+            <progressIndicatorMessage>Getting the service catalog items based on your query...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__GetEligibleServiceCatalogItems</source>
+        </localActions>
+        <localActions>
+            <fullName>GetSvcCatalogAttributes_179Bi0000003KND</fullName>
+            <description>Retrieves the list of attributes and their details for a service catalog item based on the ID of the item provided by the user.</description>
+            <developerName>GetSvcCatalogAttributes_179Bi0000003KND</developerName>
+            <invocationTarget>getSvcCtlgAttributes</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetSvcCatalogAttributes</localDeveloperName>
+            <masterLabel>Get Service Catalog Item Attributes</masterLabel>
+            <progressIndicatorMessage>Getting attributes for the item...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__GetSvcCatalogAttributes</source>
+        </localActions>
+        <localDeveloperName>HardwareManagement</localDeveloperName>
+        <masterLabel>Hardware Management</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>This topic handles all employee issues and service requests related to physical IT equipment and user-assigned devices. This includes the procurement, setup, repair, and replacement of all computer hardware and peripherals.
+
+This topic includes, but is not limited to:
+
+New Hardware &amp; Lifecycle Requests: &apos;Request New Hardware (Laptop, Monitor, etc.),&apos; &apos;Request Laptop Replacement,&apos; &apos;Device Return Request&apos; (e.g., offboarding, equipment return).
+
+Peripherals &amp; Upgrades: &apos;Request a Peripheral (Keyboard, Mouse, Docking Station),&apos; &apos;Hardware Upgrade Request (RAM, SSD)&apos;
+
+Device Setup &amp; Security Configuration: &apos;Enroll Device for MDM&apos; (Mobile Device Management), &apos;Device Encryption Setup/Verification/Issue&apos;
+
+Printer &amp; Supplies Management: &apos;Report Printer Issue&apos; (e.g., &apos;Printer is jammed,&apos; &apos;Can&apos;t connect&apos;), &apos;Request Printer Supplies (Paper, Cartridge)&apos;
+
+Display &amp; Presentation Support: &apos;Projector/Display Setup &amp; Support&apos; (e.g., &apos;Can&apos;t connect to the projector,&apos; &apos;Conference room display issue&apos;).
+
+General Break-Fix &amp; Support: &apos;Report Device Issue&apos; (e.g., &apos;My laptop is slow,&apos; &apos;My computer won&apos;t turn on,&apos; &apos;My phone screen is cracked,&apos; &apos;My monitor is flickering,&apos; &apos;My dock isn&apos;t working&apos;).
+
+Current Assigned Assets: &apos;What assets are assigned to me?,&apos; &apos;Show my assigned devices,&apos; &apos;What equipment do I have?,&apos; &apos;List my hardware,&apos; &apos;Can you get details on my monitor?,&apos; &apos;Tell me about my laptop,&apos; &apos;Which devices are allocated to me?&apos;
+
+If its not in above strictly do not run this topic.</scope>
+        <source>svc_emp_intelligence__HardwareManagement</source>
+    </localTopics>
+    <localTopics>
+        <fullName>GeneralCRM_16jBi000001lvwl</fullName>
+        <aiPluginUtterances>
+            <developerName>shownewleads</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>show-new-leads</masterLabel>
+            <utterance>Show new leads.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>gettopopportunities</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>get-top-opportunities</masterLabel>
+            <utterance>Get top amount opportunities.</utterance>
+        </aiPluginUtterances>
+        <canEscalate>false</canEscalate>
+        <description>Engages and interacts with the user about any request that could be CRM data related. This could be tasks such as identify and summarize records, answer queries, aggregate data, find and query objects, update records, or drafting and refining emails.</description>
+        <developerName>GeneralCRM_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>There are multiple available data retrieval functions at your disposal. You can use each one of them multiple times if needed. You should use functions as many times as necessary until you have all the data required to fulfill the request of the user. You can perform extra calls if you think you can get additional relevant information.</description>
+            <developerName>dataretrieval</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>data-retrieval</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Do not declare your intent i.e. &quot;I will now retrieve the data&quot; - Just fetch the data.</description>
+            <developerName>proceedwithaction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>proceed-with-action</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Identify the object type (i.e., leads, opportunities, accounts) the user asks about. If unclear, confirm with the user and make a suggestion based on the query context and history.</description>
+            <developerName>identifyobjecttype</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>identify-object-type</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When only the name of a record is mentioned in the user request, you MUST call the IdentifyRecordByName action to get the necessary IDs.</description>
+            <developerName>identifyrecord</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>identify-record</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Always call QueryRecords &amp; QueryRecordsWithAggregate passing plain natural language english as input. You must Include the record ID in the input if available.</description>
+            <developerName>queryrecords</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>query-records</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When a user asks for a summary or overview of a record, use GetRecordDetails to get an overview of the data of the record, then use other data retrieval actions as needed.</description>
+            <developerName>summary0</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>summary0</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked for a summary on multiple records, you must iterate over all record IDs and for each one call GetRecordDetails.</description>
+            <developerName>summary1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>summary1</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user asks about activities you must call GetActivitiesTimeline.</description>
+            <developerName>activitytimeline0</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>activity-timeline0</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When providing the Activity Types for GetActivitiesTimeline, choose all the types that are relevant to the user request. Examples - User Request 1 - &quot;What questions does John Doe have that need addressing?&quot;, Activity Types - &quot;Call&quot;, &quot;Email&quot;. User Request 2 - &quot;What are the next activities for John Doe?&quot;, Activity Types - &quot;Task&quot;, &quot;Event&quot;.</description>
+            <developerName>activitytimeline1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>activity-timeline1</masterLabel>
+            <sortOrder>8</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When asked about recent activities, you should provide the answer, starting from the last 30 days and ending on the current date, unless a specific date range is specified by the user.</description>
+            <developerName>activitytimeline2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>activity-timeline2</masterLabel>
+            <sortOrder>9</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When you are asked about a single Call, Meeting, Email or any other single specific activity, call GetActivityDetails. Do not call it for any other record type.</description>
+            <developerName>getactivitydetails0</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>get-activity-details0</masterLabel>
+            <sortOrder>10</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Always use DraftOrReviseEmail when asked to generate a new email or revise a previously generated email.</description>
+            <developerName>draftorreviseemail</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>draft-or-revise-email</masterLabel>
+            <sortOrder>11</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>ExtractRecordFieldsAndValuesFromUserInput must be called prior to UpdateRecordFields.</description>
+            <developerName>updaterecord</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>update-record</masterLabel>
+            <sortOrder>12</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Avoid using structured lists, bullet points, or numbered lists. Instead, present the information in complete sentences and paragraphs as if you were writing an article or a report.</description>
+            <developerName>outputstyle</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>output-style</masterLabel>
+            <sortOrder>13</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>User questions which can be answered by knowledge articles or documents. These questions usually want information, instructions or guidance, including but not limited to customer questions about company information, polices and frequently asked questions.</description>
+            <developerName>answerquestions</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>answer-questions</masterLabel>
+            <sortOrder>14</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>GetActivitiesTimeline_179Bi0000003KNE</fullName>
+            <description>Retrieve a timeline of all CRM activities associated with one record, including past and future activities.</description>
+            <developerName>GetActivitiesTimeline_179Bi0000003KNE</developerName>
+            <invocationTarget>getActivitiesTimeline</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetActivitiesTimeline</localDeveloperName>
+            <masterLabel>Get Activities Timeline</masterLabel>
+            <progressIndicatorMessage>Retrieving activities</progressIndicatorMessage>
+            <source>EmployeeCopilot__GetActivitiesTimeline</source>
+        </localActions>
+        <localActions>
+            <fullName>QueryRecords_179Bi0000003KNE</fullName>
+            <description>Finds and retrieves Salesforce CRM records based on user input and specific conditions, such as field values. This action automatically identifies the correct records and object type. e.g. &apos;Find all open opportunities created in the last 5 days sorted by created date.&apos;</description>
+            <developerName>QueryRecords_179Bi0000003KNE</developerName>
+            <invocationTarget>queryRecords</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>QueryRecords</localDeveloperName>
+            <masterLabel>Query Records</masterLabel>
+            <source>EmployeeCopilot__QueryRecords</source>
+        </localActions>
+        <localActions>
+            <fullName>IdentifyObjectByName_179Bi0000003KNE</fullName>
+            <description>Finds the Salesforce object API name by extracting an object name from the user input.</description>
+            <developerName>IdentifyObjectByName_179Bi0000003KNE</developerName>
+            <invocationTarget>identifyObject</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>IdentifyObjectByName</localDeveloperName>
+            <masterLabel>Identify Object by Name</masterLabel>
+            <source>EmployeeCopilot__IdentifyObjectByName</source>
+        </localActions>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Bi0000003KNE</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Bi0000003KNE</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localActions>
+            <fullName>QueryRecordsWithAggregate_179Bi0000003KNE</fullName>
+            <description>Answers aggregation questions (such as count, sum, max, min, or average) about Salesforce CRM data based on the user input and specific conditions, such as field values. For example &apos;Find the number of open opportunities created in the last 5 days.&apos;</description>
+            <developerName>QueryRecordsWithAggregate_179Bi0000003KNE</developerName>
+            <invocationTarget>queryRecordsWithAggregate</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>QueryRecordsWithAggregate</localDeveloperName>
+            <masterLabel>Query Records with Aggregate</masterLabel>
+            <source>EmployeeCopilot__QueryRecordsWithAggregate</source>
+        </localActions>
+        <localActions>
+            <fullName>UpdateRecordFields_179Bi0000003KNE</fullName>
+            <description>Updates fields on a Salesforce CRM record. The action ExtractFieldsAndValuesFromUserInput must be called prior to this action to extract the record&apos;s fields and values.</description>
+            <developerName>UpdateRecordFields_179Bi0000003KNE</developerName>
+            <invocationTarget>einsteinCopilotUpdateRecord</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>UpdateRecordFields</localDeveloperName>
+            <masterLabel>Update Record</masterLabel>
+            <progressIndicatorMessage>Making updates</progressIndicatorMessage>
+            <source>EmployeeCopilot__UpdateRecordFields</source>
+        </localActions>
+        <localActions>
+            <fullName>IdentifyRecordByName_179Bi0000003KNE</fullName>
+            <description>Searches for Salesforce CRM records by name and returns a list of matching Salesforce CRM record IDs.</description>
+            <developerName>IdentifyRecordByName_179Bi0000003KNE</developerName>
+            <invocationTarget>identifyRecordByName</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>IdentifyRecordByName</localDeveloperName>
+            <masterLabel>Identify Record by Name</masterLabel>
+            <source>EmployeeCopilot__IdentifyRecordByName</source>
+        </localActions>
+        <localActions>
+            <fullName>GetActivityDetails_179Bi0000003KNE</fullName>
+            <description>Provides data about an activity record, including its content and other key details. The record type is strictly limited to a Call, Email, Event, or Task.</description>
+            <developerName>GetActivityDetails_179Bi0000003KNE</developerName>
+            <invocationTarget>getActivityDetails</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetActivityDetails</localDeveloperName>
+            <masterLabel>Get Activity Details</masterLabel>
+            <progressIndicatorMessage>Getting activity details</progressIndicatorMessage>
+            <source>EmployeeCopilot__GetActivityDetails</source>
+        </localActions>
+        <localActions>
+            <fullName>ExtractFieldsAndValuesFromUserInput_179Bi0000003KNE</fullName>
+            <description>Extracts Salesforce CRM record fields and their corresponding field values from the user input. This action must run before updateRecord to convert user input to a Salesforce sObject.</description>
+            <developerName>ExtractFieldsAndValuesFromUserInput_179Bi0000003KNE</developerName>
+            <invocationTarget>getRecordFieldsAndValues</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>ExtractFieldsAndValuesFromUserInput</localDeveloperName>
+            <masterLabel>Extract Fields And Values From User Input</masterLabel>
+            <progressIndicatorMessage>Preparing your changes</progressIndicatorMessage>
+            <source>EmployeeCopilot__ExtractFieldsAndValuesFromUserInput</source>
+        </localActions>
+        <localActions>
+            <fullName>GetRecordDetails_179Bi0000003KNE</fullName>
+            <description>Generates a text blob containing record details, including object fields and values and records from related lists.</description>
+            <developerName>GetRecordDetails_179Bi0000003KNE</developerName>
+            <invocationTarget>getDataForGrounding</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetRecordDetails</localDeveloperName>
+            <masterLabel>Get Record Details</masterLabel>
+            <progressIndicatorMessage>Getting details</progressIndicatorMessage>
+            <source>EmployeeCopilot__GetRecordDetails</source>
+        </localActions>
+        <localActions>
+            <fullName>DraftOrReviseEmail_179Bi0000003KNE</fullName>
+            <description>Creates an email draft or revises the latest generated email based on user input.</description>
+            <developerName>DraftOrReviseEmail_179Bi0000003KNE</developerName>
+            <invocationTarget>getDraftOrReviseEmailPrompt</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>DraftOrReviseEmail</localDeveloperName>
+            <masterLabel>Draft or Revise Email</masterLabel>
+            <progressIndicatorMessage>Crafting your email</progressIndicatorMessage>
+            <source>EmployeeCopilot__DraftOrReviseEmail</source>
+        </localActions>
+        <localDeveloperName>GeneralCRM</localDeveloperName>
+        <masterLabel>General CRM</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to interact and answer questions for the user about anything Salesforce or CRM data related, combining all data retrieval functions. i.e: QueryRecords(), GetRecordDetails(), GetActivitiesTimeline(), GetActivityDetails()</scope>
+        <source>EmployeeCopilot__GeneralCRM</source>
+    </localTopics>
+    <localTopics>
+        <fullName>Search_16jBi000001lvwl</fullName>
+        <canEscalate>false</canEscalate>
+        <description>This topic addresses user requests to perform vector search on knowledge assets using CDP Connect Query API with a fixed search index.</description>
+        <developerName>Search_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>If a user asks what you can do, tell the user in your own words that you can search through knowledge assets using semantic vector search on the realtime search index.</description>
+            <developerName>StandardInstruction</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Standard Instruction</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When a user provides a search query, use the KnowledgeSpaceKnowledgeSearch action to perform vector search on search index and return relevant results.</description>
+            <developerName>VectorSearch</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Vector Search</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>after receiving the relevant grounding data, summarize the same to provide a relevant answer to the user.</description>
+            <developerName>summarize</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>summarize</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>KnowledgeSpaceKnowledgeSearch_179Bi0000003KNB</fullName>
+            <description>Performs vector search on data selected in knowledge space and returns relevant grounding data.</description>
+            <developerName>KnowledgeSpaceKnowledgeSearch_179Bi0000003KNB</developerName>
+            <invocationTarget>KnowledgeSpaceKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>KnowledgeSpaceKnowledgeSearch</localDeveloperName>
+            <masterLabel>Knowledge Space Knowledge Search</masterLabel>
+            <progressIndicatorMessage>Searching knowledge assets in knowledge space</progressIndicatorMessage>
+            <source>KnowledgeSpaceAgent__KnowledgeSpaceKnowledgeSearch</source>
+        </localActions>
+        <localDeveloperName>Search</localDeveloperName>
+        <masterLabel>Search</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to help users search through knowledge assets using vector search capabilities. You perform semantic search queries on the fixed &quot;realtime SI&quot; search index to find relevant content.</scope>
+        <source>KnowledgeSpaceAgent__Search</source>
+    </localTopics>
+    <localTopics>
+        <fullName>GeneralFAQ_16jBi000001lvwl</fullName>
+        <canEscalate>false</canEscalate>
+        <description>This topic is for helping answer customer&apos;s questions by searching through the knowledge articles and providing information from those articles. The questions can be about the company and its products, policies or business procedures</description>
+        <developerName>GeneralFAQ_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>If the customer&apos;s question is too vague or general, ask for more details and clarification to give a better answer.</description>
+            <developerName>requestmoredetails</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>request-more-details</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you are unable to help the customer even after asking clarifying questions, ask if they want to escalate this issue to a live agent.</description>
+            <developerName>unabletohelpafterclarifying</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>unable-to-help-after-clarifying</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you are unable to answer customer&apos;s questions, ask if they want to escalate this issue to a live agent.</description>
+            <developerName>unabletoanswerquestions</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>unable-to-answer-questions</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Never provide generic information, advice or troubleshooting steps, unless retrieved from searching knowledge articles.</description>
+            <developerName>avoidgenericinformation</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>avoid-generic-information</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Include sources in your response when available from the knowledge articles, otherwise proceed without them.</description>
+            <developerName>includearticlesources</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>include-article-sources</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Bi0000003KNC</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Bi0000003KNC</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localDeveloperName>GeneralFAQ</localDeveloperName>
+        <masterLabel>General FAQ</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is solely to help with issues and answer questions about the company, its products, procedures, or policies by searching knowledge articles.</scope>
+        <source>SvcCopilotTmpl__GeneralFAQ</source>
+    </localTopics>
+    <localTopics>
+        <fullName>Ticket_Summary_Creation_16jBi000001lvwl</fullName>
+        <canEscalate>false</canEscalate>
+        <description>This topic focuses on summarizing tickets for employees, ensuring that relevant information is captured and organized for their use.</description>
+        <developerName>Ticket_Summary_Creation_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>Identify the key details from the ticket, including issue description, customer information, and resolution steps.</description>
+            <developerName>instruction_1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 1</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Ensure the summary is concise but includes all relevant information for employee use.</description>
+            <developerName>instruction_2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 2</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Ask clarifying questions if any critical information is missing from the ticket.</description>
+            <developerName>instruction_3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 3</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Format the summary in a clear and professional manner.</description>
+            <developerName>instruction_4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 4</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>Ticket_Summary_Creation</localDeveloperName>
+        <masterLabel>Ticket Summary Creation</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is only to assist in creating concise and accurate summaries of tickets for employees, ensuring all necessary details are included and formatted appropriately.</scope>
+    </localTopics>
+    <localTopics>
+        <fullName>CloudAndInfrastructureManagement_16jBi000001lvwl</fullName>
+        <aiPluginUtterances>
+            <developerName>utterance1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance1</masterLabel>
+            <utterance>I can’t access my AWS account.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance2</masterLabel>
+            <utterance>The production server is down.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance3</masterLabel>
+            <utterance>I need access to the staging environment.</utterance>
+        </aiPluginUtterances>
+        <aiPluginUtterances>
+            <developerName>utterance4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>utterance4</masterLabel>
+            <utterance>There’s a performance issue with our cloud storage.</utterance>
+        </aiPluginUtterances>
+        <canEscalate>false</canEscalate>
+        <description>This topic is to handle cloud/infrastructure issues and cloud/infrastructure requests only. Anything which is not strictly cloud or IT infrastructure related should not be handled by this topic
+
+If it’s an update or follow-up on an existing security and compliance ticket, it should go to EmployeeRequestManagement.</description>
+        <developerName>CloudAndInfrastructureManagement_16jBi000001lvwl</developerName>
+        <genAiPluginInstructions>
+            <description>When a user reports an issue, first display relevant information from Knowledge Answers (if available) instead of directly triggering the incident creation action.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Confirm with the user whether the Knowledge Answer resolved their issue.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user indicates that the Knowledge Answer resolved their issue, ask if they need any further assistance.</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the Knowledge Answer did not resolve the issue, use the IdentifyServiceCatalogItem action to check if a matching catalog item exists for the user’s utterance.</description>
+            <developerName>Instruction4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction4</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Once a matching catalog item is found, collect all necessary inputs from the user to complete the service request.</description>
+            <developerName>Instruction5</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction5</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If any of the catalog items or other topics are not able to classify the utterance then strictly ask if the incident needs to be created. If the user confirms then only run the employee incident creation action.</description>
+            <developerName>Instruction6</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction6</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Do not ask the user for a subject; instead, generate it automatically based on the chat context.</description>
+            <developerName>Instruction7</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction7</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If additional details are required while creating the incident, prompt the user to provide the missing information.</description>
+            <developerName>Instruction8</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction8</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Always include the Subject field in the attributes when creating a Service Catalog request.</description>
+            <developerName>Instruction9</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction9</masterLabel>
+            <sortOrder>8</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>From the Get Eligible Service Catalog Items step, catalog items may have a complexity level of SIMPLE or COMPLEX. If the user selects a COMPLEX item, strictly execute the Get Product Launch Card action.</description>
+            <developerName>Instruction10</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction10</masterLabel>
+            <sortOrder>9</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>From the Get Eligible Service Catalog Items step, if the user selects a SIMPLE item, strictly execute the Get Attributes action.</description>
+            <developerName>Instruction11</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction11</masterLabel>
+            <sortOrder>10</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>For SIMPLE catalog items, do not display the product launch card. Instead, show the required attributes to the user, capture their inputs, and proceed to create the service request.</description>
+            <developerName>Instruction12</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction12</masterLabel>
+            <sortOrder>11</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Whenever you are creating an incident very strictly confirm from the user if they need to create an incident before executing.</description>
+            <developerName>Instruction13</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction13</masterLabel>
+            <sortOrder>12</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you get one catalog item from Get Eligible Service Catalog Items action, always confirm with the user if that is the correct catalog item before asking user for attribute values by strictly showing the catalog item&apos;s name and nothing else.</description>
+            <developerName>Instruction14</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction14</masterLabel>
+            <sortOrder>13</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If you get an Catalog item from Get Eligible Service Catalog Items action, never ask user for Subject or reportedBy field. Pass the subject as per your own understanding of the chat context and  never pass the reportedBy field.</description>
+            <developerName>Instruction15</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction15</masterLabel>
+            <sortOrder>14</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If Product2Id is available, call GetProductLaunchCard and pass &lt;Replace with site name&gt; as siteName and $Context.ChannelType as channelType to GetProductLaunchCard.</description>
+            <developerName>Instruction16</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction16</masterLabel>
+            <sortOrder>15</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user is not happy with the suggestions or rejects the suggested catalog item, strictly ask if incident needs to be created. If the user confirms, then only run the employee incident creation action.</description>
+            <developerName>Instruction17</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction17</masterLabel>
+            <sortOrder>16</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user decides to abort the process while providing attributes because user feels suggested catalog item is incorrect then strictly ask if incident needs to be created. If the user confirms, then only run the employee incident creation action.</description>
+            <developerName>Instruction18</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction18</masterLabel>
+            <sortOrder>17</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Pass $Context.ChannelType and $Context.MessagingChannelId as inputs to the GetEligibleServiceCatalogItems action.</description>
+            <developerName>Instruction19</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction19</masterLabel>
+            <sortOrder>18</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Bi0000003KLZ</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Bi0000003KLZ</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateIncidentForEmployee_179Bi0000003KLZ</fullName>
+            <description>Creates an incident for an employee issue if the user can&apos;t resolve it with knowledge articles or if no articles exist.</description>
+            <developerName>CreateIncidentForEmployee_179Bi0000003KLZ</developerName>
+            <invocationTarget>createIncidentForRequestor</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateIncidentForEmployee</localDeveloperName>
+            <masterLabel>Create Incident For Employee</masterLabel>
+            <source>svc_emp_intelligence__CreateIncidentForEmployee</source>
+        </localActions>
+        <localActions>
+            <fullName>GetSvcCatalogAttributes_179Bi0000003KLZ</fullName>
+            <description>Retrieves the list of attributes and their details for a service catalog item based on the ID of the item provided by the user.</description>
+            <developerName>GetSvcCatalogAttributes_179Bi0000003KLZ</developerName>
+            <invocationTarget>getSvcCtlgAttributes</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetSvcCatalogAttributes</localDeveloperName>
+            <masterLabel>Get Service Catalog Item Attributes</masterLabel>
+            <progressIndicatorMessage>Getting attributes for the item...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__GetSvcCatalogAttributes</source>
+        </localActions>
+        <localActions>
+            <fullName>CreateServiceCatalogRequest_179Bi0000003KLZ</fullName>
+            <description>Creates a new service catalog request based on the specified service catalog item and its attributes.</description>
+            <developerName>CreateServiceCatalogRequest_179Bi0000003KLZ</developerName>
+            <invocationTarget>createSvcCatalogReq</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>CreateServiceCatalogRequest</localDeveloperName>
+            <masterLabel>Create Service Catalog Request</masterLabel>
+            <progressIndicatorMessage>Creating a service catalog request...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__CreateServiceCatalogRequest</source>
+        </localActions>
+        <localActions>
+            <fullName>GetEligibleServiceCatalogItems_179Bi0000003KLZ</fullName>
+            <description>Retrieves a list of the eligible service catalog items based on the user&apos;s description.</description>
+            <developerName>GetEligibleServiceCatalogItems_179Bi0000003KLZ</developerName>
+            <invocationTarget>getEligSvcCtlgItems</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetEligibleServiceCatalogItems</localDeveloperName>
+            <masterLabel>Get Eligible Service Catalog Items</masterLabel>
+            <progressIndicatorMessage>Getting the service catalog items based on your query...</progressIndicatorMessage>
+            <source>svc_emp_intelligence__GetEligibleServiceCatalogItems</source>
+        </localActions>
+        <localActions>
+            <fullName>GetProductLaunchCard_179Bi0000003KLZ</fullName>
+            <description>Retrieves the product or service process launch details that include a cover image and a link to the specific intake form.</description>
+            <developerName>GetProductLaunchCard_179Bi0000003KLZ</developerName>
+            <invocationTarget>getDynamicEnhancedLink</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>GetProductLaunchCard</localDeveloperName>
+            <masterLabel>Get Product Launch Card</masterLabel>
+            <source>sc_enterprise_catalog__GetProductLaunchCard</source>
+        </localActions>
+        <localDeveloperName>CloudAndInfrastructureManagement</localDeveloperName>
+        <masterLabel>Cloud and Infrastructure Management</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>This topic handles all service requests and incidents related to the company&apos;s backend IT infrastructure, cloud services, servers, and data platforms. It is primarily intended for technical users, engineers, and application teams, and is separate from end-user IT support (like laptops or software).
+
+This topic includes, but is not limited to:
+
+Cloud Resource Management: &apos;Request New Cloud Service&apos; (e.g., &apos;New AWS S3 Bucket,&apos; &apos;Request Azure SQL Database&apos;), &apos;Modify Cloud Resource&apos; (e.g., &apos;Change IAM policy,&apos; &apos;Adjust security group rules&apos;), &apos;Request Cloud Cost Report.&apos;
+
+Server &amp; Virtual Machine (VM) Management: &apos;Request New Server/VM,&apos; &apos;Reboot Server,&apos; &apos;Report Server Down,&apos; &apos;Request Server Decommission,&apos; &apos;Modify Server Resources&apos; (e.g., &apos;Increase RAM/CPU,&apos; &apos;Expand disk space&apos;).
+
+Platform &amp; Data Services: &apos;Report Database Performance Issue,&apos; &apos;Request Database Backup/Restore,&apos; &apos;Report Kubernetes (K8s) Cluster Issue,&apos; &apos;Request New Database User,&apos; &apos;Troubleshoot CI/CD Pipeline Failure.&apos;
+
+Infrastructure Monitoring &amp; Alerts: &apos;Report High Server CPU,&apos; &apos;Alert for Low Disk Space,&apos; &apos;Investigate Platform Latency,&apos; &apos;Request New Monitoring Alert.</scope>
+        <source>svc_emp_intelligence__CloudAndInfrastructureManagement</source>
+    </localTopics>
+    <masterLabel>IT Service Employee</masterLabel>
+    <plannerActions>
+        <fullName>AnswerQuestionsWithKnowledge_16jBi000001lvwl</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+        <developerName>AnswerQuestionsWithKnowledge_16jBi000001lvwl</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </plannerActions>
+    <plannerType>AiCopilot__ReAct</plannerType>
+</GenAiPlannerBundle>

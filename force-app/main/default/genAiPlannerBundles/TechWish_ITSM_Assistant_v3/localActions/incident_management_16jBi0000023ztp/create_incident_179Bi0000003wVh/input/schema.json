@@ -1,0 +1,42 @@
+{
+  "required" : [ "subject", "description" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "category" : {
+      "title" : "Category",
+      "description" : "Optional category",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "description" : {
+      "title" : "Description",
+      "description" : "Detailed description of the issue",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "priority" : {
+      "title" : "Priority",
+      "description" : "Optional priority override",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "requesterEmail" : {
+      "title" : "Requester Email",
+      "description" : "Email of the requester",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "subject" : {
+      "title" : "Subject",
+      "description" : "Subject of the incident",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,51 @@
+{
+  "required" : [ "searchText" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "searchText" : {
+      "title" : "Query",
+      "description" : "Enter your search query to find relevant knowledge assets",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "SInames" : {
+      "title" : "Search Indexes",
+      "description" : "Comma-separated list of search index names to query (optional)",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "KnowledgeIds" : {
+      "title" : "Knowledge IDs",
+      "description" : "Comma-separated string of Knowledge IDs for knowledge space search",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "FilePaths" : {
+      "title" : "File Paths",
+      "description" : "Comma-separated string of specific file paths that provides the details of the files for knowledge space search",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "KnowledgeSpaceSearchIndexId" : {
+      "title" : "Knowledge Space Search Index Id",
+      "description" : "Search index name where the files for knowledge space is indexed",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "citationsEnabled" : {
+      "title" : "Citations Enabled",
+      "description" : "Whether to include citations in the response",
+      "default" : true,
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

@@ -1,0 +1,16 @@
+{
+  "required" : [ "recordId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "recordId" : {
+      "title" : "Salesforce Record ID",
+      "description" : "Salesforce record ID to be used in creating a matching Slack Record Channel.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "Salesforce record ID to be used in creating a matching Slack Record Channel.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

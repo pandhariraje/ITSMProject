@@ -1,0 +1,24 @@
+{
+  "required" : [ "channelId", "userIds" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelId" : {
+      "title" : "Slack Channel ID",
+      "description" : "The Slack Channel ID to add people to.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The Slack Channel ID to add people to. A Slack Channel ID is represented as a string like C12345678. If a string like <#C123456789> is provided, extract a Slack Channel ID from it by removing the <# and > characters. For example, the Channel ID in <#C123456789> is C123456789.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "userIds" : {
+      "title" : "Slack User IDs",
+      "description" : "A comma separated list of Slack User IDs to add to the provided Slack Channel.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "A comma separated list of Slack User IDs to add to the provided Slack Channel. A single Slack User ID is represented as a string like U987654321. If a string like <@U987654321> is provided extract a Slack User ID from it by removing the <@ and > characters. For example, the Slack User in <@U987654321> is U987654321. The input here needs to be a comma separated list of Slack User IDs like U12345678,U987654321,U781345729.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

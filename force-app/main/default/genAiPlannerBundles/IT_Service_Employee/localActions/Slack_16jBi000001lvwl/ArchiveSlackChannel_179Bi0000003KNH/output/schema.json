@@ -1,0 +1,16 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelId" : {
+      "title" : "Slack Channel ID",
+      "description" : "The Slack Channel ID of the Slack Channel that was archived.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The Slack Channel ID of the Slack Channel that was archived. The output should be a channel mention string like <#C12345678>. If a string like C123456789 is provided as output, add  the <# and > characters at the start and end of the string respectively. For example, the Slack Channel ID C123456789 is converted to <#C123456789>.",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

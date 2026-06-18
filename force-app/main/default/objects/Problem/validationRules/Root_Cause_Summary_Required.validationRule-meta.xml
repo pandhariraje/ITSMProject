@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Root_Cause_Summary_Required</fullName>
+    <active>false</active>
+    <description>Ensures Root Cause Summary is mandatory before saving the Problem record.</description>
+    <errorConditionFormula>ISBLANK( RootCauseSummary )</errorConditionFormula>
+    <errorDisplayField>RootCauseSummary</errorDisplayField>
+    <errorMessage>Root Cause Summary must be filled before saving the Problem record.</errorMessage>
+</ValidationRule>

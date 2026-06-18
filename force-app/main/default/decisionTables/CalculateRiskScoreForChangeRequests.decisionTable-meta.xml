@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTable xmlns="http://soap.sforce.com/2006/04/metadata">
+    <conditionCriteria>1 AND 2</conditionCriteria>
+    <conditionType>All</conditionType>
+    <dataSourceType>CsvUpload</dataSourceType>
+    <decisionTableParameters>
+        <dataType>Number</dataType>
+        <fieldName>RiskValue</fieldName>
+        <isGroupByField>false</isGroupByField>
+        <isRequired>false</isRequired>
+        <sortType>None</sortType>
+        <usage>OUTPUT</usage>
+    </decisionTableParameters>
+    <decisionTableParameters>
+        <dataType>String</dataType>
+        <fieldName>Attribute</fieldName>
+        <isGroupByField>false</isGroupByField>
+        <isRequired>true</isRequired>
+        <operator>Equals</operator>
+        <sequence>1</sequence>
+        <sortType>None</sortType>
+        <usage>INPUT</usage>
+    </decisionTableParameters>
+    <decisionTableParameters>
+        <dataType>String</dataType>
+        <fieldName>RiskAnswer</fieldName>
+        <isGroupByField>false</isGroupByField>
+        <isRequired>true</isRequired>
+        <operator>Equals</operator>
+        <sequence>2</sequence>
+        <sortType>None</sortType>
+        <usage>INPUT</usage>
+    </decisionTableParameters>
+    <decisionTableParameters>
+        <dataType>Number</dataType>
+        <fieldName>Weight</fieldName>
+        <isGroupByField>false</isGroupByField>
+        <isRequired>false</isRequired>
+        <sortType>None</sortType>
+        <usage>OUTPUT</usage>
+    </decisionTableParameters>
+    <description>Calculates risk score for change requests based on the responses to the risk assessment questionnaire.</description>
+    <doesConsiderNullValue>false</doesConsiderNullValue>
+    <executionType>HBASE</executionType>
+    <hasIncrementalSyncFailed>false</hasIncrementalSyncFailed>
+    <isIncrementalSyncEnabled>false</isIncrementalSyncEnabled>
+    <setupName>Calculate Risk Score for Change Requests</setupName>
+    <sourceObject>CSV</sourceObject>
+    <status>Active</status>
+    <type>MediumVolume</type>
+    <usageType>Bre</usageType>
+</DecisionTable>

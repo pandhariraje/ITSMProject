@@ -1,0 +1,18 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelSummary" : {
+      "title" : "Slack Channel Summary",
+      "description" : "The Slack Channel Summary JSON created in the Summarize a Slack Channel Agentforce action.",
+      "maxLength" : 100000,
+      "lightning:type" : "lightning__richTextType",
+      "einstein:description" : "The Summary for the Slack Channel.",
+      "lightning:isPII" : true,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

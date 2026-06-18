@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>Incidents</label>
+            <name>incidents</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Password Reset</label>
+            <name>password_reset</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Software Installation</label>
+            <name>software_installation</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Network Issues</label>
+            <name>network_issues</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <label>IT Support</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

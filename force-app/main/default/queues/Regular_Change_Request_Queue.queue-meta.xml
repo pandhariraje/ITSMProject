@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The Regular Change Request Queue includes all non-emergency change requests.</description>
+    <doesIncludeBosses>true</doesIncludeBosses>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Regular Change Request Queue</name>
+    <queueSobject>
+        <sobjectType>ChangeRequest</sobjectType>
+    </queueSobject>
+</Queue>

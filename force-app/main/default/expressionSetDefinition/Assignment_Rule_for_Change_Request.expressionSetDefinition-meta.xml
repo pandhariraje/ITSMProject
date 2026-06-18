@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExpressionSetDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contextDefinitions>ChangeRequestCtxtDef__stdctx</contextDefinitions>
+    <executionScale>Low</executionScale>
+    <interfaceSourceType>ItServiceManagement</interfaceSourceType>
+    <label>Assignment Rule for Change Request</label>
+    <processType>ItServiceManagement</processType>
+    <resourceInitializationType>Off</resourceInitializationType>
+    <template>false</template>
+    <versions>
+        <fullName>Assignment_Rule_for_Change_Request_V1</fullName>
+        <decimalScale>2</decimalScale>
+        <expressionSetDefinition>Assignment_Rule_for_Change_Request</expressionSetDefinition>
+        <interfaceSourceType>ItServiceManagement</interfaceSourceType>
+        <label>Assignment Rule for Change Request V1</label>
+        <processType>ItServiceManagement</processType>
+        <shouldShowExplExternally>false</shouldShowExplExternally>
+        <startDate>2026-02-18T08:39:49.000Z</startDate>
+        <status>Draft</status>
+        <versionNumber>1</versionNumber>
+    </versions>
+</ExpressionSetDefinition>

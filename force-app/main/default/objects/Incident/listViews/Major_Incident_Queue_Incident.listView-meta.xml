@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Major_Incident_Queue_Incident</fullName>
+    <columns>Name</columns>
+    <columns>Subject</columns>
+    <columns>ReportedBy</columns>
+    <columns>Priority</columns>
+    <columns>Status</columns>
+    <columns>AssignedUser</columns>
+    <columns>Category</columns>
+    <columns>SubCategory</columns>
+    <columns>MajorIncidentStatus</columns>
+    <columns>MilestoneTimer</columns>
+    <columns>Owner</columns>
+    <filterScope>Queue</filterScope>
+    <label>Major Incident Queue</label>
+    <queue>Major_Incident_Queue</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

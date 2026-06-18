@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The Normal Problem Queue is for problems not assigned a Critical priority.</description>
+    <doesIncludeBosses>true</doesIncludeBosses>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Normal Problem Queue</name>
+    <queueMembers>
+        <users>
+            <user>lin.uoaa3i9lr1gm.qog9l1jpphv8.216o5lipwcif.i93cfw0raboq.ijbddrxwvxv2@example.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Problem</sobjectType>
+    </queueSobject>
+</Queue>

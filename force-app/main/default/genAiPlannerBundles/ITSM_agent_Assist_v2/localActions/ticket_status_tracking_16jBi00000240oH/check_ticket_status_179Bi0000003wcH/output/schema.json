@@ -1,0 +1,78 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "assignedTeam" : {
+      "title" : "Assigned Team",
+      "description" : "Assigned team/queue",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "errorMessage" : {
+      "title" : "Error Message",
+      "description" : "Details of any error",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "found" : {
+      "title" : "Found",
+      "description" : "Whether the ticket exists",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : false
+    },
+    "isSuccess" : {
+      "title" : "Is Success",
+      "description" : "Whether the lookup succeeded",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : false
+    },
+    "lastUpdatedDate" : {
+      "title" : "Last Updated Date",
+      "description" : "Date/time of last update",
+      "lightning:type" : "lightning__dateTimeStringType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "priority" : {
+      "title" : "Priority",
+      "description" : "Current priority",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "status" : {
+      "title" : "Status",
+      "description" : "Current status",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "ticketNumber" : {
+      "title" : "Ticket Number",
+      "description" : "Retrieved ticket number",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "ticketType" : {
+      "title" : "Ticket Type",
+      "description" : "Incident or Service Request",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

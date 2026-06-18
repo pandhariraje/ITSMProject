@@ -1,0 +1,32 @@
+{
+  "required" : [ "channelName", "isPrivate", "teamId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelName" : {
+      "title" : "Channel Name",
+      "description" : "The name of the channel to create. Channel names should lowercased with only letters, numbers, hyphens and underscores.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The name of the channel to create. Channel names should lowercased with only letters, numbers, hyphens and underscores.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "teamId" : {
+      "title" : "Team ID",
+      "description" : "The Team ID (or Workspace ID) of the Slack workspace to create the Channel in.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The Team ID (or Workspace ID) of the Slack workspace to create the Channel in.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "isPrivate" : {
+      "title" : "Is Private",
+      "description" : "If true, creates a private Slack channel. Otherwise creates a public channel.",
+      "lightning:type" : "lightning__booleanType",
+      "einstein:description" : "If true, creates a private Slack channel. Otherwise creates a public channel.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

@@ -1,0 +1,40 @@
+{
+  "required" : [ "channelId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelId" : {
+      "title" : "Slack Channel ID",
+      "description" : "The ID (e.g., C01ABC12345) for the Slack channel to summarize.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The user will provide a single Slack Channel ID (e.g., C01ABC12345). \n    - If the channel provided comes in the format of '<#C0150UQ9MHR|>' where the channel Id is wrapped in '<# |>', remove the '|' to alter the channel Id reference. For example, <#C1234ABC456|>' should be converted to <#C1234ABC456>'. \n    - If the channel provided comes in the format of 'C1234ABC456' where the channel Id is a simple string wrap it with '<#C1234ABC456>' to alter the channel Id reference. For example, 'C1234ABC456' should be converted to <#C0150UQ9MHR>'.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "searchTimeRange" : {
+      "title" : "Search Time Range",
+      "description" : "Specifies the number of past calendar days to include in the summary.",
+      "lightning:type" : "lightning__integerType",
+      "einstein:description" : "Specifies the number of past calendar days to include in the summary. Do not accept negative numbers. The Maximum value accepted here is 30. If the user does not explicitly specify a value, default to 7. This determines how far back in time the Slack messages will be summarized, starting from today.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "searchFilterTerms" : {
+      "title" : "Search Terms",
+      "description" : "Optional terms to filter out content for the summary, e.g., 'Root Cause', 'Bug Bash', 'Deadline'.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "User might specify an optional 'terms' to filter out content for the summary, e.g., 'Root Cause', 'Bug Bash', 'Deadline'. This Field is not required.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "summaryTemplateName" : {
+      "title" : "Summary Template Name",
+      "description" : "Optional Developer Name of the template that will be used to generate the Channel Summary.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "Optional. The Developer Name of the template that will be used to generate the Channel Summary",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

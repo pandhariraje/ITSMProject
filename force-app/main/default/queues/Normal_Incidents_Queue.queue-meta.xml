@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The Normal Incident Queue is for all incidents not categorized as Critical, High, and is not a major incidents.</description>
+    <doesIncludeBosses>true</doesIncludeBosses>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Normal Incidents Queue</name>
+    <queueMembers>
+        <users>
+            <user>pandhari.itsm@tw.com</user>
+            <user>sunil.metta-vffu@force.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>Incident_Routing</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>Incident</sobjectType>
+    </queueSobject>
+</Queue>

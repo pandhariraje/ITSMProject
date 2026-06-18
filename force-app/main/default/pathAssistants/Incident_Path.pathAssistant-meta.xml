@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Incident</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Incident Path</masterLabel>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;• Ensure resolution documented&lt;/p&gt;&lt;p&gt;• Confirm user satisfaction&lt;/p&gt;&lt;p&gt;• Close incident only after verification&lt;/p&gt;</info>
+        <picklistValueName>Closed</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;• Confirm with requester that issue is resolved&lt;/p&gt;&lt;p&gt;• Capture feedback from the user&lt;/p&gt;&lt;p&gt;• If issue reoccurs reopen incident&lt;/p&gt;</info>
+        <picklistValueName>Completed</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;• Support engineer should start investigation&lt;/p&gt;&lt;p&gt;• Update work notes regularly&lt;/p&gt;&lt;p&gt;• Communicate with requester if additional details required&lt;/p&gt;&lt;p&gt;• Check logs or system monitoring tools&lt;/p&gt;</info>
+        <picklistValueName>In Progress</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;• Capture clear incident subject&lt;/p&gt;&lt;p&gt;• Add complete description of the issue&lt;/p&gt;&lt;p&gt;• Select correct impact and urgency&lt;/p&gt;&lt;p&gt;• Verify reported method (Portal / Email / Phone)&lt;/p&gt;</info>
+        <picklistValueName>New</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;• Assign incident to correct support group&lt;/p&gt;&lt;p&gt;• Verify priority level&lt;/p&gt;&lt;p&gt;• Check if this incident is related to any parent incident&lt;/p&gt;&lt;p&gt;• If multiple users are impacted, mark as Major Incident&lt;/p&gt;</info>
+        <picklistValueName>Open</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;• Create a Problem record if issue is recurring&lt;/p&gt;&lt;p&gt;• Link the incident to problem management&lt;/p&gt;&lt;p&gt;• Document known error&lt;/p&gt;</info>
+        <picklistValueName>Problem Created</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>ResolutionSummary</fieldNames>
+        <fieldNames>ResolutionStatusCode</fieldNames>
+        <info>&lt;p&gt;• Document the resolution clearly&lt;/p&gt;&lt;p&gt;• Mention root cause if identified&lt;/p&gt;&lt;p&gt;• Inform requester that issue has been resolved&lt;/p&gt;</info>
+        <picklistValueName>Resolved</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>__MASTER__</recordTypeName>
+</PathAssistant>

@@ -1,0 +1,16 @@
+{
+  "required" : [ "channelId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "channelId" : {
+      "title" : "Slack Channel ID",
+      "description" : "The Slack Channel ID of the Slack Channel to be archived.",
+      "lightning:type" : "lightning__textType",
+      "einstein:description" : "The Slack Channel ID of the Slack Channel to be archived. A Slack Channel ID is represented as a string like C12345678. If a string like <#C123456789> is provided, extract a Slack Channel ID from it by removing the <# and > characters. For example, the Channel ID in <#C123456789> is C123456789.",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

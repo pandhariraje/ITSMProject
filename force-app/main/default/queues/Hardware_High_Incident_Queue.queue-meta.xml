@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesIncludeBosses>true</doesIncludeBosses>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Hardware High Incident Queue</name>
+    <queueMembers>
+        <users>
+            <user>pandhari.itsm@tw.com</user>
+            <user>sunil.metta-vffu@force.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>Incident_Routing</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>Incident</sobjectType>
+    </queueSobject>
+</Queue>

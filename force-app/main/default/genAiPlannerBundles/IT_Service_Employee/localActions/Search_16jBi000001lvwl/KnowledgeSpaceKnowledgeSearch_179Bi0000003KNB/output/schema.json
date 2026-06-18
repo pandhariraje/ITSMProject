@@ -1,0 +1,23 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Prompt" : {
+      "title" : "Search Results",
+      "description" : "Relevant knowledge assets found based on your search query",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "citationSources" : {
+      "title" : "Citation Sources",
+      "description" : "Sources of the knowledge assets used in the search results",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}
