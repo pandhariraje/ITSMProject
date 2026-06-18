@@ -40,7 +40,7 @@ start_agent agent_router:
               You MUST transition to the correct subagent immediately using transition actions based on the message and context:
               - Report an IT problem, bug, outage, or if they are confirming/providing details for an incident -> Transition to @subagent.incident_management
               - Request access, software, laptop, password reset, or if they are confirming/providing details for a service request -> Transition to @subagent.service_request_management
-              - Check the status of a ticket -> Transition to @subagent.ticket_status_tracking
+              - Check the status of a ticket, list user's tickets/incidents, or query ticket/incident counts -> Transition to @subagent.ticket_status_tracking
               - Search for articles/troubleshooting steps -> Transition to @subagent.knowledge_management
               - Escalate a ticket, alert manager, or if they are confirming/providing details for escalation -> Transition to @subagent.escalation_management
               - Out of scope requests -> Transition to @subagent.off_topic
@@ -196,14 +196,19 @@ subagent ticket_status_tracking:
     description: "Retrieve status details for an Incident or Service Request."
     reasoning:
         instructions: ->
-            | Help users check ticket status. Ask for the Ticket Number.
-              Call {!@actions.check_ticket_status} to fetch details.
-              Present status, ticket number, assigned team, priority, and last updated date to the user.
+            | Help users check ticket status.
+              - If the user wants to check the status of a specific ticket, ask for the Ticket Number if not provided, then call {!@actions.check_ticket_status} to fetch details.
+              - If the user wants to list all of their incidents, check open/closed incidents, or ask for counts, call {!@actions.list_user_incidents} (optionally specifying the status filter: "Open" or "Closed" if they ask specifically for open or closed incidents).
+              - When listing or counting incidents, present the details or the count clearly to the user.
+              Present status, ticket number, assigned team, priority, and last updated date when checking a specific ticket.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             check_ticket_status: @actions.check_ticket_status
                 description: "Look up ticket details by ticket number."
                 with ticketNumber = ...
+            list_user_incidents: @actions.list_user_incidents
+                description: "List incidents for the current user, optionally filtered by status."
+                with statusFilter = ...
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router when the ticket status has been provided and the user wants help with something else."
     actions:
@@ -253,6 +258,29 @@ subagent ticket_status_tracking:
                     label: "Last Updated Date"
                     description: "Date/time of last update"
                     filter_from_agent: False
+        list_user_incidents:
+            description: "Retrieve a list of incidents related to the current user, optionally filtered by status."
+            label: "List User Incidents"
+            target: "apex://ListUserIncidentsAction"
+            inputs:
+                statusFilter: string
+                    description: "Optional status filter (e.g. Open, Closed, New, In Progress)"
+                    label: "Status Filter"
+                    is_required: False
+            outputs:
+                isSuccess: boolean
+                    label: "Is Success"
+                    description: "Whether the query succeeded"
+                    filter_from_agent: True
+                errorMessage: string
+                    label: "Error Message"
+                    description: "Details of any error"
+                    filter_from_agent: False
+                incidents: list[object]
+                    label: "Incidents"
+                    description: "List of retrieved incidents"
+                    filter_from_agent: False
+                    complex_data_type_name: "@apexClassType/c__ListUserIncidentsAction$IncidentDetails"
 
 subagent knowledge_management:
     label: "Knowledge Management"

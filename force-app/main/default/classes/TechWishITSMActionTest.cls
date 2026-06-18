@@ -214,4 +214,66 @@ public class TechWishITSMActionTest {
         System.assert(tasks[0].Description.contains('Severe outage affecting multiple users.'));
         System.assertEquals('High', tasks[0].Priority);
     }
+
+    @isTest
+    static void testListUserIncidentsAction() {
+        // Create incidents for current user
+        Id currentUserId = UserInfo.getUserId();
+        
+        List<Incident> testIncidents = new List<Incident>{
+            new Incident(Subject = 'Open Incident 1', Status = 'New', ReportedById = currentUserId),
+            new Incident(Subject = 'Open Incident 2', Status = 'In Progress', ReportedById = currentUserId),
+            new Incident(Subject = 'Closed Incident 1', Status = 'Closed', ReportedById = currentUserId, ResolutionSummary = 'Fixed it', Closure_Notes__c = 'Fixed it'),
+            new Incident(Subject = 'Resolved Incident 1', Status = 'Resolved', ReportedById = currentUserId, ResolutionSummary = 'Solved it', Closure_Notes__c = 'Solved it')
+        };
+        insert testIncidents;
+
+        // Test 1: No filter (should return all 4)
+        ListUserIncidentsAction.Request reqAll = new ListUserIncidentsAction.Request();
+        reqAll.statusFilter = null;
+
+        // Test 2: 'Open' filter (should return 2 open incidents)
+        ListUserIncidentsAction.Request reqOpen = new ListUserIncidentsAction.Request();
+        reqOpen.statusFilter = 'Open';
+
+        // Test 3: 'Closed' filter (should return 2 closed/resolved incidents)
+        ListUserIncidentsAction.Request reqClosed = new ListUserIncidentsAction.Request();
+        reqClosed.statusFilter = 'Closed';
+
+        // Test 4: Specific status 'New' (should return 1 incident)
+        ListUserIncidentsAction.Request reqNew = new ListUserIncidentsAction.Request();
+        reqNew.statusFilter = 'New';
+
+        Test.startTest();
+        List<ListUserIncidentsAction.Result> results = ListUserIncidentsAction.listUserIncidents(
+            new List<ListUserIncidentsAction.Request>{reqAll, reqOpen, reqClosed, reqNew}
+        );
+        Test.stopTest();
+
+        System.assertEquals(4, results.size());
+        
+        // Assert all filter
+        System.assert(results[0].isSuccess);
+        System.assertEquals(4, results[0].incidents.size());
+
+        // Assert open filter (New and In Progress)
+        System.assert(results[1].isSuccess);
+        System.assertEquals(2, results[1].incidents.size());
+        for (ListUserIncidentsAction.IncidentDetails det : results[1].incidents) {
+            System.assertNotEquals('Closed', det.status);
+            System.assertNotEquals('Resolved', det.status);
+        }
+
+        // Assert closed filter (Closed and Resolved)
+        System.assert(results[2].isSuccess);
+        System.assertEquals(2, results[2].incidents.size());
+        for (ListUserIncidentsAction.IncidentDetails det : results[2].incidents) {
+            System.assert(det.status == 'Closed' || det.status == 'Resolved');
+        }
+
+        // Assert specific status 'New'
+        System.assert(results[3].isSuccess);
+        System.assertEquals(1, results[3].incidents.size());
+        System.assertEquals('New', results[3].incidents[0].status);
+    }
 }
