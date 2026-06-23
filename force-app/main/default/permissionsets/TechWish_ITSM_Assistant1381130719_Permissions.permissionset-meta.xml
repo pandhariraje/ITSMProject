@@ -5,15 +5,15 @@
     <label>TechWish_ITSM_Assistant1381130719 Permissions</label>
     <license>Einstein Agent</license>
     <classAccesses>
-        <apexClass>CreateIncidentAction</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CreateServiceRequestAction</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CheckTicketStatusAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ListUserIncidentsAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CreateIncidentAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

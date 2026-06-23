@@ -31,6 +31,9 @@ public with sharing class ListUserIncidentsAction {
 
         @InvocableVariable(label='Created Date')
         public Datetime createdDate;
+
+        @InvocableVariable(label='Incident ID')
+        public Id incidentId;
     }
 
     @InvocableMethod(
@@ -92,6 +95,7 @@ public with sharing class ListUserIncidentsAction {
 
                 for (Incident inc : queryResults) {
                     IncidentDetails det = new IncidentDetails();
+                    det.incidentId = inc.Id;
                     det.incidentNumber = inc.IncidentNumber;
                     det.subject = inc.Subject;
                     det.status = inc.Status;

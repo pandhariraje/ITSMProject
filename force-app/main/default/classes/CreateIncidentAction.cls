@@ -45,6 +45,17 @@ public with sharing class CreateIncidentAction {
         List<Result> results = new List<Result>();
         List<Incident> incidentsToInsert = new List<Incident>();
         
+        // Query queues for assignment
+        Set<String> queueNames = new Set<String>{
+            'Hardware_Major_Incident_Queue', 'Hardware_High_Incident_Queue', 'Hardware_Normal_Incident_Queue',
+            'Network_Major_Incident_Queue', 'Network_High_Incident_Queue', 'Network_Normal_Incident_Queue',
+            'Software_Major_Incident_Queue', 'Software_High_Incident_Queue', 'Software_Normal_Incident_Queue'
+        };
+        Map<String, Id> queueMap = new Map<String, Id>();
+        for (Group g : [SELECT Id, DeveloperName FROM Group WHERE Type = 'Queue' AND DeveloperName IN :queueNames WITH USER_MODE]) {
+            queueMap.put(g.DeveloperName, g.Id);
+        }
+
         // Resolve Requesters in bulk if emails are provided
         Set<String> emails = new Set<String>();
         for (Request req : requests) {
@@ -133,6 +144,39 @@ public with sharing class CreateIncidentAction {
             }
             inc.ReportedById = requesterId;
 
+            // 4. Determine dynamic queue assignment based on category and priority
+            String queueDevName = '';
+            if (resolvedCategory == 'Hardware') {
+                if (resolvedPriority == 'Critical') {
+                    queueDevName = 'Hardware_Major_Incident_Queue';
+                } else if (resolvedPriority == 'High') {
+                    queueDevName = 'Hardware_High_Incident_Queue';
+                } else {
+                    queueDevName = 'Hardware_Normal_Incident_Queue';
+                }
+            } else if (resolvedCategory == 'Network') {
+                if (resolvedPriority == 'Critical') {
+                    queueDevName = 'Network_Major_Incident_Queue';
+                } else if (resolvedPriority == 'High') {
+                    queueDevName = 'Network_High_Incident_Queue';
+                } else {
+                    queueDevName = 'Network_Normal_Incident_Queue';
+                }
+            } else { // Software (default)
+                if (resolvedPriority == 'Critical') {
+                    queueDevName = 'Software_Major_Incident_Queue';
+                } else if (resolvedPriority == 'High') {
+                    queueDevName = 'Software_High_Incident_Queue';
+                } else {
+                    queueDevName = 'Software_Normal_Incident_Queue';
+                }
+            }
+
+            if (queueMap.containsKey(queueDevName)) {
+                inc.OwnerId = queueMap.get(queueDevName);
+                inc.AssignedGroupId = queueMap.get(queueDevName);
+            }
+
             incidentsToInsert.add(inc);
         }
 
@@ -140,12 +184,22 @@ public with sharing class CreateIncidentAction {
             try {
                 // Insert under user mode to respect FLS/CRUD
                 SObjectAccessDecision decision = Security.stripInaccessible(AccessType.CREATABLE, incidentsToInsert);
-                insert decision.getRecords();
+                List<SObject> recordsToInsert = decision.getRecords();
+                if (recordsToInsert.isEmpty()) {
+                    for (Request req : requests) {
+                        Result r = new Result();
+                        r.isSuccess = false;
+                        r.errorMessage = 'You do not have permission to create Incidents.';
+                        results.add(r);
+                    }
+                    return results;
+                }
+                insert recordsToInsert;
                 
                 List<Incident> insertedIncidents = [
                     SELECT Id, IncidentNumber 
                     FROM Incident 
-                    WHERE Id IN :decision.getRecords()
+                    WHERE Id IN :recordsToInsert
                 ];
                 
                 Map<Id, String> incIdToNum = new Map<Id, String>();
@@ -154,7 +208,7 @@ public with sharing class CreateIncidentAction {
                 }
 
                 for (Integer idx = 0; idx < requests.size(); idx++) {
-                    Incident insertedInc = (Incident) decision.getRecords()[idx];
+                    Incident insertedInc = (Incident) recordsToInsert[idx];
                     Result r = new Result();
                     r.isSuccess = true;
                     r.incidentId = insertedInc.Id;

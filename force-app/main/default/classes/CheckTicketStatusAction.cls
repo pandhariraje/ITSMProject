@@ -32,6 +32,9 @@ public with sharing class CheckTicketStatusAction {
 
         @InvocableVariable(label='Last Updated Date' description='The date and time the ticket was last updated')
         public Datetime lastUpdatedDate;
+
+        @InvocableVariable(label='Ticket ID' description='The ID of the ticket record')
+        public Id ticketId;
     }
 
     @InvocableMethod(
@@ -106,6 +109,7 @@ public with sharing class CheckTicketStatusAction {
                 Incident inc = incidentMap.get(tNum);
                 r.found = true;
                 r.ticketType = 'Incident';
+                r.ticketId = inc.Id;
                 r.ticketNumber = inc.IncidentNumber;
                 r.status = inc.Status;
                 r.priority = inc.Priority;
@@ -119,6 +123,7 @@ public with sharing class CheckTicketStatusAction {
                 ServiceRequest sr = serviceRequestMap.get(tNum);
                 r.found = true;
                 r.ticketType = 'Service Request';
+                r.ticketId = sr.Id;
                 r.ticketNumber = sr.Name;
                 r.status = sr.Status;
                 r.priority = sr.Priority;

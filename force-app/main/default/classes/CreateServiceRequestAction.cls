@@ -44,12 +44,22 @@ public with sharing class CreateServiceRequestAction {
         if (!serviceRequestsToInsert.isEmpty()) {
             try {
                 SObjectAccessDecision decision = Security.stripInaccessible(AccessType.CREATABLE, serviceRequestsToInsert);
-                insert decision.getRecords();
+                List<SObject> recordsToInsert = decision.getRecords();
+                if (recordsToInsert.isEmpty()) {
+                    for (Request req : requests) {
+                        Result r = new Result();
+                        r.isSuccess = false;
+                        r.errorMessage = 'You do not have permission to create Service Requests.';
+                        results.add(r);
+                    }
+                    return results;
+                }
+                insert recordsToInsert;
 
                 List<ServiceRequest> insertedSRs = [
                     SELECT Id, Name 
                     FROM ServiceRequest 
-                    WHERE Id IN :decision.getRecords()
+                    WHERE Id IN :recordsToInsert
                 ];
 
                 Map<Id, String> srIdToNum = new Map<Id, String>();
@@ -58,7 +68,7 @@ public with sharing class CreateServiceRequestAction {
                 }
 
                 for (Integer idx = 0; idx < requests.size(); idx++) {
-                    ServiceRequest insertedSR = (ServiceRequest) decision.getRecords()[idx];
+                    ServiceRequest insertedSR = (ServiceRequest) recordsToInsert[idx];
                     Result r = new Result();
                     r.isSuccess = true;
                     r.serviceRequestId = insertedSR.Id;
