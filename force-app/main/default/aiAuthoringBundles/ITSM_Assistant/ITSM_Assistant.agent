@@ -343,9 +343,18 @@ subagent escalation_management:
     description: "Escalate critical incidents, route high-priority tickets, notify managers. Use this to gather ticket numbers, escalation reasons, and submit escalations."
     reasoning:
         instructions: ->
-            | Help the user escalate their critical incident. Collect the Ticket Number and Escalation Reason.
-              Once you have the details, you MUST immediately invoke {!@actions.escalate_incident}.
-              Present the confirmation response to the user.
+            | Help the user escalate their critical incident.
+              Follow this procedure:
+              - First, gather the following details:
+                - Ticket Number (required, format like INC-XXXXXXXX)
+                - Escalation Reason (optional)
+              - Once you have the Ticket Number:
+                - If the user has NOT yet explicitly confirmed the escalation (i.e. they haven't replied to a confirmation prompt with yes/confirm/proceed):
+                  Present a clear summary of all the gathered details and explicitly ask the user: "Would you like me to submit this escalation with these details?"
+                - If the user has just confirmed, says "yes", "confirm", "proceed", "go ahead", or requests to escalate the incident:
+                  Immediately invoke {!@actions.escalate_incident}. Do NOT ask for confirmation again and do NOT output any conversational text; immediately run the escalate_incident tool.
+
+              Once escalated, present the success response from the action to the user.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             escalate_incident: @actions.escalate_incident
