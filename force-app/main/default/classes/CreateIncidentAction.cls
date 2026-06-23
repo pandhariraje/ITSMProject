@@ -64,15 +64,17 @@ public with sharing class CreateIncidentAction {
             }
         }
 
-        Map<String, Id> emailToUserId = new Map<String, Id>();
+        Map<String, Id> emailToReporterId = new Map<String, Id>();
         if (!emails.isEmpty()) {
             for (User u : [SELECT Id, Email FROM User WHERE Email IN :emails AND IsActive = true WITH USER_MODE]) {
-                emailToUserId.put(u.Email.toLowerCase(), u.Id);
+                emailToReporterId.put(u.Email.toLowerCase(), u.Id);
             }
-            // Fallback to contacts if not user
-            for (Contact c : [SELECT Id, Email FROM Contact WHERE Email IN :emails WITH USER_MODE]) {
-                if (!emailToUserId.containsKey(c.Email.toLowerCase())) {
-                    emailToUserId.put(c.Email.toLowerCase(), c.Id);
+            // Fallback to contacts if not user - map to contact's AccountId
+            for (Contact c : [SELECT Id, Email, AccountId FROM Contact WHERE Email IN :emails WITH USER_MODE]) {
+                if (!emailToReporterId.containsKey(c.Email.toLowerCase())) {
+                    if (c.AccountId != null) {
+                        emailToReporterId.put(c.Email.toLowerCase(), c.AccountId);
+                    }
                 }
             }
         }
@@ -137,10 +139,17 @@ public with sharing class CreateIncidentAction {
             }
             inc.Impact = resolvedImpact;
 
+            // 2d. Auto-Type Assignment (Recurring detection)
+            String resolvedType = 'Normal'; // Default
+            if (textToAnalyze.contains('recurring') || textToAnalyze.contains('repeat') || textToAnalyze.contains('multiple times') || textToAnalyze.contains('frequent') || textToAnalyze.contains('again and again')) {
+                resolvedType = 'Recurring';
+            }
+            inc.Type = resolvedType;
+
             // 3. Resolve Requester
             Id requesterId = UserInfo.getUserId(); // Default
-            if (String.isNotBlank(req.requesterEmail) && emailToUserId.containsKey(req.requesterEmail.toLowerCase())) {
-                requesterId = emailToUserId.get(req.requesterEmail.toLowerCase());
+            if (String.isNotBlank(req.requesterEmail) && emailToReporterId.containsKey(req.requesterEmail.toLowerCase())) {
+                requesterId = emailToReporterId.get(req.requesterEmail.toLowerCase());
             }
             inc.ReportedById = requesterId;
 

@@ -7,11 +7,11 @@ The `ITSM_Assistant` is an employee agent designed to help internal employees re
 ## Behavioral Intent
 
 - **Identity & Tone**: TechWish ITSM Assistant, professional and helpful.
-- **Incident Creation**: Collects Subject, Description, Priority, Urgency, Impact, and optional Category. Requests user confirmation before creating.
-- **Service Request Creation**: Collects Subject and Description. Requests user confirmation before creating.
-- **Ticket Status Tracking**: Checks status of Incidents/Service Requests by ticket number. Lists or counts user incidents if no ticket number is provided.
+- **Incident Creation**: Collects Subject, Description, Priority, Urgency, Impact, and optional Category. Presents a summary and requests user confirmation before creating. Once created, displays details with a markdown hyperlink (`/lightning/r/Incident/<Id>/view`).
+- **Service Request Creation**: Collects Subject and Description. Presents a summary and requests user confirmation before creating. Once created, displays details with a markdown hyperlink (`/lightning/r/ServiceRequest/<Id>/view`).
+- **Ticket Status Tracking**: Checks status of Incidents/Service Requests by ticket number. Lists or counts user incidents if no ticket number is provided. Displays clickable links to records.
 - **Knowledge Search**: Searches knowledge base to recommend troubleshooting steps first.
-- **Escalation**: Escalates critical incidents by ticket number with reason.
+- **Escalation**: Escalates critical incidents by ticket number with reason, dynamically routing them to category-specific major queues.
 - **Out of Scope**: Refuses general questions or overrides. Redirects to IT support capabilities.
 
 ## Subagent Map
@@ -50,7 +50,7 @@ No custom session variables are persisted.
 
 ### list_user_incidents (ticket_status_tracking)
 - **Target:** `apex://ListUserIncidentsAction`
-- **Backing Status:** NEEDS IMPLEMENTATION
+- **Backing Status:** EXISTS
 
 ### search_knowledge (knowledge_management)
 - **Target:** `apex://SearchKnowledgeAction`

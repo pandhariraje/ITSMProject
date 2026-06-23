@@ -49,20 +49,60 @@ public class TechWishITSMActionTest {
         System.assert(results[0].isSuccess, 'Req1 should succeed');
         System.assertNotEquals(null, results[0].incidentId, 'Req1 incidentId should not be null');
         System.assertNotEquals(null, results[0].incidentNumber, 'Req1 incidentNumber should not be null');
-        Incident inc1 = [SELECT Category, Priority, ReportedById FROM Incident WHERE Id = :results[0].incidentId];
+        Incident inc1 = [SELECT Category, Priority, ReportedById, OwnerId, AssignedGroupId FROM Incident WHERE Id = :results[0].incidentId];
         System.assertEquals('Network', inc1.Category, 'Category should be Network');
         System.assertEquals('Critical', inc1.Priority, 'Priority should be Critical');
+        Id netMajorQueueId = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'Network_Major_Incident_Queue' LIMIT 1].Id;
+        System.assertEquals(netMajorQueueId, inc1.OwnerId, 'Owner should be Network Major Queue');
+        System.assertEquals(netMajorQueueId, inc1.AssignedGroupId, 'Assigned Group should be Network Major Queue');
 
         // Assert req2 (Printer / Low override)
         System.assert(results[1].isSuccess, 'Req2 should succeed');
-        Incident inc2 = [SELECT Category, Priority FROM Incident WHERE Id = :results[1].incidentId];
+        Incident inc2 = [SELECT Category, Priority, OwnerId, AssignedGroupId FROM Incident WHERE Id = :results[1].incidentId];
         System.assertEquals('Hardware', inc2.Category, 'Category should be Hardware override');
         System.assertEquals('Low', inc2.Priority, 'Priority should be Low override');
+        Id hwNormalQueueId = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'Hardware_Normal_Incident_Queue' LIMIT 1].Id;
+        System.assertEquals(hwNormalQueueId, inc2.OwnerId, 'Owner should be Hardware Normal Queue');
+        System.assertEquals(hwNormalQueueId, inc2.AssignedGroupId, 'Assigned Group should be Hardware Normal Queue');
 
         // Assert req3 (Requester Email resolution)
         System.assert(results[2].isSuccess, 'Req3 should succeed');
         Incident inc3 = [SELECT Category, Priority, ReportedById FROM Incident WHERE Id = :results[2].incidentId];
         System.assertEquals(testUser.Id, inc3.ReportedById, 'ReportedById should match the test user');
+    }
+
+    @isTest
+    static void testCreateIncidentActionWithContact() {
+        // Create an Account (Industry is required by AccountBeforeInsertIndustryRequired trigger)
+        Account acc = new Account(Name = 'Test Tech Account', Industry = 'Technology');
+        insert acc;
+
+        // Create a Contact
+        Contact c = new Contact(
+            LastName = 'Biradar',
+            Email = 'pandharirb@gmail.com',
+            AccountId = acc.Id
+        );
+        insert c;
+
+        CreateIncidentAction.Request req = new CreateIncidentAction.Request();
+        req.subject = 'Printer not working';
+        req.description = 'Hardware issue with the printer button.';
+        req.requesterEmail = 'pandharirb@gmail.com';
+
+        Test.startTest();
+        List<CreateIncidentAction.Result> results = CreateIncidentAction.createIncident(
+            new List<CreateIncidentAction.Request>{req}
+        );
+        Test.stopTest();
+
+        System.assertEquals(1, results.size(), 'Should return 1 result');
+        System.assert(results[0].isSuccess, 'Should succeed');
+        System.assertNotEquals(null, results[0].incidentId, 'Incident ID should not be null');
+
+        Incident inc = [SELECT Category, Priority, ReportedById FROM Incident WHERE Id = :results[0].incidentId];
+        System.assertEquals('Hardware', inc.Category, 'Category should be Hardware');
+        System.assertEquals(acc.Id, inc.ReportedById, 'ReportedById should match the Contact\'s Account ID');
     }
 
     @isTest
@@ -133,6 +173,7 @@ public class TechWishITSMActionTest {
         System.assert(results[0].isSuccess);
         System.assert(results[0].found);
         System.assertEquals('Incident', results[0].ticketType);
+        System.assertEquals(inc.Id, results[0].ticketId);
         System.assertEquals('New', results[0].status);
         System.assertEquals('Medium', results[0].priority);
 
@@ -140,6 +181,7 @@ public class TechWishITSMActionTest {
         System.assert(results[1].isSuccess);
         System.assert(results[1].found);
         System.assertEquals('Service Request', results[1].ticketType);
+        System.assertEquals(sr.Id, results[1].ticketId);
         System.assertEquals('Submitted', results[1].status);
 
         // Assert invalid ticket
@@ -203,9 +245,10 @@ public class TechWishITSMActionTest {
         System.assert(results[0].isSuccess);
         System.assertNotEquals(null, results[0].successMessage);
 
-        Incident updatedInc = [SELECT Status, Priority, OwnerId FROM Incident WHERE Id = :inc.Id];
+        Incident updatedInc = [SELECT Status, Priority, OwnerId, AssignedGroupId FROM Incident WHERE Id = :inc.Id];
         System.assertEquals('Escalated', updatedInc.Status);
         System.assertEquals('Critical', updatedInc.Priority);
+        System.assertEquals(updatedInc.OwnerId, updatedInc.AssignedGroupId);
 
         // Verify task creation
         List<Task> tasks = [SELECT Subject, Description, Priority, Status FROM Task WHERE WhatId = :inc.Id];
@@ -255,6 +298,9 @@ public class TechWishITSMActionTest {
         // Assert all filter
         System.assert(results[0].isSuccess);
         System.assertEquals(4, results[0].incidents.size());
+        for (ListUserIncidentsAction.IncidentDetails det : results[0].incidents) {
+            System.assertNotEquals(null, det.incidentId);
+        }
 
         // Assert open filter (New and In Progress)
         System.assert(results[1].isSuccess);

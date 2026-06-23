@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This agent helps employees at an organization quickly resolve their IT issues, collaborate easily with the IT help desk, and manage their own incidents and service requests. Use this agent to simplify the experience of your IT employees.</description>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>escalation_management_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>incident_management_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>knowledge_management_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>off_topic_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>service_request_management_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ticket_status_tracking_16jBi00000252jB</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>ticket_status_tracking_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Retrieve status details for an Incident or Service Request.</description>
+        <developerName>ticket_status_tracking_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uN</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uN</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>list_user_incidents_179Bi00000040uN</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>check_ticket_status_179Bi00000040uN</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>check_ticket_status_179Bi00000040uN</fullName>
+            <description>Check the status of an existing Incident or Service Request.</description>
+            <developerName>check_ticket_status_179Bi00000040uN</developerName>
+            <invocationTarget>CheckTicketStatusAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>check_ticket_status</localDeveloperName>
+            <masterLabel>Check Ticket Status</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>list_user_incidents_179Bi00000040uN</fullName>
+            <description>Retrieve a list of incidents related to the current user, optionally filtered by status.</description>
+            <developerName>list_user_incidents_179Bi00000040uN</developerName>
+            <invocationTarget>ListUserIncidentsAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>list_user_incidents</localDeveloperName>
+            <masterLabel>List User Incidents</masterLabel>
+        </localActions>
+        <localDeveloperName>ticket_status_tracking</localDeveloperName>
+        <masterLabel>Ticket Status Tracking</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>escalation_management_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Escalate critical incidents, route high-priority tickets, notify managers. Use this to gather ticket numbers, escalation reasons, and submit escalations.</description>
+        <developerName>escalation_management_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uM</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uM</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>escalate_incident_179Bi00000040uM</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>escalate_incident_179Bi00000040uM</fullName>
+            <description>Escalates an existing Incident to Critical priority, routes to Queue, and logs manager task.</description>
+            <developerName>escalate_incident_179Bi00000040uM</developerName>
+            <invocationTarget>EscalateIncidentAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>escalate_incident</localDeveloperName>
+            <masterLabel>Escalate Incident</masterLabel>
+        </localActions>
+        <localDeveloperName>escalation_management</localDeveloperName>
+        <masterLabel>Escalation Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>incident_management_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Create Incident records for VPN, login, email, software, printer, hardware, or network issues. Use this to collect details, confirm incident info, and submit the ticket.</description>
+        <developerName>incident_management_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uL</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uL</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>create_incident_179Bi00000040uL</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>create_incident_179Bi00000040uL</fullName>
+            <description>Creates an Incident record with automated categorization and priority assignment.</description>
+            <developerName>create_incident_179Bi00000040uL</developerName>
+            <invocationTarget>CreateIncidentAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>create_incident</localDeveloperName>
+            <masterLabel>Create Incident</masterLabel>
+        </localActions>
+        <localDeveloperName>incident_management</localDeveloperName>
+        <masterLabel>Incident Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>service_request_management_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Create Service Request records for software, access, password reset, VPN access, new laptop, or email accounts. Use this to collect details, confirm request info, and submit the request.</description>
+        <developerName>service_request_management_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uK</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uK</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>create_service_request_179Bi00000040uK</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>create_service_request_179Bi00000040uK</fullName>
+            <description>Creates a ServiceRequest record in Salesforce.</description>
+            <developerName>create_service_request_179Bi00000040uK</developerName>
+            <invocationTarget>CreateServiceRequestAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>create_service_request</localDeveloperName>
+            <masterLabel>Create Service Request</masterLabel>
+        </localActions>
+        <localDeveloperName>service_request_management</localDeveloperName>
+        <masterLabel>Service Request Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>knowledge_management_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Search knowledge articles to troubleshoot common IT questions.</description>
+        <developerName>knowledge_management_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uJ</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uJ</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>search_knowledge_179Bi00000040uJ</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>search_knowledge_179Bi00000040uJ</fullName>
+            <description>Searches knowledge base articles using SOSL.</description>
+            <developerName>search_knowledge_179Bi00000040uJ</developerName>
+            <invocationTarget>SearchKnowledgeAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>search_knowledge</localDeveloperName>
+            <masterLabel>Search Knowledge</masterLabel>
+        </localActions>
+        <localDeveloperName>knowledge_management</localDeveloperName>
+        <masterLabel>Knowledge Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+        <developerName>ambiguous_question_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uI</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uI</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Ambiguous Question</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the employee and route to the correct subagent based on their IT need.</description>
+        <developerName>agent_router_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uH</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uH</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>off_topic_16jBi00000252jB</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+        <developerName>off_topic_16jBi00000252jB</developerName>
+        <genAiPluginInstructions>
+            <description>You are the TechWish ITSM Assistant, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management (VPN, login, email, software, printer, hardware, network issues)
+- Service Request Management (software installation, access requests, password resets, VPN access, new laptop, email accounts)
+- Knowledge Article Search &amp; Troubleshooting
+- Ticket Status Tracking
+- Escalation Management
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm ticket details with users before record creation. Recommend troubleshooting steps first before logging tickets.
+messages:
+welcome: &quot;Hi, I&apos;m the TechWish ITSM Assistant. How can I help you today?&quot;
+error: &quot;Sorry, it looks like something has gone wrong.&quot;</description>
+            <developerName>instruction0_179Bi00000040uO</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000040uO</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>ITSM Assistant</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

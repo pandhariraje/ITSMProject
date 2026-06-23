@@ -52,7 +52,7 @@ public with sharing class EscalateIncidentAction {
             SELECT Id, DeveloperName 
             FROM Group 
             WHERE Type = 'Queue' 
-            AND DeveloperName IN ('High_Priority_Incidents_Queue', 'Software_Major_Incident_Queue', 'Major_Incident_Queue')
+            AND DeveloperName IN ('High_Priority_Incidents_Queue', 'Software_Major_Incident_Queue', 'Major_Incident_Queue', 'Hardware_Major_Incident_Queue', 'Network_Major_Incident_Queue')
             WITH USER_MODE
         ];
         for (Group q : queues) {
@@ -79,15 +79,22 @@ public with sharing class EscalateIncidentAction {
                 if (inc.Category == 'Software' && queueMap.containsKey('Software_Major_Incident_Queue')) {
                     targetQueueId = queueMap.get('Software_Major_Incident_Queue');
                     assignedQueueName = 'Software Major Incident Queue';
+                } else if (inc.Category == 'Network' && queueMap.containsKey('Network_Major_Incident_Queue')) {
+                    targetQueueId = queueMap.get('Network_Major_Incident_Queue');
+                    assignedQueueName = 'Network Major Incident Queue';
                 } else if (inc.Category == 'Network' && queueMap.containsKey('Major_Incident_Queue')) {
                     targetQueueId = queueMap.get('Major_Incident_Queue');
                     assignedQueueName = 'Major Incident Queue';
+                } else if (inc.Category == 'Hardware' && queueMap.containsKey('Hardware_Major_Incident_Queue')) {
+                    targetQueueId = queueMap.get('Hardware_Major_Incident_Queue');
+                    assignedQueueName = 'Hardware Major Incident Queue';
                 } else if (queueMap.containsKey('High_Priority_Incidents_Queue')) {
                     targetQueueId = queueMap.get('High_Priority_Incidents_Queue');
                 }
 
                 if (targetQueueId != null) {
                     inc.OwnerId = targetQueueId;
+                    inc.AssignedGroupId = targetQueueId;
                 }
 
                 incidentsToUpdate.add(inc);

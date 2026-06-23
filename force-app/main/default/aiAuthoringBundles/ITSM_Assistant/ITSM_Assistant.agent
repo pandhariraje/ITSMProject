@@ -63,18 +63,23 @@ subagent incident_management:
     description: "Create Incident records for VPN, login, email, software, printer, hardware, or network issues. Use this to collect details, confirm incident info, and submit the ticket."
     reasoning:
         instructions: ->
-            | You help users report IT issues. Before calling {!@actions.create_incident}, gather:
-              - Subject (short summary of the issue)
-              - Description (detailed problem description)
-              - Category (optional, select from: Network, Hardware, Software)
-              - Priority (required, select from: Low, Medium, High, Critical)
-              - Urgency (required, select from: Low, Medium, High)
-              - Impact (required, select from: Low, Medium, High)
-              - Requester Email (optional)
+            | You help users report IT issues.
+              Follow this procedure:
+              - First, gather the following details:
+                - Subject (short summary of the issue)
+                - Description (detailed problem description)
+                - Category (optional, select from: Network, Hardware, Software)
+                - Priority (required, select from: Low, Medium, High, Critical)
+                - Urgency (required, select from: Low, Medium, High)
+                - Impact (required, select from: Low, Medium, High)
+                - Requester Email (optional)
+              - Once all details are gathered:
+                - If the user has NOT yet explicitly confirmed the creation of the incident (i.e. they haven't replied to a confirmation prompt with yes/confirm/proceed):
+                  Present a clear summary of all the gathered details and explicitly ask the user: "Would you like me to submit this incident with these details?"
+                - If the user has just confirmed, says "yes", "confirm", "proceed", "go ahead", or requests to create/submit the incident:
+                  Immediately invoke {!@actions.create_incident}. Do NOT ask for confirmation again and do NOT output any conversational text; immediately run the create_incident tool.
               
-              Confirm the incident details with the user before submitting.
-              Once the user confirms the details, you MUST immediately invoke {!@actions.create_incident}. Do NOT respond with text saying you will submit it. You MUST call the create_incident tool.
-              Once created, tell the user the created Incident ID and Incident Number.
+              Once created, present the created Incident details, including a Markdown hyperlink to open the record, formatted exactly as: `[View Incident <IncidentNumber>](/lightning/r/Incident/<IncidentId>/view)`.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             create_incident: @actions.create_incident
@@ -146,10 +151,16 @@ subagent service_request_management:
     description: "Create Service Request records for software, access, password reset, VPN access, new laptop, or email accounts. Use this to collect details, confirm request info, and submit the request."
     reasoning:
         instructions: ->
-            | Help users submit Service Requests. Ask for the Subject and Description.
-              Before calling {!@actions.create_service_request}, verify you have all details and confirm them with the user.
-              Once the user confirms the details, you MUST immediately invoke {!@actions.create_service_request}.
-              Once created, tell the user the Service Request ID and Number.
+            | Help users submit Service Requests.
+              Follow this procedure:
+              - First, gather the Subject and Description.
+              - Once both details are gathered:
+                - If the user has NOT yet explicitly confirmed the creation of the service request:
+                  Present a summary of the details and explicitly ask the user: "Would you like me to submit this service request?"
+                - If the user has just confirmed, says "yes", "confirm", "proceed", "go ahead", or requests to submit the request:
+                  Immediately invoke {!@actions.create_service_request}. Do NOT ask for confirmation again and do NOT output any conversational text; immediately run the create_service_request tool.
+              
+              Once created, present the created Service Request details, including a Markdown hyperlink to open the record, formatted exactly as: `[View Service Request <ServiceRequestNumber>](/lightning/r/ServiceRequest/<ServiceRequestId>/view)`.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             create_service_request: @actions.create_service_request
@@ -199,8 +210,8 @@ subagent ticket_status_tracking:
             | Help users check ticket status.
               - If the user wants to check the status of a specific ticket, ask for the Ticket Number if not provided, then call {!@actions.check_ticket_status} to fetch details.
               - If the user wants to list all of their incidents, check open/closed incidents, or ask for counts, call {!@actions.list_user_incidents} (optionally specifying the status filter: "Open" or "Closed" if they ask specifically for open or closed incidents).
-              - When listing or counting incidents, present the details or the count clearly to the user.
-              Present status, ticket number, assigned team, priority, and last updated date when checking a specific ticket.
+              - When listing incidents, present each incident with its Incident Number formatted as a Markdown hyperlink: `[<IncidentNumber>](/lightning/r/Incident/<IncidentId>/view)`.
+              - When checking a specific ticket, present the status, ticket number (formatted as a Markdown hyperlink: `[View Ticket <TicketNumber>](/lightning/r/<TicketType>/<TicketId>/view)`), assigned team, priority, and last updated date.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             check_ticket_status: @actions.check_ticket_status
@@ -258,6 +269,11 @@ subagent ticket_status_tracking:
                     label: "Last Updated Date"
                     description: "Date/time of last update"
                     filter_from_agent: False
+                ticketId: object
+                    label: "Ticket ID"
+                    description: "The record ID of the ticket"
+                    filter_from_agent: False
+                    complex_data_type_name: "lightning__recordIdType"
         list_user_incidents:
             description: "Retrieve a list of incidents related to the current user, optionally filtered by status."
             label: "List User Incidents"
