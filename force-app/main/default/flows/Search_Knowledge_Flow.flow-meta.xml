@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Search Knowledge Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Search Knowledge Flow</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Knowledge_Articles</name>
+        <label>Get Knowledge Articles</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Title</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>searchQuery</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Summary</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>searchQuery</elementReference>
+            </value>
+        </filters>
+        <object>Knowledge__kav</object>
+        <outputReference>articles</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Title</queriedFields>
+        <queriedFields>Summary</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Knowledge_Articles</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>articles</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Knowledge__kav</objectType>
+    </variables>
+    <variables>
+        <name>searchQuery</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

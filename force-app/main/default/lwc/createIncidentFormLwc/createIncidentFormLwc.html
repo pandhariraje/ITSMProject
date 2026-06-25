@@ -1,0 +1,180 @@
+<template>
+    <div class="form-card">
+        <!-- Success State -->
+        <template if:true={isSuccess}>
+            <div class="success-container">
+                <div class="success-icon">✔️</div>
+                <h2>Incident Logged</h2>
+                <p class="success-message">Incident <strong>{incidentNumber}</strong> has been created successfully.</p>
+                <div class="success-actions">
+                    <a href={incidentRecordUrl} target="_blank" class="view-link-btn">View Incident</a>
+                </div>
+            </div>
+        </template>
+
+        <!-- Form Content -->
+        <template if:false={isSuccess}>
+            <header class="form-header">
+                <h3>Report New Incident</h3>
+                <p>Please enter the details below to log your technical issue.</p>
+            </header>
+
+            <main class="form-body">
+                <!-- Spinner -->
+                <template if:true={isLoading}>
+                    <div class="spinner-container">
+                        <lightning-spinner alternative-text="Submitting Incident..." size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+                <!-- Error Notification -->
+                <template if:true={customError}>
+                    <div class="error-banner">
+                        <div class="error-icon">⚠️</div>
+                        <div class="error-message">
+                            <strong>Submission failed:</strong> {customError}
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Form Content -->
+                <div class="form-grid">
+                    <!-- Subject -->
+                    <div class="grid-col-12">
+                        <lightning-input 
+                            label="Subject" 
+                            value={subject} 
+                            data-name="subject"
+                            onchange={handleFieldChange}
+                            required
+                            message-when-value-missing="Subject is required"
+                            class="custom-input">
+                        </lightning-input>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="grid-col-12">
+                        <lightning-textarea 
+                            label="Detailed Description (Optional)" 
+                            value={description} 
+                            data-name="description"
+                            onchange={handleFieldChange}
+                            class="custom-input">
+                        </lightning-textarea>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="grid-col-6">
+                        <lightning-combobox 
+                            label="Category (Optional)" 
+                            value={category} 
+                            options={categoryOptions}
+                            data-name="category"
+                            onchange={handleFieldChange}
+                            class="custom-input">
+                        </lightning-combobox>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="grid-col-6">
+                        <lightning-combobox 
+                            label="Status" 
+                            value={status} 
+                            options={statusOptions}
+                            data-name="status"
+                            onchange={handleFieldChange}
+                            required
+                            message-when-value-missing="Status is required"
+                            class="custom-input">
+                        </lightning-combobox>
+                    </div>
+
+                    <!-- Urgency -->
+                    <div class="grid-col-4">
+                        <lightning-combobox 
+                            label="Urgency" 
+                            value={urgency} 
+                            options={urgencyOptions}
+                            data-name="urgency"
+                            onchange={handleFieldChange}
+                            required
+                            message-when-value-missing="Urgency is required"
+                            class="custom-input">
+                        </lightning-combobox>
+                    </div>
+
+                    <!-- Impact -->
+                    <div class="grid-col-4">
+                        <lightning-combobox 
+                            label="Impact" 
+                            value={impact} 
+                            options={impactOptions}
+                            data-name="impact"
+                            onchange={handleFieldChange}
+                            required
+                            message-when-value-missing="Impact is required"
+                            class="custom-input">
+                        </lightning-combobox>
+                    </div>
+
+                    <!-- Priority -->
+                    <div class="grid-col-4">
+                        <lightning-combobox 
+                            label="Priority" 
+                            value={priority} 
+                            options={priorityOptions}
+                            data-name="priority"
+                            onchange={handleFieldChange}
+                            required
+                            message-when-value-missing="Priority is required"
+                            class="custom-input">
+                        </lightning-combobox>
+                    </div>
+
+                    <!-- Requester Email -->
+                    <div class="grid-col-12">
+                        <lightning-input 
+                            type="email"
+                            label="Requester Email (Optional)" 
+                            value={requesterEmail} 
+                            data-name="requesterEmail"
+                            onchange={handleFieldChange}
+                            class="custom-input">
+                        </lightning-input>
+                    </div>
+
+                    <!-- SubCategory -->
+                    <div class="grid-col-6">
+                        <lightning-input 
+                            label="Subcategory (Optional)" 
+                            value={subCategory} 
+                            data-name="subCategory"
+                            onchange={handleFieldChange}
+                            class="custom-input">
+                        </lightning-input>
+                    </div>
+
+                    <!-- Type -->
+                    <div class="grid-col-6">
+                        <lightning-input 
+                            label="Type (Optional)" 
+                            value={type} 
+                            data-name="type"
+                            onchange={handleFieldChange}
+                            class="custom-input">
+                        </lightning-input>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="form-footer">
+                <button 
+                    class="submit-button" 
+                    onclick={handleSubmit} 
+                    disabled={isLoading}>
+                    Submit Incident
+                </button>
+            </footer>
+        </template>
+    </div>
+</template>

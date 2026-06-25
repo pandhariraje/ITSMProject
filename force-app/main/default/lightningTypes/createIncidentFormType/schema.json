@@ -1,0 +1,5 @@
+{
+  "title": "Create Incident Form Type",
+  "description": "Custom lightning type representing the incident form wrapper returning from Apex.",
+  "lightning:type": "@apexClassType/c__CopilotShowIncidentFormAction$IncidentFormWrapper"
+}

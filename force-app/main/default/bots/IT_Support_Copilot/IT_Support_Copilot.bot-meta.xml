@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>true</agentDSLEnabled>
+    <agentType>AgentforceEmployeeAgent</agentType>
+    <botMlDomain>
+        <label>IT Support Copilot</label>
+        <name>IT_Support_Copilot</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <description>An IT Help Desk assistant capable of handling incidents, service requests, knowledge search, ticket tracking, and escalation.</description>
+    <label>IT Support Copilot</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>InternalCopilot</type>
+</Bot>
