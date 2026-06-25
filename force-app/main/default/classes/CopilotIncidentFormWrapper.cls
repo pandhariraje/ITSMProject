@@ -21,7 +21,7 @@ global class CopilotIncidentFormWrapper {
 
     @AuraEnabled
     @InvocableVariable(label='Status' description='Status of the incident')
-    global String status;
+    global String status = 'New';
 
     @AuraEnabled
     @InvocableVariable(label='Priority' description='Priority of the incident')
