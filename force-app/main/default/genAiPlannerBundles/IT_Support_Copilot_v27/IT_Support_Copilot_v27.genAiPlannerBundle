@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>An IT Help Desk assistant capable of handling incidents, service requests, knowledge search, ticket tracking, and escalation.</description>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>escalation_management_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>incident_management_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>knowledge_management_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>off_topic_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>service_request_management_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ticket_status_tracking_16jBi0000025h1h</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>off_topic_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+        <developerName>off_topic_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045nb</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045nb</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>service_request_management_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Create Service Request records for access requests, software installation, and password resets. Collects details, confirms details, and creates the ticket.</description>
+        <developerName>service_request_management_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045na</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045na</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>create_service_request_179Bi00000045na</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>create_service_request_179Bi00000045na</fullName>
+            <description>Creates a ServiceRequest record in Salesforce.</description>
+            <developerName>create_service_request_179Bi00000045na</developerName>
+            <invocationTarget>CopilotCreateServiceRequestAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>create_service_request</localDeveloperName>
+            <masterLabel>Create Service Request</masterLabel>
+        </localActions>
+        <localDeveloperName>service_request_management</localDeveloperName>
+        <masterLabel>Service Request Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>knowledge_management_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Search knowledge articles to troubleshoot common IT questions. Recommend articles before ticket creation.</description>
+        <developerName>knowledge_management_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045nZ</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045nZ</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>search_knowledge_179Bi00000045nZ</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>search_knowledge_179Bi00000045nZ</fullName>
+            <description>Searches knowledge base articles using SOSL.</description>
+            <developerName>search_knowledge_179Bi00000045nZ</developerName>
+            <invocationTarget>CopilotSearchKnowledgeAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>search_knowledge</localDeveloperName>
+            <masterLabel>Search Knowledge</masterLabel>
+        </localActions>
+        <localDeveloperName>knowledge_management</localDeveloperName>
+        <masterLabel>Knowledge Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the employee and route to the correct subagent based on their IT need.</description>
+        <developerName>agent_router_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045nY</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045nY</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>escalation_management_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Escalate unresolved or critical tickets by updating priority and notifying support teams.</description>
+        <developerName>escalation_management_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045nX</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045nX</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>escalate_ticket_179Bi00000045nX</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>escalate_ticket_179Bi00000045nX</fullName>
+            <description>Escalates a ticket to Critical priority, routes to Queue, and logs task.</description>
+            <developerName>escalate_ticket_179Bi00000045nX</developerName>
+            <invocationTarget>CopilotEscalateTicketAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>escalate_ticket</localDeveloperName>
+            <masterLabel>Escalate Ticket</masterLabel>
+        </localActions>
+        <localDeveloperName>escalation_management</localDeveloperName>
+        <masterLabel>Escalation Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ticket_status_tracking_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Check the status of an existing Incident or Service Request using a Ticket Number.</description>
+        <developerName>ticket_status_tracking_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045nW</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045nW</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>check_ticket_status_179Bi00000045nW</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>check_ticket_status_179Bi00000045nW</fullName>
+            <description>Check the status of an existing Incident or Service Request.</description>
+            <developerName>check_ticket_status_179Bi00000045nW</developerName>
+            <invocationTarget>CopilotCheckTicketStatusAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>check_ticket_status</localDeveloperName>
+            <masterLabel>Check Ticket Status</masterLabel>
+        </localActions>
+        <localDeveloperName>ticket_status_tracking</localDeveloperName>
+        <masterLabel>Ticket Status Tracking</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+        <developerName>ambiguous_question_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045nV</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045nV</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Ambiguous Question</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>incident_management_16jBi0000025h1h</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident.</description>
+        <developerName>incident_management_16jBi0000025h1h</developerName>
+        <genAiPluginInstructions>
+            <description>You are the IT Support Copilot, an IT Service Management agent for internal employees.
+Your responsibilities include:
+- Incident Management: Handle technical issues like VPN issues, login failures, network issues, and application errors.
+- Service Request Management: Handle requests for software installation, access requests, and password resets.
+- Knowledge Search: Search knowledge base articles to help troubleshoot common IT questions.
+- Ticket Status Tracking: Check ticket status of incidents and service requests by ticket number.
+- Escalation Management: Escalate unresolved or critical tickets.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records. Recommend troubleshooting steps from knowledge articles before suggesting case logging.</description>
+            <developerName>instruction0_179Bi00000045nc</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000045nc</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>show_incident_form_179Bi00000045nc</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>show_incident_form_179Bi00000045nc</fullName>
+            <description>Presents the Create Incident form popup to the user to collect details.</description>
+            <developerName>show_incident_form_179Bi00000045nc</developerName>
+            <invocationTarget>CopilotShowIncidentFormAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>show_incident_form</localDeveloperName>
+            <masterLabel>Show Create Incident Form</masterLabel>
+        </localActions>
+        <localDeveloperName>incident_management</localDeveloperName>
+        <masterLabel>Incident Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>IT Support Copilot</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

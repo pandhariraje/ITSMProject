@@ -19,6 +19,10 @@ config:
     description: "An IT Help Desk assistant capable of handling incidents, service requests, knowledge search, ticket tracking, and escalation."
     developer_name: "IT_Support_Copilot"
 
+variables:
+    incident_created: mutable boolean = False
+        description: "Indicates whether the incident has been successfully created via the form"
+
 language:
     default_locale: "en_US"
     additional_locales: ""
@@ -61,6 +65,10 @@ subagent incident_management:
     description: "Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident."
     reasoning:
         instructions: ->
+            if @variables.incident_created == True:
+                set @variables.incident_created = False
+                transition to @subagent.agent_router
+
             | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
               Do NOT ask for any details, fields, or confirmation conversationally.
               Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
@@ -70,6 +78,7 @@ subagent incident_management:
             show_incident_form: @actions.show_incident_form
                 description: "Displays the Incident Creation form inline to the employee."
                 with incidentForm = ...
+                set @variables.incident_created = True
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router when the incident has been created and the user wants help with something else."
     actions:
