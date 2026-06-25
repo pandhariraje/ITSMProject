@@ -134,6 +134,24 @@ export default class CreateIncidentFormLwc extends LightningElement {
                 this.incidentNumber = result.incidentNumber;
                 this.isSuccess = true;
                 this.errorMessage = '';
+
+                // Dispatch Custom Event valuechange to notify the Atlas Reasoner of input completion
+                this.dispatchEvent(new CustomEvent('valuechange', {
+                    detail: {
+                        value: {
+                            subject: this.subject,
+                            description: this.description,
+                            category: this.category,
+                            urgency: this.urgency,
+                            impact: this.impact,
+                            status: this.status,
+                            priority: this.priority,
+                            requesterEmail: this.requesterEmail,
+                            subCategory: this.subCategory,
+                            type: this.type
+                        }
+                    }
+                }));
             } else {
                 this.isSuccess = false;
                 this.errorMessage = result.errorMessage;

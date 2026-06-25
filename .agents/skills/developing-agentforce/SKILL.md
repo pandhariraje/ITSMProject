@@ -1,3 +1,230 @@
+
+Shortcuts
+Home
+Mentions
+star
+Starred
+spark
+Ask Gemini
+Direct messages
+
+Swaroop Bobba
+
+Ujjalita Majumdar
+
+Sunil Metta
+
+Siri Nagapur
+
+sasi kiran
+
+Anshuman Gupta
+
+Alyssa Jackson
+Deleted User
+
+Aakash Shrivas
+
+Vinitha Cheruku
+
+Rajavarma Kancharapu
+
+Sowmya Mekapothula
+
+Muniteja Bhakthi
+
+Sandeep Kancherla
+
+Muniteja bhakthi
+
+Himanshu Raina
+
+Shiv Daftari
+
+Aditya Anal
+
+IT Help Desk
+Deleted User
+
+Ruchitha Boddu
+
+Anshul Nagulkar
+
+Raghavendra Shettem
+
+Srinivas Gandluru
+
+Techwish HR
+
+Tirumala Avuthu
+
+Techwish India HR
+
+Shashidhar Vanam
+Deleted User
+
+
+
+Working Sessions - Lifesciences Demo - Feb 26
+Meeting conversation
+Spaces
+
+SF team
+Space
+
+TW-Salesforce New Workflow Support Window
+Space
+
+TechWish Employees
+Space
+
+SS-DEV
+Space
+
+Agentic Sales
+Space
+
+SS-internal Team
+Space
+
+Minnesota_DHS_SystemTransformation_RFP
+Space
+
+Practice Tasks Syncup New
+Space
+
+Dynamics365Implementation
+Space
+
+Techwish-Salesforce Support
+Space
+
+Techwish-SF Project
+Space
+
+MultiRecordCreator(MRC)
+Space
+
+App Exchange
+Space
+Apps
+
+Google Drive
+Swaroop Bobba
+You
+,
+Jun 17, 2:40 PM
+,
+Devbiradar@1234
+,Jun 17, 2:40 PM,
+Devbiradar@12345
+,Jun 17, 2:41 PM,
+You
+,
+Jun 17, 3:46 PM
+,
+Hii
+,Jun 17, 3:46 PM,
+Thursday, Jun 18
+Message deleted by its author
+,
+Jun 18, 9:53 AM
+Swaroop Bobba
+,
+Jun 18, 12:47 PM
+,
+https://docs.google.com/spreadsheets/d/1mV7RGPQ-lU93AjzjO1vTJDmKIC7ywYvj_vqPIxnPm1U/edit?usp=sharing
+Consumer Goods Cloud
+Consumer Goods Cloud
+
+Techwish Salesforce is the owner
+No changes since last viewed by you
+
+,Jun 18, 12:47 PM,
+You
+,
+Jun 18, 1:02 PM
+,
+https://www.linkedin.com/safety/go/?url=https%3A%2F%2Fcareers%2Esynoptek%2Ecom%2Fjobs%2F4844%2FSalesforce%2BAdministrator%3Flang%3Den-US%26iis%3DLinkedIn%26mode%3Dapply&urlhash=cpRw&mt=vxhle-HfyBewgJYH5tVKTemr99LNgDT0X0Wzh2PsQ7RJo6EyaBL4yP7qzOaj6Zf6oFnsIuTmBiZCuyvsSGKr2800Ug8&isSdui=true
+,Jun 18, 1:02 PM,
+You
+,
+Jun 18, 2:45 PM
+,
+came ra
+,Jun 18, 2:45 PM,
+Friday, Jun 19
+Swaroop Bobba
+,
+Fri 3:13 PM
+,
+https://youtube.com/playlist?list=PL3Rr8DM87XnAtRnIGCDc-CMRJBewzejUY&si=c9HA2Oa6vqvRpv_u
+,Fri 3:13 PM,
+Tuesday, Jun 23
+Swaroop Bobba
+,
+Tue 11:47 AM
+,
+New Text Document (2).txt
+,Tue 11:47 AM,
+Swaroop Bobba
+,
+Tue 11:50 AM
+,
+**Visit Intelligence** is a Salesforce Employee Agent built to assist field representatives and supervisors in managing, analyzing, and executing customer store visits. The agent operates within the context of a Visit record and automatically retrieves related Account information, providing users with a consolidated view of visit activities, store performance, customer engagement, and sales opportunities.
+
+The agent enables users to search for and select visits, review visit details such as account, status, assigned representative, and scheduled date, and quickly access key account metrics. It can summarize related records including contacts, previous visits, tasks, promotions, assortments, retail stores, store products, tactics, and out-of-stock items, presenting the information in a clear and actionable format.
+
+In addition to visit management, Visit Intelligence provides advanced order analysis capabilities. Users can review historical purchasing trends, understand buying behavior, analyze order performance, view visit-specific orders, inspect order line items, and receive AI-driven product recommendations based on assortment gaps and ordering patterns. The agent can also generate pre-visit store briefs and post-visit summaries to help representatives prepare for customer interactions and document visit outcomes efficiently.
+
+The agent supports operational updates by allowing authorized users to update visit statuses, add visit notes, record visit start and end times, modify order delivery or invoice notes, and transfer visit ownership to another user after confirmation. By combining visit execution data, account context, order intelligence, and store insights into a single conversational experience, Visit Intelligence helps field teams improve productivity, enhance customer engagement, and make more informed business decisions.
+,Tue 11:50 AM,
+You
+,
+Tue 11:51 AM
+,
+Edited,
+I need your help to create the ITSM agent.
+,Tue 11:51 AM,Edited,
+You
+,
+Tue 1:03 PM
+,
+image.png
+,Tue 1:03 PM,
+Today
+Swaroop Bobba
+,
+10:18 AM
+,
+https://github.com/Swaroop-Bobba/CGCLOUD.git
+,10:18 AM,
+Unread
+Swaroop Bobba
+,
+29 min
+,
+Screenshot 2026-06-24 092211.png
+,29 min,
+Swaroop Bobba
+,
+1 min
+,
+https://drive.google.com/file/d/1tiEmkncnJfkACWYk9ahtc82djF_jXOkB/view?usp=drive_link
+developing-agentforce.zip
+,1 min,
+New Text Document (2).txt
+Message viewed by everyone. Press tab to navigate to the read receipts list.
+
+,Now,
+
+
+
+Message Swaroop Bobba
+
+
+
+Sent an attachment
 ---
 name: developing-agentforce
 description: "Build, modify, debug, and deploy agents with Agentforce Agent Script. TRIGGER when: user creates, modifies, or asks about .agent files or aiAuthoringBundle metadata; changes agent behavior, responses, or conversation logic; designs agent actions, tools, subagents, or flow control; writes or reviews an Agent Spec; previews, debugs, deploys, publishes, or tests agents; uses Agent Script CLI commands (sf agent generate/preview/publish/test). DO NOT TRIGGER when: Apex development, Flow building, Prompt Template authoring, Experience Cloud configuration, or general Salesforce CLI tasks unrelated to Agent Script."
@@ -27,6 +254,8 @@ publishing, and testing.
 ## How to Use This Skill
 
 This file maps user intent to task domains and relevant reference files in `references/`. Detailed knowledge includes syntax rules, design patterns, CLI commands, debugging workflows, and more.
+
+For custom user interface components (such as picklists and datetime inputs) mapped to Agentforce action inputs, see the [Custom Inputs & Lightning Types](references/custom-inputs-and-lightning-types.md) reference.
 
 Identify user intent from task descriptions. ALWAYS read indicated reference files BEFORE starting work.
 
@@ -126,6 +355,8 @@ Read [CLI for Agents](references/salesforce-cli-for-agents.md) for exact command
 13. [Discover Reference](references/discover-reference.md) — target discovery CLI
 14. [Scaffold Reference](references/scaffold-reference.md) — stub generation CLI
 15. [Deploy Reference](references/deploy-reference.md) — deployment lifecycle, error recovery
+16. [Custom Inputs & Lightning Types](references/custom-inputs-and-lightning-types.md) — design, configure, and register LWC inputs and Custom Lightning Types for Agentforce
+
 
 ### Comprehend an Existing Agent
 
@@ -518,3 +749,9 @@ Ready-to-use `.agent` templates in `assets/agents/` (hello-world, simple-qa, mul
 | Feature validity by context | [feature-validity.md](references/feature-validity.md) |
 | Instruction resolution model | [instruction-resolution.md](references/instruction-resolution.md) |
 | Complete agent examples | [examples.md](references/examples.md) |
+| Compiled Metadata Deep Dive | [compiled-metadata-deep-dive.md](references/compiled-metadata-deep-dive.md) |
+
+
+apps-fileview.texmex_20260618.00_p1
+New Text Document (2).txt
+Displaying New Text Document (2).txt.

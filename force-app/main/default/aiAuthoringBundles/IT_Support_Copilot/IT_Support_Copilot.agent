@@ -36,7 +36,7 @@ start_agent agent_router:
             | You are a router ONLY. Do NOT answer questions, confirm details, or chat with the user directly.
               Even if the conversation history shows the assistant was already conversing about a topic, you MUST call the appropriate transition action tool to delegate the turn to that subagent. Do NOT reply with conversational text or try to handle details/confirmations yourself.
               You MUST transition to the correct subagent immediately using transition actions based on the message and context:
-              - Report a technical problem, VPN issue, login failure, network issue, application error, or if they are confirming details for an incident -> Transition to @subagent.incident_management
+              - Report a technical problem, VPN issue, login failure, network issue, application error, create an incident, create incident, or if they are confirming details for an incident -> Transition to @subagent.incident_management
               - Request software installation, access request, password reset, or if they are confirming details for a service request -> Transition to @subagent.service_request_management
               - Check ticket status or status of an existing ticket -> Transition to @subagent.ticket_status_tracking
               - Ask a knowledge question, search help articles, or ask for troubleshooting guidance -> Transition to @subagent.knowledge_management
@@ -44,7 +44,7 @@ start_agent agent_router:
               - Out of scope requests -> Transition to @subagent.off_topic
         actions:
             go_to_incident: @utils.transition to @subagent.incident_management
-                description: "Route to Incident Management for technical issues, login/network/VPN failures, or app errors."
+                description: "Route to Incident Management for technical issues, login/network/VPN failures, app errors, or requests to create an incident."
             go_to_service_req: @utils.transition to @subagent.service_request_management
                 description: "Route to Service Request Management for software installs, access requests, or password resets."
             go_to_status: @utils.transition to @subagent.ticket_status_tracking
@@ -58,25 +58,19 @@ start_agent agent_router:
 
 subagent incident_management:
     label: "Incident Management"
-    description: "Presents the Incident Creation Form (LWC) to the employee."
+    description: "Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident."
     reasoning:
         instructions: ->
             | When the employee wants to report or create an incident, or describes an IT issue, you must immediately invoke {!@actions.show_incident_form} to present the form directly in the chat pane.
               Do NOT ask for details or fields conversationally. Do NOT ask for confirmation.
               Do NOT direct the user to a Flow hyperlink or a separate page.
-              Rely on the show_incident_form action output to present the form inline.
-              Pass any details the user has already mentioned (e.g., subject, description, category, urgency, impact, priority) to the show_incident_form action inputs to pre-populate the form.
+              Rely on the show_incident_form action to present the form inline.
+              Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the incidentForm parameter.
               Always set status to "New" when calling show_incident_form.
         actions:
             show_incident_form: @actions.show_incident_form
                 description: "Displays the Incident Creation form inline to the employee."
-                with subject = ...
-                with description = ...
-                with category = ...
-                with urgency = ...
-                with impact = ...
-                with status = ...
-                with priority = ...
+                with incidentForm = ...
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router when the incident has been created and the user wants help with something else."
     actions:
@@ -85,40 +79,17 @@ subagent incident_management:
             label: "Show Create Incident Form"
             target: "apex://CopilotShowIncidentFormAction"
             inputs:
-                subject: string
-                    description: "Subject of the incident"
-                    label: "Subject"
-                    is_required: False
-                description: string
-                    description: "Detailed description of the issue"
-                    label: "Description"
-                    is_required: False
-                category: string
-                    description: "Category of the incident"
-                    label: "Category"
-                    is_required: False
-                urgency: string
-                    description: "Urgency level: Low, Medium, High"
-                    label: "Urgency"
-                    is_required: False
-                impact: string
-                    description: "Impact level: Low, Medium, High"
-                    label: "Impact"
-                    is_required: False
-                status: string
-                    description: "Status of the incident"
-                    label: "Status"
-                    is_required: False
-                priority: string
-                    description: "Priority of the incident"
-                    label: "Priority"
-                    is_required: False
+                incidentForm: object
+                    description: "The pre-populated incident form data structure"
+                    label: "Incident Form"
+                    is_required: True
+                    complex_data_type_name: "lightning__c__createIncidentFormInputType"
             outputs:
                 incidentForm: object
                     label: "Incident Form"
-                    description: "The pre-populated incident form data structure"
+                    description: "The completed incident form data structure"
                     filter_from_agent: False
-                    complex_data_type_name: "lightning__c__createIncidentFormType"
+                    complex_data_type_name: "lightning__c__createIncidentFormInputType"
 
 subagent service_request_management:
     label: "Service Request Management"

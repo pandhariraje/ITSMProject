@@ -1,0 +1,14 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "incidentForm" : {
+      "title" : "Incident Form",
+      "description" : "The pre-populated incident form data structure",
+      "lightning:type" : "c__createIncidentFormType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
