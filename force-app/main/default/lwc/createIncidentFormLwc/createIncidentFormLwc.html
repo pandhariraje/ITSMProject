@@ -43,7 +43,7 @@
                     <div class="grid-col-12">
                         <lightning-input 
                             label="Subject" 
-                            value={subject} 
+                            value={localSubject} 
                             data-name="subject"
                             onchange={handleFieldChange}
                             required
@@ -56,7 +56,7 @@
                     <div class="grid-col-12">
                         <lightning-textarea 
                             label="Detailed Description (Optional)" 
-                            value={description} 
+                            value={localDescription} 
                             data-name="description"
                             onchange={handleFieldChange}
                             class="custom-input">
@@ -67,7 +67,7 @@
                     <div class="grid-col-6">
                         <lightning-combobox 
                             label="Category (Optional)" 
-                            value={category} 
+                            value={localCategory} 
                             options={categoryOptions}
                             data-name="category"
                             onchange={handleFieldChange}
@@ -79,7 +79,7 @@
                     <div class="grid-col-6">
                         <lightning-combobox 
                             label="Status" 
-                            value={status} 
+                            value={localStatus} 
                             options={statusOptions}
                             data-name="status"
                             onchange={handleFieldChange}
@@ -93,7 +93,7 @@
                     <div class="grid-col-4">
                         <lightning-combobox 
                             label="Urgency" 
-                            value={urgency} 
+                            value={localUrgency} 
                             options={urgencyOptions}
                             data-name="urgency"
                             onchange={handleFieldChange}
@@ -107,7 +107,7 @@
                     <div class="grid-col-4">
                         <lightning-combobox 
                             label="Impact" 
-                            value={impact} 
+                            value={localImpact} 
                             options={impactOptions}
                             data-name="impact"
                             onchange={handleFieldChange}
@@ -121,7 +121,7 @@
                     <div class="grid-col-4">
                         <lightning-combobox 
                             label="Priority" 
-                            value={priority} 
+                            value={localPriority} 
                             options={priorityOptions}
                             data-name="priority"
                             onchange={handleFieldChange}
@@ -129,40 +129,6 @@
                             message-when-value-missing="Priority is required"
                             class="custom-input">
                         </lightning-combobox>
-                    </div>
-
-                    <!-- Requester Email -->
-                    <div class="grid-col-12">
-                        <lightning-input 
-                            type="email"
-                            label="Requester Email (Optional)" 
-                            value={requesterEmail} 
-                            data-name="requesterEmail"
-                            onchange={handleFieldChange}
-                            class="custom-input">
-                        </lightning-input>
-                    </div>
-
-                    <!-- SubCategory -->
-                    <div class="grid-col-6">
-                        <lightning-input 
-                            label="Subcategory (Optional)" 
-                            value={subCategory} 
-                            data-name="subCategory"
-                            onchange={handleFieldChange}
-                            class="custom-input">
-                        </lightning-input>
-                    </div>
-
-                    <!-- Type -->
-                    <div class="grid-col-6">
-                        <lightning-input 
-                            label="Type (Optional)" 
-                            value={type} 
-                            data-name="type"
-                            onchange={handleFieldChange}
-                            class="custom-input">
-                        </lightning-input>
                     </div>
                 </div>
             </main>

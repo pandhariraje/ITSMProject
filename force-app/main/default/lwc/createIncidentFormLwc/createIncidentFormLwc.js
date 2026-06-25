@@ -1,23 +1,30 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import createIncidentLwc from '@salesforce/apex/CopilotCreateIncidentAction.createIncidentLwc';
-import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
-import INCIDENT_OBJECT from '@salesforce/schema/Incident';
-import PRIORITY_FIELD from '@salesforce/schema/Incident.Priority';
-import URGENCY_FIELD from '@salesforce/schema/Incident.Urgency';
-import IMPACT_FIELD from '@salesforce/schema/Incident.Impact';
 
 export default class CreateIncidentFormLwc extends LightningElement {
     // Inputs (pre-populated by flow/agent)
     @api subject = '';
     @api description = '';
-    @api category = '';
-    @api urgency = '';
-    @api impact = '';
+    @api category = 'Software';
+    @api urgency = 'Medium';
+    @api impact = 'Medium';
     @api requesterEmail = '';
     @api subCategory = '';
-    @api type = '';
+    @api type = 'Normal';
     @api status = 'New';
-    @api priority = '';
+    @api priority = 'Medium';
+
+    // Local tracked variables to avoid @api read-only mutation errors
+    @track localSubject = '';
+    @track localDescription = '';
+    @track localCategory = 'Software';
+    @track localUrgency = 'Medium';
+    @track localImpact = 'Medium';
+    @track localStatus = 'New';
+    @track localPriority = 'Medium';
+    @track localRequesterEmail = '';
+    @track localSubCategory = '';
+    @track localType = 'Normal';
 
     _value;
 
@@ -29,16 +36,34 @@ export default class CreateIncidentFormLwc extends LightningElement {
     set value(val) {
         this._value = val;
         if (val) {
-            this.subject = val.subject || '';
-            this.description = val.description || '';
-            this.category = val.category || '';
-            this.urgency = val.urgency || '';
-            this.impact = val.impact || '';
-            this.status = val.status || 'New';
-            this.priority = val.priority || '';
+            this.localSubject = val.subject || '';
+            this.localDescription = val.description || '';
+            this.localCategory = val.category || 'Software';
+            this.localUrgency = val.urgency || 'Medium';
+            this.localImpact = val.impact || 'Medium';
+            this.localStatus = val.status || 'New';
+            this.localPriority = val.priority || 'Medium';
+            this.localRequesterEmail = val.requesterEmail || '';
+            this.localSubCategory = val.subCategory || '';
+            this.localType = val.type || 'Normal';
         }
     }
 
+    connectedCallback() {
+        // Initialize local tracked values from API inputs if value is not set
+        if (!this.value) {
+            this.localSubject = this.subject || '';
+            this.localDescription = this.description || '';
+            this.localCategory = this.category || 'Software';
+            this.localUrgency = this.urgency || 'Medium';
+            this.localImpact = this.impact || 'Medium';
+            this.localStatus = this.status || 'New';
+            this.localPriority = this.priority || 'Medium';
+            this.localRequesterEmail = this.requesterEmail || '';
+            this.localSubCategory = this.subCategory || '';
+            this.localType = this.type || 'Normal';
+        }
+    }
 
     // Outputs (returned to flow/agent)
     @api incidentId = '';
@@ -48,9 +73,6 @@ export default class CreateIncidentFormLwc extends LightningElement {
 
     @track isLoading = false;
     @track customError = '';
-    @track priorityOptions = [];
-    @track urgencyOptions = [];
-    @track impactOptions = [];
 
     categoryOptions = [
         { label: 'Network', value: 'Network' },
@@ -66,39 +88,48 @@ export default class CreateIncidentFormLwc extends LightningElement {
         { label: 'Closed', value: 'Closed' }
     ];
 
-    @wire(getObjectInfo, { objectApiName: INCIDENT_OBJECT })
-    incidentInfo;
+    priorityOptions = [
+        { label: 'Low', value: 'Low' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'High', value: 'High' },
+        { label: 'Critical', value: 'Critical' }
+    ];
 
-    @wire(getPicklistValues, { recordTypeId: '$incidentInfo.data.defaultRecordTypeId', fieldApiName: PRIORITY_FIELD })
-    wiredPriorityValues({ error, data }) {
-        if (data) {
-            this.priorityOptions = data.values;
-        } else if (error) {
-            console.error('Error fetching priority picklist values', error);
-        }
-    }
+    urgencyOptions = [
+        { label: 'Low', value: 'Low' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'High', value: 'High' }
+    ];
 
-    @wire(getPicklistValues, { recordTypeId: '$incidentInfo.data.defaultRecordTypeId', fieldApiName: URGENCY_FIELD })
-    wiredUrgencyValues({ error, data }) {
-        if (data) {
-            this.urgencyOptions = data.values;
-        } else if (error) {
-            console.error('Error fetching urgency picklist values', error);
-        }
-    }
-
-    @wire(getPicklistValues, { recordTypeId: '$incidentInfo.data.defaultRecordTypeId', fieldApiName: IMPACT_FIELD })
-    wiredImpactValues({ error, data }) {
-        if (data) {
-            this.impactOptions = data.values;
-        } else if (error) {
-            console.error('Error fetching impact picklist values', error);
-        }
-    }
+    impactOptions = [
+        { label: 'Low', value: 'Low' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'High', value: 'High' }
+    ];
 
     handleFieldChange(event) {
         const fieldName = event.target.dataset.name;
-        this[fieldName] = event.target.value;
+        if (fieldName === 'subject') {
+            this.localSubject = event.target.value;
+        } else if (fieldName === 'description') {
+            this.localDescription = event.target.value;
+        } else if (fieldName === 'category') {
+            this.localCategory = event.target.value;
+        } else if (fieldName === 'status') {
+            this.localStatus = event.target.value;
+        } else if (fieldName === 'urgency') {
+            this.localUrgency = event.target.value;
+        } else if (fieldName === 'impact') {
+            this.localImpact = event.target.value;
+        } else if (fieldName === 'priority') {
+            this.localPriority = event.target.value;
+        } else if (fieldName === 'requesterEmail') {
+            this.localRequesterEmail = event.target.value;
+        } else if (fieldName === 'subCategory') {
+            this.localSubCategory = event.target.value;
+        } else if (fieldName === 'type') {
+            this.localType = event.target.value;
+        }
     }
 
     handleSubmit() {
@@ -116,16 +147,16 @@ export default class CreateIncidentFormLwc extends LightningElement {
         this.customError = '';
 
         createIncidentLwc({
-            subject: this.subject,
-            description: this.description,
-            category: this.category,
-            urgency: this.urgency,
-            impact: this.impact,
-            requesterEmail: this.requesterEmail,
-            subCategory: this.subCategory,
-            type: this.type,
-            status: this.status,
-            priority: this.priority
+            subject: this.localSubject,
+            description: this.localDescription,
+            category: this.localCategory,
+            urgency: this.localUrgency,
+            impact: this.localImpact,
+            requesterEmail: this.localRequesterEmail,
+            subCategory: this.localSubCategory,
+            type: this.localType,
+            status: this.localStatus,
+            priority: this.localPriority
         })
         .then((result) => {
             this.isLoading = false;
@@ -139,16 +170,16 @@ export default class CreateIncidentFormLwc extends LightningElement {
                 this.dispatchEvent(new CustomEvent('valuechange', {
                     detail: {
                         value: {
-                            subject: this.subject,
-                            description: this.description,
-                            category: this.category,
-                            urgency: this.urgency,
-                            impact: this.impact,
-                            status: this.status,
-                            priority: this.priority,
-                            requesterEmail: this.requesterEmail,
-                            subCategory: this.subCategory,
-                            type: this.type
+                            subject: this.localSubject,
+                            description: this.localDescription,
+                            category: this.localCategory,
+                            urgency: this.localUrgency,
+                            impact: this.localImpact,
+                            status: this.localStatus,
+                            priority: this.localPriority,
+                            requesterEmail: this.localRequesterEmail,
+                            subCategory: this.localSubCategory,
+                            type: this.localType
                         }
                     }
                 }));

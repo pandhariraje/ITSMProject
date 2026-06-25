@@ -61,10 +61,9 @@ subagent incident_management:
     description: "Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident."
     reasoning:
         instructions: ->
-            | When the employee wants to report or create an incident, or describes an IT issue, you must immediately invoke {!@actions.show_incident_form} to present the form directly in the chat pane.
-              Do NOT ask for details or fields conversationally. Do NOT ask for confirmation.
-              Do NOT direct the user to a Flow hyperlink or a separate page.
-              Rely on the show_incident_form action to present the form inline.
+            | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
+              Do NOT ask for any details, fields, or confirmation conversationally.
+              Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
               Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the incidentForm parameter.
               Always set status to "New" when calling show_incident_form.
         actions:
