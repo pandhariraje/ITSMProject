@@ -4,22 +4,24 @@ private class CopilotShowIncidentFormActionTest {
     @IsTest
     static void testShowIncidentForm() {
         CopilotShowIncidentFormAction.Request req1 = new CopilotShowIncidentFormAction.Request();
-        req1.subject = 'Internet connection is down';
-        req1.description = 'The router in room 204 is flashing red.';
-        req1.category = 'Network';
-        req1.urgency = 'High';
-        req1.impact = 'High';
-        req1.status = 'New';
-        req1.priority = 'Medium';
+        req1.incidentForm = new CopilotIncidentFormWrapper();
+        req1.incidentForm.subject = 'Internet connection is down';
+        req1.incidentForm.description = 'The router in room 204 is flashing red.';
+        req1.incidentForm.category = 'Network';
+        req1.incidentForm.urgency = 'High';
+        req1.incidentForm.impact = 'High';
+        req1.incidentForm.status = 'New';
+        req1.incidentForm.priority = 'Medium';
 
         CopilotShowIncidentFormAction.Request req2 = new CopilotShowIncidentFormAction.Request();
-        req2.subject = 'Broken keyboard';
-        req2.description = 'Spaceship key is stuck.';
-        req2.category = 'Hardware';
-        req2.urgency = 'Low';
-        req2.impact = 'Low';
-        // status is left null to test default value
-        req2.priority = null;
+        req2.incidentForm = new CopilotIncidentFormWrapper();
+        req2.incidentForm.subject = 'Broken keyboard';
+        req2.incidentForm.description = 'Spaceship key is stuck.';
+        req2.incidentForm.category = 'Hardware';
+        req2.incidentForm.urgency = 'Low';
+        req2.incidentForm.impact = 'Low';
+        req2.incidentForm.status = null;
+        req2.incidentForm.priority = null;
 
         List<CopilotShowIncidentFormAction.Request> requests = new List<CopilotShowIncidentFormAction.Request>{ req1, req2 };
 
@@ -46,7 +48,7 @@ private class CopilotShowIncidentFormActionTest {
         System.assertEquals('Hardware', results[1].incidentForm.category);
         System.assertEquals('Low', results[1].incidentForm.urgency);
         System.assertEquals('Low', results[1].incidentForm.impact);
-        System.assertEquals('New', results[1].incidentForm.status, 'Status should default to New.');
+        System.assertEquals(null, results[1].incidentForm.status, 'Status should be null.');
         System.assertEquals(null, results[1].incidentForm.priority);
     }
 }

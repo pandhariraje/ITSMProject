@@ -83,13 +83,13 @@ subagent incident_management:
                     description: "The pre-populated incident form data structure"
                     label: "Incident Form"
                     is_required: True
-                    complex_data_type_name: "lightning__c__createIncidentFormInputType"
+                    complex_data_type_name: "c__createIncidentFormInputType"
             outputs:
                 incidentForm: object
                     label: "Incident Form"
                     description: "The completed incident form data structure"
                     filter_from_agent: False
-                    complex_data_type_name: "lightning__c__createIncidentFormInputType"
+                    complex_data_type_name: "c__createIncidentFormInputType"
 
 subagent service_request_management:
     label: "Service Request Management"
