@@ -72,12 +72,18 @@ subagent incident_management:
             | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
               Do NOT ask for any details, fields, or confirmation conversationally.
               Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
-              Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the incidentForm parameter.
+              Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the show_incident_form action inputs.
               Always set status to "New" when calling show_incident_form.
         actions:
             show_incident_form: @actions.show_incident_form
                 description: "Displays the Incident Creation form inline to the employee."
-                with incidentForm = ...
+                with subject = ...
+                with description = ...
+                with category = ...
+                with urgency = ...
+                with impact = ...
+                with status = ...
+                with priority = ...
                 set @variables.incident_created = True
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router when the incident has been created and the user wants help with something else."
@@ -87,16 +93,38 @@ subagent incident_management:
             label: "Show Create Incident Form"
             target: "apex://CopilotShowIncidentFormAction"
             inputs:
-                incidentForm: object
-                    description: "The pre-populated incident form data structure"
-                    label: "Incident Form"
-                    is_required: True
-                    is_user_input: True
-                    complex_data_type_name: "c__createIncidentFormInputType"
+                subject: string
+                    description: "Subject of the incident"
+                    label: "Subject"
+                    is_required: False
+                description: string
+                    description: "Detailed description of the issue"
+                    label: "Description"
+                    is_required: False
+                category: string
+                    description: "Category of the incident"
+                    label: "Category"
+                    is_required: False
+                urgency: string
+                    description: "Urgency level: Low, Medium, High"
+                    label: "Urgency"
+                    is_required: False
+                impact: string
+                    description: "Impact level: Low, Medium, High"
+                    label: "Impact"
+                    is_required: False
+                status: string
+                    description: "Status of the incident"
+                    label: "Status"
+                    is_required: False
+                priority: string
+                    description: "Priority of the incident"
+                    label: "Priority"
+                    is_required: False
             outputs:
                 incidentForm: object
                     label: "Incident Form"
-                    description: "The completed incident form data structure"
+                    description: "The pre-populated incident form data structure"
                     filter_from_agent: False
                     complex_data_type_name: "c__createIncidentFormInputType"
 
