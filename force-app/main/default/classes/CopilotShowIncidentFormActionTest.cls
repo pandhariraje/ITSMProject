@@ -4,22 +4,26 @@ private class CopilotShowIncidentFormActionTest {
     @IsTest
     static void testShowIncidentForm() {
         CopilotShowIncidentFormAction.Request req1 = new CopilotShowIncidentFormAction.Request();
-        req1.subject = 'Internet connection is down';
-        req1.description = 'The router in room 204 is flashing red.';
-        req1.category = 'Network';
-        req1.urgency = 'High';
-        req1.impact = 'High';
-        req1.status = 'New';
-        req1.priority = 'Medium';
+        CopilotIncidentFormWrapper w1 = new CopilotIncidentFormWrapper();
+        w1.subject = 'Internet connection is down';
+        w1.description = 'The router in room 204 is flashing red.';
+        w1.category = 'Network';
+        w1.urgency = 'High';
+        w1.impact = 'High';
+        w1.status = 'New';
+        w1.priority = 'Medium';
+        req1.incidentForm = w1;
 
         CopilotShowIncidentFormAction.Request req2 = new CopilotShowIncidentFormAction.Request();
-        req2.subject = 'Broken keyboard';
-        req2.description = 'Spaceship key is stuck.';
-        req2.category = 'Hardware';
-        req2.urgency = 'Low';
-        req2.impact = 'Low';
-        req2.status = null;
-        req2.priority = null;
+        CopilotIncidentFormWrapper w2 = new CopilotIncidentFormWrapper();
+        w2.subject = 'Broken keyboard';
+        w2.description = 'Spaceship key is stuck.';
+        w2.category = 'Hardware';
+        w2.urgency = 'Low';
+        w2.impact = 'Low';
+        w2.status = null;
+        w2.priority = null;
+        req2.incidentForm = w2;
 
         List<CopilotShowIncidentFormAction.Request> requests = new List<CopilotShowIncidentFormAction.Request>{ req1, req2 };
 

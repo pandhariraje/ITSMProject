@@ -1,13 +1,13 @@
 <template>
-    <div class="form-card">
+    <div class="form-card slds-is-relative slds-scrollable_none">
         <!-- Success State -->
         <template if:true={isSuccess}>
-            <div class="success-container">
-                <div class="success-icon">✔️</div>
+            <div class="success-container slds-text-align_center">
+                <div class="success-icon slds-line-height_reset">✔️</div>
                 <h2>Incident Logged</h2>
                 <p class="success-message">Incident <strong>{incidentNumber}</strong> has been created successfully.</p>
-                <div class="success-actions">
-                    <a href={incidentRecordUrl} target="_blank" class="view-link-btn">View Incident</a>
+                <div class="success-actions slds-grid slds-grid_align-center">
+                    <a href={incidentRecordUrl} target="_blank" class="view-link-btn slds-show_inline-block">View Incident</a>
                 </div>
             </div>
         </template>
@@ -16,21 +16,21 @@
         <template if:false={isSuccess}>
             <header class="form-header">
                 <h3>Report New Incident</h3>
-                <p>Please enter the details below to log your technical issue.</p>
+                <p class="slds-m-around_none">Please enter the details below to log your technical issue.</p>
             </header>
 
-            <main class="form-body">
+            <main class="form-body slds-is-relative">
                 <!-- Spinner -->
                 <template if:true={isLoading}>
-                    <div class="spinner-container">
+                    <div class="spinner-container slds-is-absolute slds-grid slds-grid_align-center slds-grid_vertical-align-center">
                         <lightning-spinner alternative-text="Submitting Incident..." size="medium"></lightning-spinner>
                     </div>
                 </template>
 
                 <!-- Error Notification -->
                 <template if:true={customError}>
-                    <div class="error-banner">
-                        <div class="error-icon">⚠️</div>
+                    <div class="error-banner slds-grid slds-grid_vertical-align-start">
+                        <div class="error-icon slds-line-height_reset">⚠️</div>
                         <div class="error-message">
                             <strong>Submission failed:</strong> {customError}
                         </div>
@@ -134,12 +134,12 @@
             </main>
 
             <footer class="form-footer">
-                <button 
-                    class="submit-button" 
+                <lightning-button 
+                    label="Submit Incident" 
                     onclick={handleSubmit} 
-                    disabled={isLoading}>
-                    Submit Incident
-                </button>
+                    disabled={isLoading}
+                    class="submit-button">
+                </lightning-button>
             </footer>
         </template>
     </div>
