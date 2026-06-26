@@ -1380,10 +1380,7 @@
         <members>Assignment_Rule_for_Change_Request_V1</members>
         <members>Assignment_Rule_for_Problems_V1</members>
         <members>ChangeRequestRiskScoreExpressionSet</members>
-        <members>Sample_Assignment_Rule_for_Incident_Assignment_Rule_for_Incident_V30</members>
         <members>Sample_Assignment_Rule_for_Incident_Assignment_Rule_for_Incident_V40</members>
-        <members>Sample_Assignment_Rule_for_Incident_Sample_Assignment_Rule_for_Incident_V20</members>
-        <members>Sample_Assignment_Rule_for_Incident_V1</members>
         <name>ExpressionSetDefinitionVersion</name>
     </types>
     <types>
