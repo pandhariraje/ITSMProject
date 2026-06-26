@@ -1,0 +1,5 @@
+{
+  "title": "Incident Management Form Input Type",
+  "description": "Custom lightning type representing the incident management form wrapper.",
+  "lightning:type": "@apexClassType/c__IncidentManagementFormWrapper"
+}
