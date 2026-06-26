@@ -1,16 +1,16 @@
 system:
     instructions: |
         You are the Incident Management agent.
-        Your job is to assist employees in logging new incidents.
-        Always display the incident creation LWC form immediately upon entering the incident creation flow.
+        Your job is to assist employees in logging new incidents and managing existing ones.
+        Always display the incident management form immediately upon entering the incident management flow.
     messages:
-        welcome: "I'll help you create a new Incident."
+        welcome: "I'll help you manage your Incidents."
         error: "Sorry, it looks like something has gone wrong."
 
 config:
     developer_name: "Incident_Management"
     agent_label: "Incident Management"
-    description: "Incident Management agent capable of launching the incident LWC form."
+    description: "Incident Management agent capable of launching the incident LWC form to create, search, and update Incidents."
     agent_type: "AgentforceEmployeeAgent"
 
 variables:
@@ -19,47 +19,86 @@ variables:
     incident_number: mutable string = ""
     incident_status: mutable string = ""
     incident_priority: mutable string = ""
+    search_ticket_number: mutable string = ""
+    incident_found: mutable boolean = False
 
 language:
     default_locale: "en_US"
     all_additional_locales: False
 
 start_agent agent_router:
-    description: "Welcome the employee and route to the incident creation flow."
+    description: "Welcome the employee and route to the correct subagent based on their need."
     reasoning:
         instructions: ->
-            | Route the user to the incident creation flow.
+            | You are a router ONLY. Do NOT answer questions, confirm details, or chat with the user directly.
+              You MUST transition to the correct subagent immediately using transition actions based on the message:
+              - If the user wants to create a new incident, report an issue, log a ticket, or types "create incident" or "create a new incident" -> Transition to @subagent.incident_management
+              - If the user wants to update, edit, search, find, open, or view an existing incident, or mentions an incident number (like INCXXXX) -> Transition to @subagent.incident_management
+              - Out of scope requests -> Transition to @subagent.off_topic
+              - Ambiguous requests -> Transition to @subagent.ambiguous_question
         actions:
-            go_to_create: @utils.transition to @subagent.incident_creation
-                description: "Create a new incident, report an issue, or log a ticket."
+            go_to_management: @utils.transition to @subagent.incident_management
+                description: "Create a new incident, report an issue, or manage, search, open, view, or update an existing incident."
             go_to_off_topic: @utils.transition to @subagent.off_topic
             go_to_ambiguous_question: @utils.transition to @subagent.ambiguous_question
 
-subagent incident_creation:
-    label: "Incident Creation"
-    description: "Handles dynamic LWC form rendering to collect incident details and log the record."
+subagent incident_management:
+    label: "Incident Management"
+    description: "Handles dynamic LWC form rendering to search, view, create, and update incident details."
     reasoning:
         instructions: ->
             if @variables.incident_created == True:
-                | Incident Created Successfully
+                | Incident Saved Successfully
                 | Incident Number: {!@variables.incident_number}
                 | Status: {!@variables.incident_status}
                 | Priority: {!@variables.incident_priority}
                 | Incident Id: {!@variables.incident_id}
                 | 
-                | Incident successfully created.
+                | Incident successfully saved.
                 | 
-                | Would you like to update this Incident or create another one?
+                | Would you like to manage another Incident?
                 set @variables.incident_created = False
                 transition to @subagent.agent_router
+
+            if @variables.incident_id == "" and @variables.search_ticket_number != "":
+                | Fetching incident details for {!@variables.search_ticket_number}...
+                run @actions.get_incident_details
+                    with ticketNumber = @variables.search_ticket_number
+                    set @variables.incident_id = @outputs.incidentForm.incidentId
+                    set @variables.incident_found = @outputs.found
+
+            if @variables.incident_found == True:
+                run @actions.show_form
+                    with incidentForm = @outputs.incidentForm
+                set @variables.incident_id = @outputs.incidentForm.incidentId
+                set @variables.incident_number = @outputs.incidentForm.incidentNumber
+                set @variables.incident_status = @outputs.incidentForm.status
+                set @variables.incident_priority = @outputs.incidentForm.priority
+                set @variables.incident_created = True
+                set @variables.search_ticket_number = ""
+
+            if @variables.incident_found == False and @variables.search_ticket_number != "":
+                | I couldn't find incident {!@variables.search_ticket_number}.
+                | Let's open the Incident Management form so you can search or create one.
+                run @actions.show_form
+                    with incidentForm = @outputs.incidentForm
+                set @variables.incident_id = @outputs.incidentForm.incidentId
+                set @variables.incident_number = @outputs.incidentForm.incidentNumber
+                set @variables.incident_status = @outputs.incidentForm.status
+                set @variables.incident_priority = @outputs.incidentForm.priority
+                set @variables.incident_created = True
+                set @variables.search_ticket_number = ""
 
             | You must immediately invoke {!@actions.show_form} to present the incident form.
               Do NOT ask for any details, fields, or confirmation conversationally.
               Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_form}.
               Pass any details the user has already mentioned (e.g. subject, description) to pre-populate properties inside the incidentForm parameter.
         actions:
+            get_incident_details: @actions.get_incident_details
+                description: "Fetches details of an incident by its ID or number."
+                with ticketNumber = ...
             show_form: @actions.show_form
-                description: "Presents the Incident creation form inline to the employee."
+                description: "Presents the Incident management form inline to the employee."
                 with incidentForm = ...
                 set @variables.incident_id = @outputs.incidentForm.incidentId
                 set @variables.incident_number = @outputs.incidentForm.incidentNumber
@@ -69,15 +108,35 @@ subagent incident_creation:
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router if the user cancels or wants help with something else."
     actions:
+        get_incident_details:
+            description: "Queries details of an Incident by record ID or ticket number."
+            label: "Get Incident Details"
+            target: "apex://GetIncidentDetailsAction"
+            inputs:
+                ticketNumber: string
+                    description: "The Incident ticket number or ID"
+                    label: "Incident Number or ID"
+                    is_required: True
+            outputs:
+                isSuccess: boolean
+                    label: "Is Success"
+                found: boolean
+                    label: "Found"
+                incidentForm: object
+                    label: "Incident Form"
+                    complex_data_type_name: "c__incidentManagementFormInputType"
+                errorMessage: string
+                    label: "Error Message"
         show_form:
-            description: "Presents the Incident creation form popup to the user to collect details."
-            label: "Show Create Incident Form"
+            description: "Presents the Incident creation/update form popup to the user to collect details."
+            label: "Show Incident Management Form"
             target: "apex://ShowIncidentManagementFormAction"
             inputs:
                 incidentForm: object
                     description: "The pre-populated incident form data structure"
                     label: "Incident Form"
                     is_required: True
+                    is_user_input: True
                     complex_data_type_name: "c__incidentManagementFormInputType"
             outputs:
                 incidentForm: object

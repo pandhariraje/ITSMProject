@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Incident Management agent capable of launching the incident LWC form.</description>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jBi0000025qxh</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>agent_router_16jBi0000025qxh</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the employee and launch the incident form.</description>
+        <developerName>agent_router_16jBi0000025qxh</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Incident Management agent.
+Your job is to assist employees in logging new incidents by displaying the LWC form immediately.
+Do NOT ask questions, do NOT prompt for fields, and do NOT wait for input conversationally.
+Directly launch the form by invoking the show_form action.</description>
+            <developerName>instruction0_179Bi00000046Ob</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi00000046Ob</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>show_form_179Bi00000046Ob</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>show_form_179Bi00000046Ob</fullName>
+            <description>Presents the Incident creation form popup to the user to collect details.</description>
+            <developerName>show_form_179Bi00000046Ob</developerName>
+            <invocationTarget>ShowIncidentManagementFormAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>show_form</localDeveloperName>
+            <masterLabel>Show Create Incident Form</masterLabel>
+        </localActions>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Incident Management</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

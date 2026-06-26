@@ -11,10 +11,12 @@ public with sharing class IncidentMetadataController {
     public class PicklistOption {
         @AuraEnabled public String label;
         @AuraEnabled public String value;
+        @AuraEnabled public Boolean isDefault;
         
-        public PicklistOption(String label, String value) {
+        public PicklistOption(String label, String value, Boolean isDefault) {
             this.label = label;
             this.value = value;
+            this.isDefault = isDefault;
         }
     }
 
@@ -22,10 +24,12 @@ public with sharing class IncidentMetadataController {
     public static List<FieldMetadata> getIncidentFieldsMetadata() {
         List<FieldMetadata> fieldMetadatas = new List<FieldMetadata>();
         List<String> fieldsToDescribe = new List<String>{
-            'Subject', 'Description', 'Urgency', 'Impact', 'Priority', 'Status'
+            'Subject', 'Description', 'Category', 'Status', 'Urgency', 'Impact', 'Priority'
         };
 
         Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Incident.fields.getMap();
+
+        Set<String> requiredFields = new Set<String>{ 'Subject', 'Status', 'Urgency', 'Impact', 'Priority' };
 
         for (String fieldName : fieldsToDescribe) {
             if (fieldMap.containsKey(fieldName)) {
@@ -35,15 +39,13 @@ public with sharing class IncidentMetadataController {
                 fm.label = dfr.getLabel();
                 fm.type = String.valueOf(dfr.getType()).toLowerCase();
                 
-                // Subject and Description are required standard fields but might show isNillable = true or false. 
-                // We make them required in the UI, or use describe's nillable info.
-                fm.isRequired = !dfr.isNillable() || fieldName == 'Subject' || fieldName == 'Description';
+                fm.isRequired = requiredFields.contains(fieldName);
                 
                 if (dfr.getType() == Schema.DisplayType.PICKLIST) {
                     List<PicklistOption> options = new List<PicklistOption>();
                     for (Schema.PicklistEntry entry : dfr.getPicklistValues()) {
                         if (entry.isActive()) {
-                            options.add(new PicklistOption(entry.getLabel(), entry.getValue()));
+                            options.add(new PicklistOption(entry.getLabel(), entry.getValue(), entry.isDefaultValue()));
                         }
                     }
                     fm.picklistOptions = options;

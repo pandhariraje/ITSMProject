@@ -1,83 +1,149 @@
 <template>
-    <lightning-card title={label} icon-name="standard:incident">
-        <div class="slds-p-around_medium slds-is-relative">
-            <!-- Spinner -->
-            <template if:true={isLoading}>
-                <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
-            </template>
+    <div class="form-card">
+        <!-- Navigation Tabs -->
+        <div class="form-tabs">
+            <button class={createTabClass} data-tab="create" onclick={handleTabChange}>
+                Report Incident
+            </button>
+            <button class={editTabClass} data-tab="edit" onclick={handleTabChange}>
+                Search & Edit Incident
+            </button>
+        </div>
 
-            <!-- Error Banner -->
-            <template if:true={error}>
-                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
-                    <span class="slds-assistive-text">error</span>
-                    <h2>{error}</h2>
+        <!-- Success State -->
+        <template if:true={isSuccess}>
+            <div class="success-container">
+                <div class="success-icon">✔️</div>
+                <h2>Incident Saved</h2>
+                <p class="success-message">Incident <strong>{incidentNumber}</strong> has been saved successfully.</p>
+                <div class="success-actions">
+                    <a href={incidentRecordUrl} target="_blank" class="view-link-btn">View Incident</a>
                 </div>
-            </template>
+            </div>
+        </template>
 
-            <!-- Success State -->
-            <template if:true={isSuccess}>
-                <div class="slds-align_absolute-center slds-m-around_large slds-flex-column">
-                    <lightning-icon icon-name="action:approval" size="large" alternative-text="Success"></lightning-icon>
-                    <div class="slds-text-heading_medium slds-m-top_medium">Incident Created Successfully</div>
-                    <div class="slds-text-body_regular slds-m-top_small">Incident Number: <strong>{incidentNumber}</strong></div>
-                    <div class="slds-m-top_medium">
-                        <a href={incidentRecordUrl} target="_blank" class="slds-button slds-button_brand">View Incident</a>
+        <!-- Form Content -->
+        <template if:false={isSuccess}>
+            <!-- Search bar (Only shown on Search & Edit tab when not already editing) -->
+            <template if:true={isEditTabActive}>
+                <div class="search-section">
+                    <div class="search-box">
+                        <lightning-input
+                            type="search"
+                            label="Find Existing Incident"
+                            value={searchKey}
+                            placeholder="Type incident number or subject (min 2 chars)..."
+                            onchange={handleSearchKeyChange}
+                            class="custom-search-input">
+                        </lightning-input>
                     </div>
-                </div>
-            </template>
 
-            <!-- Form Fields -->
-            <template if:false={isSuccess}>
-                <div class="slds-form slds-form_stacked">
-                    <template for:each={fields} for:item="field">
-                        <div key={field.fieldName} class="slds-form-element slds-m-bottom_small">
-                            <!-- Picklist (Combobox) -->
-                            <template if:true={field.isPicklist}>
-                                <lightning-combobox
-                                    label={field.label}
-                                    value={field.value}
-                                    data-name={field.fieldName}
-                                    options={field.options}
-                                    onchange={handleFieldChange}
-                                    required={field.isRequired}
-                                    message-when-value-missing="This field is required">
-                                </lightning-combobox>
-                            </template>
+                    <!-- Search Results dropdown list -->
+                    <template if:true={isSearching}>
+                        <div class="search-loading">Searching...</div>
+                    </template>
 
-                            <!-- Long Text Area (Textarea) -->
-                            <template if:true={field.isTextarea}>
-                                <lightning-textarea
-                                    label={field.label}
-                                    value={field.value}
-                                    data-name={field.fieldName}
-                                    onchange={handleFieldChange}
-                                    required={field.isRequired}
-                                    message-when-value-missing="This field is required">
-                                </lightning-textarea>
+                    <template if:true={searchResults.length}>
+                        <ul class="search-results-list">
+                            <template for:each={searchResults} for:item="result">
+                                <li key={result.incidentId} data-id={result.incidentId} onclick={handleSelectIncident} class="search-result-item">
+                                    <div class="result-header">
+                                        <span class="result-number">{result.incidentNumber}</span>
+                                        <span class="result-status-badge">{result.status}</span>
+                                    </div>
+                                    <div class="result-subject">{result.subject}</div>
+                                </li>
                             </template>
-
-                            <!-- Text Input -->
-                            <template if:true={field.isInput}>
-                                <lightning-input
-                                    type="text"
-                                    label={field.label}
-                                    value={field.value}
-                                    data-name={field.fieldName}
-                                    onchange={handleFieldChange}
-                                    required={field.isRequired}
-                                    message-when-value-missing="This field is required">
-                                </lightning-input>
-                            </template>
-                        </div>
+                        </ul>
                     </template>
                 </div>
+            </template>
 
-                <!-- Footer Buttons -->
-                <div class="slds-m-top_medium slds-align_absolute-center">
-                    <button class="slds-button slds-button_neutral slds-m-right_small" onclick={handleCancel}>Cancel</button>
-                    <button class="slds-button slds-button_brand" onclick={handleSubmit} disabled={isSubmitDisabled}>Submit</button>
+            <!-- Main Form Card (Visible always in Create, or in Edit tab if an incidentId is set) -->
+            <template if:true={fields.length}>
+                <div class="form-content-area">
+                    <header class="form-header">
+                        <h3>{formHeaderTitle}</h3>
+                        <p>{formHeaderSub}</p>
+                    </header>
+
+                    <main class="form-body">
+                        <!-- Spinner -->
+                        <template if:true={isLoading}>
+                            <div class="spinner-container">
+                                <lightning-spinner alternative-text="Saving Incident..." size="medium"></lightning-spinner>
+                            </div>
+                        </template>
+
+                        <!-- Error Notification -->
+                        <template if:true={error}>
+                            <div class="error-banner">
+                                <div class="error-icon">⚠️</div>
+                                <div class="error-message">
+                                    <strong>Operation failed:</strong> {error}
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Form Fields Grid -->
+                        <div class="form-grid">
+                            <template for:each={fields} for:item="field">
+                                <div key={field.fieldName} class={field.gridClass}>
+                                    <!-- Picklist (Combobox) -->
+                                    <template if:true={field.isPicklist}>
+                                        <lightning-combobox
+                                            label={field.label}
+                                            value={field.value}
+                                            data-name={field.fieldName}
+                                            options={field.options}
+                                            onchange={handleFieldChange}
+                                            required={field.isRequired}
+                                            message-when-value-missing="This field is required"
+                                            class="custom-input">
+                                        </lightning-combobox>
+                                    </template>
+
+                                    <!-- Long Text Area (Textarea) -->
+                                    <template if:true={field.isTextarea}>
+                                        <lightning-textarea
+                                            label={field.label}
+                                            value={field.value}
+                                            data-name={field.fieldName}
+                                            onchange={handleFieldChange}
+                                            required={field.isRequired}
+                                            message-when-value-missing="This field is required"
+                                            class="custom-input">
+                                        </lightning-textarea>
+                                    </template>
+
+                                    <!-- Text Input -->
+                                    <template if:true={field.isInput}>
+                                        <lightning-input
+                                            type="text"
+                                            label={field.label}
+                                            value={field.value}
+                                            data-name={field.fieldName}
+                                            onchange={handleFieldChange}
+                                            required={field.isRequired}
+                                            message-when-value-missing="This field is required"
+                                            class="custom-input">
+                                        </lightning-input>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </main>
+
+                    <footer class="form-footer">
+                        <button class="cancel-button slds-m-right_small" onclick={handleCancel}>
+                            Cancel
+                        </button>
+                        <button class="submit-button" onclick={handleSubmit} disabled={isSubmitDisabled}>
+                            {submitButtonLabel}
+                        </button>
+                    </footer>
                 </div>
             </template>
-        </div>
-    </lightning-card>
+        </template>
+    </div>
 </template>

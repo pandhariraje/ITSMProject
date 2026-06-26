@@ -91,6 +91,7 @@ subagent incident_management:
                     description: "The pre-populated incident form data structure"
                     label: "Incident Form"
                     is_required: True
+                    is_user_input: True
                     complex_data_type_name: "c__createIncidentFormInputType"
             outputs:
                 incidentForm: object

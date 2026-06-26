@@ -8,6 +8,10 @@ global class IncidentManagementFormWrapper {
     global String description;
 
     @AuraEnabled
+    @InvocableVariable(label='Category' description='Category of the incident')
+    global String category;
+
+    @AuraEnabled
     @InvocableVariable(label='Urgency' description='Urgency of the incident')
     global String urgency;
 
