@@ -1,6 +1,6 @@
 public with sharing class ShowIncidentManagementFormAction {
     public class Request {
-        @InvocableVariable(label='Incident Form' description='The incident form data structure' required=true)
+        @InvocableVariable(label='Incident Form' description='The incident form data structure' required=false)
         public IncidentManagementFormWrapper incidentForm;
     }
 

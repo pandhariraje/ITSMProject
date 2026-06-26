@@ -21,6 +21,7 @@ variables:
     incident_priority: mutable string = ""
     search_ticket_number: mutable string = ""
     incident_found: mutable boolean = False
+    incident_form_var: mutable object = {}
 
 language:
     default_locale: "en_US"
@@ -66,10 +67,11 @@ subagent incident_management:
                     with ticketNumber = @variables.search_ticket_number
                     set @variables.incident_id = @outputs.incidentForm.incidentId
                     set @variables.incident_found = @outputs.found
+                    set @variables.incident_form_var = @outputs.incidentForm
 
             if @variables.incident_found == True:
                 run @actions.show_form
-                    with incidentForm = @outputs.incidentForm
+                    with incidentForm = @variables.incident_form_var
                 set @variables.incident_id = @outputs.incidentForm.incidentId
                 set @variables.incident_number = @outputs.incidentForm.incidentNumber
                 set @variables.incident_status = @outputs.incidentForm.status
@@ -81,7 +83,6 @@ subagent incident_management:
                 | I couldn't find incident {!@variables.search_ticket_number}.
                 | Let's open the Incident Management form so you can search or create one.
                 run @actions.show_form
-                    with incidentForm = @outputs.incidentForm
                 set @variables.incident_id = @outputs.incidentForm.incidentId
                 set @variables.incident_number = @outputs.incidentForm.incidentNumber
                 set @variables.incident_status = @outputs.incidentForm.status
@@ -89,10 +90,13 @@ subagent incident_management:
                 set @variables.incident_created = True
                 set @variables.search_ticket_number = ""
 
-            | You must immediately invoke {!@actions.show_form} to present the incident form.
-              Do NOT ask for any details, fields, or confirmation conversationally.
-              Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_form}.
-              Pass any details the user has already mentioned (e.g. subject, description) to pre-populate properties inside the incidentForm parameter.
+            if @variables.incident_id == "":
+                run @actions.show_form
+                set @variables.incident_id = @outputs.incidentForm.incidentId
+                set @variables.incident_number = @outputs.incidentForm.incidentNumber
+                set @variables.incident_status = @outputs.incidentForm.status
+                set @variables.incident_priority = @outputs.incidentForm.priority
+                set @variables.incident_created = True
         actions:
             get_incident_details: @actions.get_incident_details
                 description: "Fetches details of an incident by its ID or number."
@@ -135,7 +139,7 @@ subagent incident_management:
                 incidentForm: object
                     description: "The pre-populated incident form data structure"
                     label: "Incident Form"
-                    is_required: True
+                    is_required: False
                     is_user_input: True
                     complex_data_type_name: "c__incidentManagementFormInputType"
             outputs:
