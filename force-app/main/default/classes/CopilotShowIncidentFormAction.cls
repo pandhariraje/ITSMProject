@@ -1,7 +1,7 @@
 public with sharing class CopilotShowIncidentFormAction {
 
     public class Request {
-        @InvocableVariable(label='Incident Form' description='The incident form data structure' required=false)
+        @InvocableVariable(label='Incident Form' description='The incident form data structure' required=true)
         public CopilotIncidentFormWrapper incidentForm;
     }
 
