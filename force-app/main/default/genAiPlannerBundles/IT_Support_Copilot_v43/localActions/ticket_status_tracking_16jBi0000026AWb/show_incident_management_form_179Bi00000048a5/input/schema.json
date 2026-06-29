@@ -1,0 +1,14 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "incidentForm" : {
+      "title" : "Incident Form",
+      "description" : "The pre-populated incident form data structure",
+      "lightning:type" : "c__incidentManagementFormInputType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

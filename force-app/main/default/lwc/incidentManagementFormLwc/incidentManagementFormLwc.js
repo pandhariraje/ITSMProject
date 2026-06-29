@@ -225,7 +225,7 @@ export default class IncidentManagementFormLwc extends LightningElement {
     }
 
     get submitButtonLabel() {
-        return this.isEditMode ? 'Update Incident' : 'Submit Incident';
+        return 'Submit';
     }
 
     get formHeaderTitle() {

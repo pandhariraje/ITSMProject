@@ -179,8 +179,9 @@ subagent ticket_status_tracking:
               - If the user wants to check the status of a specific ticket, ask for the Ticket Number if not provided, then call {!@actions.check_ticket_status} to fetch details.
               - When checking a specific ticket, present the status, ticket number (formatted as a Markdown hyperlink: `[View Ticket <TicketNumber>](/lightning/r/<TicketType>/<TicketId>/view)` where TicketType is Incident or ServiceRequest without spaces), priority, assigned user, assigned group, and last updated date.
               - If the user wants to update or change the priority or status of a ticket:
-                - Ask for the Ticket Number if not already provided in context.
-                - You MUST immediately invoke {!@actions.show_incident_management_form} passing the ticket number in property `incidentForm.incidentNumber` to present the interactive UI screen with dynamic Status and Priority picklists.
+                - Ask for the Ticket Number if not provided.
+                - Once you have the Ticket Number, you MUST immediately invoke {!@actions.show_incident_management_form} with property `incidentForm.incidentNumber` set to the ticket number.
+                - Do NOT ask for any details conversationally. Show the form immediately by invoking {!@actions.show_incident_management_form}.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             check_ticket_status: @actions.check_ticket_status
@@ -333,7 +334,7 @@ subagent ticket_status_tracking:
                 incidentForm: object
                     description: "The pre-populated incident form data structure"
                     label: "Incident Form"
-                    is_required: False
+                    is_required: True
                     is_user_input: True
                     complex_data_type_name: "c__incidentManagementFormInputType"
             outputs:
