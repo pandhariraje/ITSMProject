@@ -180,7 +180,7 @@ subagent ticket_status_tracking:
               - When checking a specific ticket, present the status, ticket number (formatted as a Markdown hyperlink: `[View Ticket <TicketNumber>](/lightning/r/<TicketType>/<TicketId>/view)` where TicketType is Incident or ServiceRequest without spaces), priority, assigned user, assigned group, and last updated date.
               - If the user wants to update or change the priority or status of a ticket:
                 - Ask for the Ticket Number if not already provided in context.
-                - You MUST immediately invoke {!@actions.show_incident_management_form} passing the ticket number to present the interactive UI screen with dynamic Status and Priority picklists.
+                - You MUST immediately invoke {!@actions.show_incident_management_form} passing the ticket number in property `incidentForm.incidentNumber` to present the interactive UI screen with dynamic Status and Priority picklists.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             check_ticket_status: @actions.check_ticket_status
@@ -196,7 +196,7 @@ subagent ticket_status_tracking:
                 with ticketNumber = ...
             show_incident_management_form: @actions.show_incident_management_form
                 description: "Display the Incident Management UI form with picklists for status and priority."
-                with ticketNumber = ...
+                with incidentForm = ...
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router when the operation is complete and the user wants help with something else."
     actions:
@@ -330,10 +330,6 @@ subagent ticket_status_tracking:
             label: "Show Incident Management Form"
             target: "apex://ShowIncidentManagementFormAction"
             inputs:
-                ticketNumber: string
-                    description: "The Incident ticket number or ID"
-                    label: "Incident Number or ID"
-                    is_required: False
                 incidentForm: object
                     description: "The pre-populated incident form data structure"
                     label: "Incident Form"
