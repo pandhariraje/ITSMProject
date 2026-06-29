@@ -41,4 +41,21 @@ private class ITSMCopilotActionTest {
         System.assertNotEquals(null, results[0].incidentId, 'Incident ID should not be null');
         System.assertEquals('Laptop display flickering', results[0].subject, 'Subject should match');
     }
+
+    @isTest
+    static void testCreateIncidentLwc() {
+        Test.startTest();
+        ITSMCopilotCreateIncidentAction.Result res = ITSMCopilotCreateIncidentAction.createIncident(
+            'LWC Test Incident',
+            'LWC Test Description',
+            'New',
+            'Medium',
+            'Medium',
+            'Medium'
+        );
+        Test.stopTest();
+
+        System.assert(res.isSuccess, 'Expected LWC creation to succeed');
+        System.assertNotEquals(null, res.incidentId, 'Incident ID should not be null');
+    }
 }

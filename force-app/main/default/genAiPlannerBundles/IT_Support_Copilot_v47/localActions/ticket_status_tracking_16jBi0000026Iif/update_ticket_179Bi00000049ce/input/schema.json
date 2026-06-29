@@ -1,0 +1,28 @@
+{
+  "required" : [ "ticketNumber" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "priority" : {
+      "title" : "Priority",
+      "description" : "The new priority (Low, Medium, High, Critical)",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "status" : {
+      "title" : "Status",
+      "description" : "The new status (e.g. New, Open, In Progress, On Hold, Resolved, Closed, Escalated)",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "ticketNumber" : {
+      "title" : "Ticket Number",
+      "description" : "The Incident Number or Service Request Number",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -9,9 +9,13 @@ public with sharing class ITSMCopilotCreateIncidentAction {
         @AuraEnabled
         public String description;
 
-        @InvocableVariable(label='Category' description='Category of the incident' required=false)
+        @InvocableVariable(label='Status' description='Status of the incident' required=false)
         @AuraEnabled
-        public String category;
+        public String status;
+
+        @InvocableVariable(label='Priority' description='Priority level (Critical, High, Moderate, Low)' required=false)
+        @AuraEnabled
+        public String priority;
 
         @InvocableVariable(label='Urgency' description='Urgency level (High, Medium, Low)' required=false)
         @AuraEnabled
@@ -20,14 +24,6 @@ public with sharing class ITSMCopilotCreateIncidentAction {
         @InvocableVariable(label='Impact' description='Impact level (High, Medium, Low)' required=false)
         @AuraEnabled
         public String impact;
-
-        @InvocableVariable(label='Priority' description='Priority level (Critical, High, Moderate, Low)' required=false)
-        @AuraEnabled
-        public String priority;
-
-        @InvocableVariable(label='Status' description='Status of the incident' required=false)
-        @AuraEnabled
-        public String status;
     }
 
     public class Result {
@@ -75,15 +71,21 @@ public with sharing class ITSMCopilotCreateIncidentAction {
     }
 
     @AuraEnabled
-    public static Result createIncidentLwc(String subject, String description, String category, String urgency, String impact, String priority, String status) {
+    public static Result createIncident(
+        String subject,
+        String description,
+        String status,
+        String priority,
+        String urgency,
+        String impact
+    ) {
         Request req = new Request();
         req.subject = subject;
         req.description = description;
-        req.category = category;
+        req.status = status;
+        req.priority = priority;
         req.urgency = urgency;
         req.impact = impact;
-        req.priority = priority;
-        req.status = status;
         return createSingleIncident(req);
     }
 
@@ -93,23 +95,10 @@ public with sharing class ITSMCopilotCreateIncidentAction {
             Incident inc = new Incident();
             inc.Subject = req.subject;
             inc.Description = req.description;
-            if (String.isNotBlank(req.category)) {
-                inc.Category = req.category;
-            }
-            if (String.isNotBlank(req.urgency)) {
-                inc.Urgency = req.urgency;
-            }
-            if (String.isNotBlank(req.impact)) {
-                inc.Impact = req.impact;
-            }
-            if (String.isNotBlank(req.priority)) {
-                inc.Priority = req.priority;
-            }
-            if (String.isNotBlank(req.status)) {
-                inc.Status = req.status;
-            } else {
-                inc.Status = 'New';
-            }
+            inc.Status = req.status;
+            inc.Priority = req.priority;
+            inc.Urgency = req.urgency;
+            inc.Impact = req.impact;
 
             insert inc;
 

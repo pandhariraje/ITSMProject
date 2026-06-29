@@ -1,22 +1,55 @@
-import { LightningElement, api, track } from 'lwc';
-import createIncidentLwc from '@salesforce/apex/ITSMCopilotCreateIncidentAction.createIncidentLwc';
+import { LightningElement, api, wire, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+import INCIDENT_OBJECT from '@salesforce/schema/Incident';
+import SUBJECT_FIELD from '@salesforce/schema/Incident.Subject';
+import DESCRIPTION_FIELD from '@salesforce/schema/Incident.Description';
+import STATUS_FIELD from '@salesforce/schema/Incident.Status';
+import PRIORITY_FIELD from '@salesforce/schema/Incident.Priority';
+import URGENCY_FIELD from '@salesforce/schema/Incident.Urgency';
+import IMPACT_FIELD from '@salesforce/schema/Incident.Impact';
+
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+
+import createIncident from '@salesforce/apex/ITSMCopilotCreateIncidentAction.createIncident';
 
 export default class ItsmCopilotCreateIncidentForm extends LightningElement {
     @api subject = '';
     @api description = '';
-    @api category = '';
+    @api status = 'New';
+    @api priority = 'Medium';
     @api urgency = 'Medium';
     @api impact = 'Medium';
-    @api priority = 'Medium';
-    @api status = 'New';
 
-    @track localSubject = '';
-    @track localDescription = '';
-    @track localCategory = '';
-    @track localUrgency = 'Medium';
-    @track localImpact = 'Medium';
-    @track localPriority = 'Medium';
-    @track localStatus = 'New';
+    @track statusOptions = [
+        { label: 'New', value: 'New' },
+        { label: 'Open', value: 'Open' },
+        { label: 'In Process', value: 'In Process' },
+        { label: 'Resolved', value: 'Resolved' },
+        { label: 'Closed', value: 'Closed' }
+    ];
+    @track priorityOptions = [
+        { label: 'Critical', value: 'Critical' },
+        { label: 'High', value: 'High' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'Low', value: 'Low' }
+    ];
+    @track urgencyOptions = [
+        { label: 'High', value: 'High' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'Low', value: 'Low' }
+    ];
+    @track impactOptions = [
+        { label: 'High', value: 'High' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'Low', value: 'Low' }
+    ];
+
+    @track isLoading = false;
+    @track isSubmitted = false;
+    @track customError = '';
+    @track incidentNumber = '';
 
     _value;
 
@@ -28,121 +61,83 @@ export default class ItsmCopilotCreateIncidentForm extends LightningElement {
     set value(val) {
         this._value = val;
         if (val) {
-            this.localSubject = val.subject || '';
-            this.localDescription = val.description || '';
-            this.localCategory = val.category || '';
-            this.localUrgency = val.urgency || 'Medium';
-            this.localImpact = val.impact || 'Medium';
-            this.localPriority = val.priority || 'Medium';
-            this.localStatus = val.status || 'New';
+            this.subject = val.subject || this.subject;
+            this.description = val.description || this.description;
+            this.status = val.status || this.status;
+            this.priority = val.priority || this.priority;
+            this.urgency = val.urgency || this.urgency;
+            this.impact = val.impact || this.impact;
         }
     }
 
-    connectedCallback() {
-        if (!this.value) {
-            this.localSubject = this.subject || '';
-            this.localDescription = this.description || '';
-            this.localCategory = this.category || '';
-            this.localUrgency = this.urgency || 'Medium';
-            this.localImpact = this.impact || 'Medium';
-            this.localPriority = this.priority || 'Medium';
-            this.localStatus = this.status || 'New';
+    @wire(getObjectInfo, { objectApiName: INCIDENT_OBJECT })
+    objectInfo;
+
+    @wire(getPicklistValues, {
+        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
+        fieldApiName: STATUS_FIELD
+    })
+    statusPicklist({ data }) {
+        if (data && data.values && data.values.length > 0) {
+            this.statusOptions = data.values;
         }
     }
 
-    @api incidentId = '';
-    @api incidentNumber = '';
-    @api isSuccess = false;
-    @api errorMessage = '';
-
-    @track isLoading = false;
-    @track isSubmitted = false;
-    @track isCancelled = false;
-    @track customError = '';
-
-    categoryOptions = [
-        { label: '--None--', value: '' },
-        { label: 'Software', value: 'Software' },
-        { label: 'Hardware', value: 'Hardware' },
-        { label: 'Network', value: 'Network' },
-        { label: 'Access', value: 'Access' }
-    ];
-
-    urgencyOptions = [
-        { label: 'High', value: 'High' },
-        { label: 'Medium', value: 'Medium' },
-        { label: 'Low', value: 'Low' }
-    ];
-
-    impactOptions = [
-        { label: 'High', value: 'High' },
-        { label: 'Medium', value: 'Medium' },
-        { label: 'Low', value: 'Low' }
-    ];
-
-    priorityOptions = [
-        { label: 'Critical', value: 'Critical' },
-        { label: 'High', value: 'High' },
-        { label: 'Medium', value: 'Medium' },
-        { label: 'Low', value: 'Low' }
-    ];
-
-    statusOptions = [
-        { label: 'New', value: 'New' },
-        { label: 'Open', value: 'Open' },
-        { label: 'In Process', value: 'In Process' },
-        { label: 'Resolved', value: 'Resolved' },
-        { label: 'Completed', value: 'Completed' },
-        { label: 'Problem Created', value: 'Problem Created' },
-        { label: 'Closed', value: 'Closed' }
-    ];
-
-    handleFieldChange(event) {
-        const fieldName = event.target.dataset.name;
-        if (fieldName === 'subject') {
-            this.localSubject = event.target.value;
-        } else if (fieldName === 'description') {
-            this.localDescription = event.target.value;
-        } else if (fieldName === 'category') {
-            this.localCategory = event.target.value;
-        } else if (fieldName === 'urgency') {
-            this.localUrgency = event.target.value;
-            this.calculatePriority();
-        } else if (fieldName === 'impact') {
-            this.localImpact = event.target.value;
-            this.calculatePriority();
-        } else if (fieldName === 'priority') {
-            this.localPriority = event.target.value;
-        } else if (fieldName === 'status') {
-            this.localStatus = event.target.value;
+    @wire(getPicklistValues, {
+        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
+        fieldApiName: PRIORITY_FIELD
+    })
+    priorityPicklist({ data }) {
+        if (data && data.values && data.values.length > 0) {
+            this.priorityOptions = data.values;
         }
     }
 
-    calculatePriority() {
-        if (this.localImpact === 'High' && this.localUrgency === 'High') {
-            this.localPriority = 'Critical';
-        } else if (this.localImpact === 'High' || this.localUrgency === 'High') {
-            this.localPriority = 'High';
-        } else if (this.localImpact === 'Low' && this.localUrgency === 'Low') {
-            this.localPriority = 'Low';
-        } else {
-            this.localPriority = 'Medium';
+    @wire(getPicklistValues, {
+        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
+        fieldApiName: URGENCY_FIELD
+    })
+    urgencyPicklist({ data }) {
+        if (data && data.values && data.values.length > 0) {
+            this.urgencyOptions = data.values;
         }
     }
 
-    handleCancel() {
-        this.isCancelled = true;
-        this.dispatchEvent(new CustomEvent('valuechange', {
-            detail: {
-                value: {
-                    actionStatus: 'Cancelled',
-                    message: 'Incident creation has been cancelled. No record was created.'
-                }
-            }
-        }));
+    @wire(getPicklistValues, {
+        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
+        fieldApiName: IMPACT_FIELD
+    })
+    impactPicklist({ data }) {
+        if (data && data.values && data.values.length > 0) {
+            this.impactOptions = data.values;
+        }
     }
 
-    handleSubmit() {
+    handleSubject(event) {
+        this.subject = event.target.value;
+    }
+
+    handleDescription(event) {
+        this.description = event.target.value;
+    }
+
+    handleStatus(event) {
+        this.status = event.detail.value;
+    }
+
+    handlePriority(event) {
+        this.priority = event.detail.value;
+    }
+
+    handleUrgency(event) {
+        this.urgency = event.detail.value;
+    }
+
+    handleImpact(event) {
+        this.impact = event.detail.value;
+    }
+
+    createIncident() {
         const isInputsValid = [...this.template.querySelectorAll('lightning-input, lightning-textarea, lightning-combobox')]
             .reduce((validSoFar, inputField) => {
                 inputField.reportValidity();
@@ -156,23 +151,27 @@ export default class ItsmCopilotCreateIncidentForm extends LightningElement {
         this.isLoading = true;
         this.customError = '';
 
-        createIncidentLwc({
-            subject: this.localSubject,
-            description: this.localDescription,
-            category: this.localCategory,
-            urgency: this.localUrgency,
-            impact: this.localImpact,
-            priority: this.localPriority,
-            status: this.localStatus
+        createIncident({
+            subject: this.subject,
+            description: this.description,
+            status: this.status,
+            priority: this.priority,
+            urgency: this.urgency,
+            impact: this.impact
         })
-        .then((result) => {
+        .then(result => {
             this.isLoading = false;
             if (result.isSuccess) {
-                this.incidentId = result.incidentId;
                 this.incidentNumber = result.incidentNumber;
-                this.isSuccess = true;
                 this.isSubmitted = true;
-                this.errorMessage = '';
+
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Incident Created Successfully (' + result.incidentNumber + ')',
+                        variant: 'success'
+                    })
+                );
 
                 this.dispatchEvent(new CustomEvent('valuechange', {
                     detail: {
@@ -187,26 +186,26 @@ export default class ItsmCopilotCreateIncidentForm extends LightningElement {
                     }
                 }));
             } else {
-                this.isSuccess = false;
-                this.errorMessage = result.errorMessage;
-                this.customError = "I couldn't create the Incident due to an error. Please review the information and try again.";
+                this.customError = result.errorMessage || 'Error creating incident.';
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: this.customError,
+                        variant: 'error'
+                    })
+                );
             }
         })
-        .catch(() => {
+        .catch(error => {
             this.isLoading = false;
-            this.isSuccess = false;
-            this.customError = "I couldn't create the Incident due to an error. Please review the information and try again.";
+            this.customError = error.body ? error.body.message : 'Error creating incident.';
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: this.customError,
+                    variant: 'error'
+                })
+            );
         });
-    }
-
-    handleNextAction(event) {
-        const selectedAction = event.target.dataset.action;
-        this.dispatchEvent(new CustomEvent('valuechange', {
-            detail: {
-                value: {
-                    nextAction: selectedAction
-                }
-            }
-        }));
     }
 }
