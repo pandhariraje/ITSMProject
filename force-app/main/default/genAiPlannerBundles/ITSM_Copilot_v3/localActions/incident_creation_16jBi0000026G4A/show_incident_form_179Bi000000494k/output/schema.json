@@ -1,0 +1,14 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "incidentForm" : {
+      "title" : "Incident Form",
+      "description" : "Returned incident form structure",
+      "lightning:type" : "c__itsmCopilotIncidentFormInputType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,61 @@
+<template>
+    <lightning-card title="Create Incident" icon-name="standard:incident">
+        <div class="slds-p-around_medium">
+
+            <lightning-input
+                label="Subject"
+                value={subject}
+                onchange={handleSubject}
+                required>
+            </lightning-input>
+
+            <lightning-textarea
+                label="Description"
+                value={description}
+                onchange={handleDescription}
+                class="slds-m-top_small">
+            </lightning-textarea>
+
+            <lightning-combobox
+                label="Status"
+                value={status}
+                options={statusOptions}
+                onchange={handleStatus}
+                class="slds-m-top_small">
+            </lightning-combobox>
+
+            <lightning-combobox
+                label="Priority"
+                value={priority}
+                options={priorityOptions}
+                onchange={handlePriority}
+                class="slds-m-top_small">
+            </lightning-combobox>
+
+            <lightning-combobox
+                label="Urgency"
+                value={urgency}
+                options={urgencyOptions}
+                onchange={handleUrgency}
+                class="slds-m-top_small">
+            </lightning-combobox>
+
+            <lightning-combobox
+                label="Impact"
+                value={impact}
+                options={impactOptions}
+                onchange={handleImpact}
+                class="slds-m-top_small">
+            </lightning-combobox>
+
+            <div class="slds-m-top_large slds-align_absolute-center">
+                <lightning-button
+                    variant="brand"
+                    label="Create Incident"
+                    onclick={createIncident}>
+                </lightning-button>
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

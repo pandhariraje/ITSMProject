@@ -1,0 +1,88 @@
+system:
+    instructions: |
+        You are ITSM Copilot, an intelligent assistant for IT Service Management.
+        Your primary role is to assist employees with IT issues and facilitate Incident Creation via a custom screen form.
+
+        Keep responses concise, clear, and professional at all times.
+    messages:
+        welcome: "Hello! I'm ITSM Copilot. How can I help you today?"
+        error: "Sorry, it looks like something went wrong."
+
+config:
+    agent_label: "ITSM Copilot"
+    agent_type: "AgentforceEmployeeAgent"
+    description: "ITSM Copilot agent handling Incident Creation workflow."
+    developer_name: "ITSM_Copilot"
+
+variables:
+    incident_created: mutable boolean = False
+        description: "Indicates whether the incident form has been completed"
+    last_incident_id: mutable string = ""
+        description: "The ID of the created incident record"
+    last_incident_number: mutable string = ""
+        description: "The auto-number reference of the created incident"
+    last_subject: mutable string = ""
+        description: "The subject of the created incident"
+    last_status: mutable string = ""
+        description: "The status of the created incident"
+    last_priority: mutable string = ""
+        description: "The priority of the created incident"
+
+language:
+    default_locale: "en_US"
+    additional_locales: ""
+    all_additional_locales: False
+
+knowledge:
+    rag_feature_config_id: ""
+    citations_url: ""
+    citations_enabled: False
+
+start_agent agent_router:
+    description: "Routes employee requests to the Incident Creation flow."
+    reasoning:
+        instructions: ->
+            | You are a router ONLY. When an employee asks to create an incident, report an issue, or states a problem (e.g., 'Create an incident', 'I have a problem', 'My laptop isn't working', 'Raise a ticket'), immediately transition to the incident creation subagent. Do NOT reply with conversational text directly.
+        actions:
+            go_to_incident_creation: @utils.transition to @subagent.incident_creation
+                description: "Route to Incident Creation when user reports an issue, asks to create an incident, or needs a ticket raised."
+
+subagent incident_creation:
+    label: "Incident Creation"
+    description: "Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident."
+    reasoning:
+        instructions: ->
+            if @variables.incident_created == True:
+                set @variables.incident_created = False
+                transition to @subagent.agent_router
+
+            | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
+              Do NOT ask for any details, fields, or confirmation conversationally.
+              Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
+              Pass any details the user has already mentioned (e.g. subject, description, urgency, impact, priority) to pre-populate properties inside the show_incident_form action input `incidentForm`.
+              Always set status to "New" when calling show_incident_form.
+        actions:
+            show_incident_form: @actions.show_incident_form
+                description: "Displays the custom LWC form for incident creation."
+                with incidentForm = ...
+                set @variables.incident_created = True
+            back_to_router: @utils.transition to @subagent.agent_router
+                description: "Return to main router when done."
+    actions:
+        show_incident_form:
+            description: "Presents the Create Incident LWC screen form to collect fields."
+            label: "Show Create Incident Form"
+            target: "apex://ITSMCopilotShowIncidentFormAction"
+            inputs:
+                incidentForm: object
+                    description: "The pre-populated incident form structure"
+                    label: "Incident Form"
+                    is_required: True
+                    is_user_input: True
+                    complex_data_type_name: "c__itsmCopilotIncidentFormInputType"
+            outputs:
+                incidentForm: object
+                    label: "Incident Form"
+                    description: "Returned incident form structure"
+                    filter_from_agent: False
+                    complex_data_type_name: "c__itsmCopilotIncidentFormInputType"

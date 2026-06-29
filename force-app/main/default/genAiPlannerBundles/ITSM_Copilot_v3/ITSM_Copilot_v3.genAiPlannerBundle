@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>ITSM Copilot agent handling Incident Creation workflow.</description>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jBi0000026G4A</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>incident_creation_16jBi0000026G4A</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>incident_creation_16jBi0000026G4A</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident.</description>
+        <developerName>incident_creation_16jBi0000026G4A</developerName>
+        <genAiPluginInstructions>
+            <description>You are ITSM Copilot, an intelligent assistant for IT Service Management.
+Your primary role is to assist employees with IT issues and facilitate Incident Creation via a custom screen form.
+
+Keep responses concise, clear, and professional at all times.</description>
+            <developerName>instruction0_179Bi000000494k</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi000000494k</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>show_incident_form_179Bi000000494k</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>show_incident_form_179Bi000000494k</fullName>
+            <description>Presents the Create Incident LWC screen form to collect fields.</description>
+            <developerName>show_incident_form_179Bi000000494k</developerName>
+            <invocationTarget>ITSMCopilotShowIncidentFormAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>show_incident_form</localDeveloperName>
+            <masterLabel>Show Create Incident Form</masterLabel>
+        </localActions>
+        <localDeveloperName>incident_creation</localDeveloperName>
+        <masterLabel>Incident Creation</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jBi0000026G4A</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Routes employee requests to the Incident Creation flow.</description>
+        <developerName>agent_router_16jBi0000026G4A</developerName>
+        <genAiPluginInstructions>
+            <description>You are ITSM Copilot, an intelligent assistant for IT Service Management.
+Your primary role is to assist employees with IT issues and facilitate Incident Creation via a custom screen form.
+
+Keep responses concise, clear, and professional at all times.</description>
+            <developerName>instruction0_179Bi000000494j</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi000000494j</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>ITSM Copilot</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

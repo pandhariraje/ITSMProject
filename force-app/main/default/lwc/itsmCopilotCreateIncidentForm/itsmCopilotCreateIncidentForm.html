@@ -1,0 +1,199 @@
+<template>
+    <div class="modal-card">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Processing..." size="medium"></lightning-spinner>
+        </template>
+
+        <template if:false={isSubmitted}>
+            <template if:false={isCancelled}>
+                <!-- Header -->
+                <div class="modal-header">
+                    <div class="header-left">
+                        <div class="header-icon-container">
+                            <lightning-icon icon-name="utility:agent" size="medium" class="header-icon"></lightning-icon>
+                        </div>
+                        <div class="header-text">
+                            <h2>Create New Incident</h2>
+                            <p class="header-subtitle">Please provide the details below to create a new incident.</p>
+                        </div>
+                    </div>
+                    <button class="close-button" onclick={handleCancel} title="Close">
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </div>
+
+                <!-- Error Banner if any -->
+                <template if:true={customError}>
+                    <div class="error-banner">
+                        <lightning-icon icon-name="utility:error" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                        <span>{customError}</span>
+                    </div>
+                </template>
+
+                <!-- Body (2 Columns) -->
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <!-- Left Column -->
+                        <div class="form-column">
+                            <div class="form-field">
+                                <label class="field-label required">Subject</label>
+                                <lightning-input 
+                                    data-name="subject"
+                                    value={localSubject} 
+                                    placeholder="Enter a short subject"
+                                    onchange={handleFieldChange} 
+                                    variant="label-hidden"
+                                    required>
+                                </lightning-input>
+                            </div>
+
+                            <div class="form-field">
+                                <label class="field-label required">Description</label>
+                                <lightning-textarea 
+                                    data-name="description"
+                                    value={localDescription} 
+                                    placeholder="Please provide a detailed description of the issue..."
+                                    onchange={handleFieldChange} 
+                                    variant="label-hidden"
+                                    required>
+                                </lightning-textarea>
+                            </div>
+
+                            <div class="form-field">
+                                <div class="label-with-info">
+                                    <label class="field-label required">Impact</label>
+                                    <lightning-icon icon-name="utility:info" size="xx-small" class="info-icon" title="Impact level"></lightning-icon>
+                                </div>
+                                <lightning-combobox
+                                    data-name="impact"
+                                    value={localImpact}
+                                    options={impactOptions}
+                                    onchange={handleFieldChange}
+                                    variant="label-hidden"
+                                    required>
+                                </lightning-combobox>
+                            </div>
+
+                            <div class="form-field">
+                                <div class="label-with-info">
+                                    <label class="field-label required">Category</label>
+                                    <lightning-icon icon-name="utility:info" size="xx-small" class="info-icon" title="Incident category"></lightning-icon>
+                                </div>
+                                <lightning-combobox
+                                    data-name="category"
+                                    value={localCategory}
+                                    options={categoryOptions}
+                                    onchange={handleFieldChange}
+                                    variant="label-hidden"
+                                    required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="form-column">
+                            <div class="form-field">
+                                <label class="field-label required">Status</label>
+                                <lightning-combobox
+                                    data-name="status"
+                                    value={localStatus}
+                                    options={statusOptions}
+                                    onchange={handleFieldChange}
+                                    variant="label-hidden"
+                                    required>
+                                </lightning-combobox>
+                            </div>
+
+                            <div class="form-field">
+                                <label class="field-label required">Priority</label>
+                                <lightning-combobox
+                                    data-name="priority"
+                                    value={localPriority}
+                                    options={priorityOptions}
+                                    onchange={handleFieldChange}
+                                    variant="label-hidden"
+                                    required>
+                                </lightning-combobox>
+                                <p class="field-help-text">Priority is calculated based on Impact and Urgency, but can be adjusted if needed.</p>
+                            </div>
+
+                            <div class="form-field">
+                                <div class="label-with-info">
+                                    <label class="field-label required">Urgency</label>
+                                    <lightning-icon icon-name="utility:info" size="xx-small" class="info-icon" title="Urgency level"></lightning-icon>
+                                </div>
+                                <lightning-combobox
+                                    data-name="urgency"
+                                    value={localUrgency}
+                                    options={urgencyOptions}
+                                    onchange={handleFieldChange}
+                                    variant="label-hidden"
+                                    required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick={handleCancel}>Cancel</button>
+                    <button class="btn btn-primary" onclick={handleSubmit}>
+                        <lightning-icon icon-name="utility:save" size="x-small" class="btn-icon"></lightning-icon>
+                        <span>Create Incident</span>
+                    </button>
+                </div>
+            </template>
+        </template>
+
+        <!-- Success view -->
+        <template if:true={isSubmitted}>
+            <div class="success-card">
+                <div class="success-icon">
+                    <lightning-icon icon-name="action:approval" size="medium"></lightning-icon>
+                </div>
+                <h3>Your Incident has been created successfully.</h3>
+                
+                <div class="details-summary">
+                    <div class="detail-row">
+                        <span class="label">Incident Number:</span>
+                        <span class="value font-bold">{incidentNumber}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Subject:</span>
+                        <span class="value">{localSubject}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Status:</span>
+                        <span class="value">{localStatus}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Priority:</span>
+                        <span class="value">{localPriority}</span>
+                    </div>
+                </div>
+
+                <div class="next-actions-section">
+                    <p class="next-actions-title">What would you like to do next?</p>
+                    <div class="action-buttons">
+                        <button class="action-chip" onclick={handleNextAction} data-action="Update this Incident">Update this Incident</button>
+                        <button class="action-chip" onclick={handleNextAction} data-action="Check Incident Status">Check Incident Status</button>
+                        <button class="action-chip" onclick={handleNextAction} data-action="Create Another Incident">Create Another Incident</button>
+                        <button class="action-chip" onclick={handleNextAction} data-action="End Conversation">End Conversation</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Cancel view -->
+        <template if:true={isCancelled}>
+            <div class="cancel-card">
+                <div class="cancel-icon">
+                    <lightning-icon icon-name="utility:close" size="medium" variant="warning"></lightning-icon>
+                </div>
+                <h3>Incident creation has been cancelled. No record was created.</h3>
+                <p class="subtitle slds-m-top_small">Is there anything else I can help you with?</p>
+            </div>
+        </template>
+    </div>
+</template>
