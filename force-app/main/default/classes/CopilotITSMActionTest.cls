@@ -291,4 +291,75 @@ public class CopilotITSMActionTest {
         System.assertNotEquals(null, result.incidentNumber, 'Incident Number should be populated');
         System.assertEquals('Critical', result.priority, 'Priority override should match');
     }
+
+    @isTest
+    static void testCopilotUpdateTicketAction() {
+        // Insert test Incident
+        Incident inc = new Incident(
+            Subject = 'Update Test Incident',
+            Description = 'Update test description',
+            Category = 'Software',
+            Urgency = 'Low',
+            Impact = 'Low',
+            Priority = 'Low',
+            Status = 'New'
+        );
+        insert inc;
+        Incident insertedInc = [SELECT IncidentNumber FROM Incident WHERE Id = :inc.Id];
+
+        // Insert test Service Request
+        ServiceRequest sr = new ServiceRequest(
+            Subject = 'Update Test SR',
+            Description = 'Update test description',
+            Priority = 'Low',
+            Status = 'New'
+        );
+        insert sr;
+        ServiceRequest insertedSR = [SELECT Name FROM ServiceRequest WHERE Id = :sr.Id];
+
+        // Request 1: Update Incident Priority to High and Status to In Progress
+        CopilotUpdateTicketAction.Request req1 = new CopilotUpdateTicketAction.Request();
+        req1.ticketNumber = insertedInc.IncidentNumber;
+        req1.priority = 'High';
+        req1.status = 'In Progress';
+
+        // Request 2: Update Service Request Priority to Critical
+        CopilotUpdateTicketAction.Request req2 = new CopilotUpdateTicketAction.Request();
+        req2.ticketNumber = insertedSR.Name;
+        req2.priority = 'Critical';
+
+        // Request 3: Non-existent ticket number
+        CopilotUpdateTicketAction.Request req3 = new CopilotUpdateTicketAction.Request();
+        req3.ticketNumber = 'NON_EXISTENT_TICKET';
+        req3.priority = 'High';
+
+        Test.startTest();
+        List<CopilotUpdateTicketAction.Result> results = CopilotUpdateTicketAction.updateTicket(
+            new List<CopilotUpdateTicketAction.Request>{req1, req2, req3}
+        );
+        Test.stopTest();
+
+        System.assertEquals(3, results.size());
+
+        // Assert Req 1
+        System.assert(results[0].isSuccess);
+        System.assertEquals('Incident', results[0].ticketType);
+        System.assertEquals('High', results[0].priority);
+        System.assertEquals('In Progress', results[0].status);
+        Incident updatedInc = [SELECT Priority, Status FROM Incident WHERE Id = :inc.Id];
+        System.assertEquals('High', updatedInc.Priority);
+        System.assertEquals('In Progress', updatedInc.Status);
+
+        // Assert Req 2
+        System.assert(results[1].isSuccess);
+        System.assertEquals('Service Request', results[1].ticketType);
+        System.assertEquals('Critical', results[1].priority);
+        ServiceRequest updatedSR = [SELECT Priority, Status FROM ServiceRequest WHERE Id = :sr.Id];
+        System.assertEquals('Critical', updatedSR.Priority);
+
+        // Assert Req 3
+        System.assert(!results[2].isSuccess);
+        System.assertNotEquals(null, results[2].errorMessage);
+    }
 }
+

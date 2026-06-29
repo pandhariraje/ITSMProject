@@ -24,8 +24,8 @@
 
         <!-- Form Content -->
         <template if:false={isSuccess}>
-            <!-- Search bar (Only shown on Search & Edit tab when not already editing) -->
-            <template if:true={isEditTabActive}>
+            <!-- Search bar (Only shown on Search & Edit tab when not already editing an existing incident) -->
+            <template if:true={showSearchSection}>
                 <div class="search-section">
                     <div class="search-box">
                         <lightning-input

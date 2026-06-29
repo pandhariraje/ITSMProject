@@ -115,7 +115,8 @@ export default class IncidentManagementFormLwc extends LightningElement {
             this.fields = this.fields.map(f => {
                 const apiFieldName = f.fieldName.toLowerCase();
                 const key = Object.keys(this._value).find(k => k.toLowerCase() === apiFieldName);
-                const val = (key && this._value[key]) ? this._value[key] : f.value;
+                const rawVal = key ? this._value[key] : null;
+                const val = (rawVal !== undefined && rawVal !== null && String(rawVal).trim() !== '') ? rawVal : f.value;
                 this.fieldValues[f.fieldName] = val;
                 return { ...f, value: val };
             });
@@ -241,6 +242,10 @@ export default class IncidentManagementFormLwc extends LightningElement {
 
     get isEditTabActive() {
         return this.activeTab === 'edit';
+    }
+
+    get showSearchSection() {
+        return this.isEditTabActive && !this.isEditMode;
     }
 
     get createTabClass() {

@@ -37,12 +37,13 @@ public with sharing class GetIncidentDetailsAction {
             }
 
             String searchVal = req.ticketNumber.trim();
+            String altSearchVal = searchVal.contains('-') ? searchVal.replace('-', '') : (searchVal.startsWith('INC') && searchVal.length() > 3 ? 'INC-' + searchVal.substring(3) : searchVal);
             
             try {
                 List<Incident> incidents = [
                     SELECT Id, IncidentNumber, Subject, Description, Category, Status, Urgency, Impact, Priority 
                     FROM Incident 
-                    WHERE IncidentNumber = :searchVal OR Id = :searchVal
+                    WHERE IncidentNumber = :searchVal OR IncidentNumber = :altSearchVal OR Id = :searchVal
                     WITH USER_MODE
                     LIMIT 1
                 ];

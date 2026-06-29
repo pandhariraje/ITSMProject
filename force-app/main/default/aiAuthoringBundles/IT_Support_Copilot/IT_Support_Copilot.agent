@@ -42,7 +42,7 @@ start_agent agent_router:
               You MUST transition to the correct subagent immediately using transition actions based on the message and context:
               - Report a technical problem, VPN issue, login failure, network issue, application error, create an incident, create incident, or if they are confirming details for an incident -> Transition to @subagent.incident_management
               - Request software installation, access request, password reset, or if they are confirming details for a service request -> Transition to @subagent.service_request_management
-              - Check ticket status or status of an existing ticket -> Transition to @subagent.ticket_status_tracking
+              - Check ticket status, status of an existing ticket, change ticket status, update ticket status, change priority, or update priority of a ticket -> Transition to @subagent.ticket_status_tracking
               - Ask a knowledge question, search help articles, or ask for troubleshooting guidance -> Transition to @subagent.knowledge_management
               - Escalate a ticket or request escalation -> Transition to @subagent.escalation_management
               - Out of scope requests -> Transition to @subagent.off_topic
@@ -52,7 +52,7 @@ start_agent agent_router:
             go_to_service_req: @utils.transition to @subagent.service_request_management
                 description: "Route to Service Request Management for software installs, access requests, or password resets."
             go_to_status: @utils.transition to @subagent.ticket_status_tracking
-                description: "Route to Check Ticket Status to check details of a ticket."
+                description: "Route to Ticket Status & Tracking to check details or update status/priority of a ticket."
             go_to_knowledge: @utils.transition to @subagent.knowledge_management
                 description: "Route to Knowledge Search to search help articles or get troubleshooting steps."
             go_to_escalate: @utils.transition to @subagent.escalation_management
@@ -171,20 +171,34 @@ subagent service_request_management:
                     filter_from_agent: False
 
 subagent ticket_status_tracking:
-    label: "Ticket Status Tracking"
-    description: "Check the status of an existing Incident or Service Request using a Ticket Number."
+    label: "Ticket Status & Management"
+    description: "Check status or update status/priority of an existing Incident or Service Request using a Ticket Number."
     reasoning:
         instructions: ->
-            | Help users check ticket status.
+            | Help users check and update ticket status and priority.
               - If the user wants to check the status of a specific ticket, ask for the Ticket Number if not provided, then call {!@actions.check_ticket_status} to fetch details.
               - When checking a specific ticket, present the status, ticket number (formatted as a Markdown hyperlink: `[View Ticket <TicketNumber>](/lightning/r/<TicketType>/<TicketId>/view)` where TicketType is Incident or ServiceRequest without spaces), priority, assigned user, assigned group, and last updated date.
+              - If the user wants to update or change the priority or status of a ticket:
+                - Ask for the Ticket Number if not already provided in context.
+                - You MUST immediately invoke {!@actions.show_incident_management_form} passing the ticket number to present the interactive UI screen with dynamic Status and Priority picklists.
               Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             check_ticket_status: @actions.check_ticket_status
                 description: "Look up ticket details by ticket number."
                 with ticketNumber = ...
+            update_ticket: @actions.update_ticket
+                description: "Update the priority or status of an existing ticket by ticket number."
+                with ticketNumber = ...
+                with priority = ...
+                with status = ...
+            get_incident_details: @actions.get_incident_details
+                description: "Fetch incident details to populate the UI screen form."
+                with ticketNumber = ...
+            show_incident_management_form: @actions.show_incident_management_form
+                description: "Display the Incident Management UI form with picklists for status and priority."
+                with ticketNumber = ...
             back_to_router: @utils.transition to @subagent.agent_router
-                description: "Return to the main router when the ticket status has been provided and the user wants help with something else."
+                description: "Return to the main router when the operation is complete and the user wants help with something else."
     actions:
         check_ticket_status:
             description: "Check the status of an existing Incident or Service Request."
@@ -241,6 +255,97 @@ subagent ticket_status_tracking:
                     description: "The record ID of the ticket"
                     filter_from_agent: False
                     complex_data_type_name: "lightning__recordIdType"
+        update_ticket:
+            description: "Updates the priority and/or status of an existing Incident or Service Request."
+            label: "Update Ticket"
+            target: "apex://CopilotUpdateTicketAction"
+            inputs:
+                ticketNumber: string
+                    description: "The Incident Number or Service Request Number"
+                    label: "Ticket Number"
+                    is_required: True
+                priority: string
+                    description: "The new priority (Low, Medium, High, Critical)"
+                    label: "Priority"
+                    is_required: False
+                status: string
+                    description: "The new status (e.g. New, Open, In Progress, On Hold, Resolved, Closed, Escalated)"
+                    label: "Status"
+                    is_required: False
+            outputs:
+                isSuccess: boolean
+                    label: "Is Success"
+                    description: "Whether the update succeeded"
+                    filter_from_agent: True
+                errorMessage: string
+                    label: "Error Message"
+                    description: "Details of any error"
+                    filter_from_agent: False
+                successMessage: string
+                    label: "Success Message"
+                    description: "Confirmation message of the update"
+                    filter_from_agent: False
+                ticketType: string
+                    label: "Ticket Type"
+                    description: "Incident or Service Request"
+                    filter_from_agent: False
+                ticketNumber: string
+                    label: "Ticket Number"
+                    description: "The updated ticket number"
+                    filter_from_agent: False
+                status: string
+                    label: "Status"
+                    description: "Updated status"
+                    filter_from_agent: False
+                priority: string
+                    label: "Priority"
+                    description: "Updated priority"
+                    filter_from_agent: False
+                ticketId: object
+                    label: "Ticket ID"
+                    description: "The record ID of the ticket"
+                    filter_from_agent: False
+                    complex_data_type_name: "lightning__recordIdType"
+        get_incident_details:
+            description: "Queries details of an Incident by record ID or ticket number."
+            label: "Get Incident Details"
+            target: "apex://GetIncidentDetailsAction"
+            inputs:
+                ticketNumber: string
+                    description: "The Incident ticket number or ID"
+                    label: "Incident Number or ID"
+                    is_required: True
+            outputs:
+                isSuccess: boolean
+                    label: "Is Success"
+                found: boolean
+                    label: "Found"
+                incidentForm: object
+                    label: "Incident Form"
+                    complex_data_type_name: "c__incidentManagementFormInputType"
+                errorMessage: string
+                    label: "Error Message"
+        show_incident_management_form:
+            description: "Presents the Incident creation/update form popup to the user to collect or edit details using picklists."
+            label: "Show Incident Management Form"
+            target: "apex://ShowIncidentManagementFormAction"
+            inputs:
+                ticketNumber: string
+                    description: "The Incident ticket number or ID"
+                    label: "Incident Number or ID"
+                    is_required: False
+                incidentForm: object
+                    description: "The pre-populated incident form data structure"
+                    label: "Incident Form"
+                    is_required: False
+                    is_user_input: True
+                    complex_data_type_name: "c__incidentManagementFormInputType"
+            outputs:
+                incidentForm: object
+                    label: "Incident Form"
+                    description: "The completed incident form data structure"
+                    filter_from_agent: False
+                    complex_data_type_name: "c__incidentManagementFormInputType"
 
 subagent knowledge_management:
     label: "Knowledge Management"
