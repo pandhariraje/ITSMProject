@@ -17,16 +17,6 @@ config:
 variables:
     incident_created: mutable boolean = False
         description: "Indicates whether the incident form has been completed"
-    last_incident_id: mutable string = ""
-        description: "The ID of the created incident record"
-    last_incident_number: mutable string = ""
-        description: "The auto-number reference of the created incident"
-    last_subject: mutable string = ""
-        description: "The subject of the created incident"
-    last_status: mutable string = ""
-        description: "The status of the created incident"
-    last_priority: mutable string = ""
-        description: "The priority of the created incident"
 
 language:
     default_locale: "en_US"
