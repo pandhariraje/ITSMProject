@@ -8,6 +8,69 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class IncidentManagementFormLwc extends LightningElement {
     @api label = 'Incident Management';
 
+    // Inputs (pre-populated by Agentforce / Flow)
+    @api incidentId = '';
+    @api incidentNumber = '';
+    @api subject = '';
+    @api description = '';
+    @api category = '';
+    @api urgency = '';
+    @api impact = '';
+    @api priority = '';
+    @api status = '';
+
+    // Local tracked variables
+    @track localIncidentId = '';
+    @track localIncidentNumber = '';
+    @track localSubject = '';
+    @track localDescription = '';
+    @track localCategory = 'Software';
+    @track localUrgency = 'High';
+    @track localImpact = 'High';
+    @track localPriority = 'Critical';
+    @track localStatus = 'New';
+
+    @track isLoading = false;
+    @track error = '';
+    @track isSuccess = false;
+
+    @track activeTab = 'create'; // 'create' or 'edit'
+    @track isEditMode = false;
+    @track searchKey = '';
+    @track searchResults = [];
+    @track isSearching = false;
+
+    @track categoryOptions = [
+        { label: 'Software', value: 'Software' },
+        { label: 'Hardware', value: 'Hardware' },
+        { label: 'Network', value: 'Network' }
+    ];
+    @track statusOptions = [
+        { label: 'New', value: 'New' },
+        { label: 'Open', value: 'Open' },
+        { label: 'In Progress', value: 'In Progress' },
+        { label: 'On Hold', value: 'On Hold' },
+        { label: 'Resolved', value: 'Resolved' },
+        { label: 'Closed', value: 'Closed' },
+        { label: 'Escalated', value: 'Escalated' }
+    ];
+    @track priorityOptions = [
+        { label: 'Low', value: 'Low' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'High', value: 'High' },
+        { label: 'Critical', value: 'Critical' }
+    ];
+    @track urgencyOptions = [
+        { label: 'Low', value: 'Low' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'High', value: 'High' }
+    ];
+    @track impactOptions = [
+        { label: 'Low', value: 'Low' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'High', value: 'High' }
+    ];
+
     _value;
     @api 
     get value() {
@@ -16,110 +79,70 @@ export default class IncidentManagementFormLwc extends LightningElement {
     set value(val) {
         this._value = val;
         if (val) {
-            this.incidentId = val.incidentId || '';
-            this.incidentNumber = val.incidentNumber || '';
-            this.isEditMode = !!this.incidentId;
-            if (this.isEditMode) {
-                this.activeTab = 'edit';
-            }
-        } else {
-            this.incidentId = '';
-            this.incidentNumber = '';
-            this.isEditMode = false;
-            this.activeTab = 'create';
+            this.syncFromObject(val);
         }
-        this.initializeValues();
     }
-
-    @track fields = [];
-    @track fieldValues = {
-        Subject: '',
-        Description: '',
-        Category: '',
-        Urgency: '',
-        Impact: '',
-        Priority: '',
-        Status: ''
-    };
-    @track isLoading = true;
-    @track error = '';
-    @track isSuccess = false;
-    @track incidentId = '';
-    @track incidentNumber = '';
-
-    @track activeTab = 'create'; // 'create' or 'edit'
-    @track searchKey = '';
-    @track searchResults = [];
-    @track isSearching = false;
 
     @wire(getIncidentFieldsMetadata)
     wiredMetadata({ error, data }) {
         if (data) {
-            this.fields = data.map(field => {
-                let options = [];
-                let val = '';
-                if (field.picklistOptions) {
-                    options = field.picklistOptions.map(opt => {
-                        if (opt.isDefault) {
-                            val = opt.value;
-                        }
-                        return {
-                            label: opt.label,
-                            value: opt.value
-                        };
-                    });
+            data.forEach(field => {
+                if (field.picklistOptions && field.picklistOptions.length > 0) {
+                    const opts = field.picklistOptions.map(opt => ({ label: opt.label, value: opt.value }));
+                    if (field.fieldName === 'Category') this.categoryOptions = opts;
+                    else if (field.fieldName === 'Status') this.statusOptions = opts;
+                    else if (field.fieldName === 'Priority') this.priorityOptions = opts;
+                    else if (field.fieldName === 'Urgency') this.urgencyOptions = opts;
+                    else if (field.fieldName === 'Impact') this.impactOptions = opts;
                 }
-
-                // Fallback default values if database does not specify a default
-                if (!val && field.type === 'picklist') {
-                    if (field.fieldName === 'Urgency') val = 'High';
-                    else if (field.fieldName === 'Impact') val = 'High';
-                    else if (field.fieldName === 'Priority') val = 'Critical';
-                    else if (field.fieldName === 'Status') val = 'New';
-                }
-
-                this.fieldValues[field.fieldName] = val;
-
-                // Determine column spans for premium grid alignment
-                let gridClass = 'grid-col-6'; // default: half width (col-6)
-                if (field.fieldName === 'Subject' || field.fieldName === 'Description') {
-                    gridClass = 'grid-col-12'; // full width (col-12)
-                } else if (field.fieldName === 'Urgency' || field.fieldName === 'Impact' || field.fieldName === 'Priority') {
-                    gridClass = 'grid-col-4'; // one-third width (col-4)
-                }
-
-                return {
-                    ...field,
-                    isPicklist: field.type === 'picklist',
-                    isTextarea: field.type === 'textarea',
-                    isInput: field.type !== 'picklist' && field.type !== 'textarea',
-                    options: options,
-                    value: val,
-                    gridClass: gridClass
-                };
             });
-            this.initializeValues();
-            this.isLoading = false;
-        } else if (error) {
-            this.error = error.body ? error.body.message : error.message;
-            this.isLoading = false;
         }
     }
 
     connectedCallback() {
-        // Wired method handles data fetching and loading states.
+        if (this._value) {
+            this.syncFromObject(this._value);
+        } else {
+            this.syncFromProps();
+        }
     }
 
-    initializeValues() {
-        if (this._value && this.fields.length > 0) {
-            this.fields = this.fields.map(f => {
-                const apiFieldName = f.fieldName.toLowerCase();
-                const key = Object.keys(this._value).find(k => k.toLowerCase() === apiFieldName);
-                const rawVal = key ? this._value[key] : null;
-                const val = (rawVal !== undefined && rawVal !== null && String(rawVal).trim() !== '') ? rawVal : f.value;
-                this.fieldValues[f.fieldName] = val;
-                return { ...f, value: val };
-            });
+    syncFromProps() {
+        this.localIncidentId = this.incidentId || '';
+        this.localIncidentNumber = this.incidentNumber || '';
+        this.localSubject = this.subject || '';
+        this.localDescription = this.description || '';
+        this.localCategory = this.category || 'Software';
+        this.localUrgency = this.urgency || 'High';
+        this.localImpact = this.impact || 'High';
+        this.localPriority = this.priority || 'Critical';
+        this.localStatus = this.status || 'New';
+        
+        this.isEditMode = !!this.localIncidentId || !!this.localIncidentNumber;
+        if (this.isEditMode) {
+            this.activeTab = 'edit';
+        }
+    }
+
+    syncFromObject(val) {
+        const getVal = (propName) => {
+            const key = Object.keys(val).find(k => k.toLowerCase() === propName.toLowerCase());
+            return key && val[key] !== undefined && val[key] !== null ? val[key] : '';
+        };
+
+        this.localIncidentId = getVal('incidentId') || getVal('id') || this.incidentId || '';
+        this.localIncidentNumber = getVal('incidentNumber') || this.incidentNumber || '';
+        this.localSubject = getVal('subject') || this.subject || '';
+        this.localDescription = getVal('description') || this.description || '';
+        this.localCategory = getVal('category') || this.category || 'Software';
+        this.localUrgency = getVal('urgency') || this.urgency || 'High';
+        this.localImpact = getVal('impact') || this.impact || 'High';
+        this.localPriority = getVal('priority') || this.priority || 'Critical';
+        this.localStatus = getVal('status') || this.status || 'New';
+
+        this.isEditMode = !!this.localIncidentId || !!this.localIncidentNumber;
+        if (this.isEditMode) {
+            this.activeTab = 'edit';
         }
     }
 
@@ -127,19 +150,15 @@ export default class IncidentManagementFormLwc extends LightningElement {
         this.activeTab = event.currentTarget.dataset.tab;
         if (this.activeTab === 'create') {
             this.isEditMode = false;
-            this.incidentId = '';
-            this.incidentNumber = '';
-            // reset form fields to defaults
-            this.fields = this.fields.map(f => {
-                let val = '';
-                if (f.fieldName === 'Urgency') val = 'High';
-                else if (f.fieldName === 'Impact') val = 'High';
-                else if (f.fieldName === 'Priority') val = 'Critical';
-                else if (f.fieldName === 'Status') val = 'New';
-                
-                this.fieldValues[f.fieldName] = val;
-                return { ...f, value: val };
-            });
+            this.localIncidentId = '';
+            this.localIncidentNumber = '';
+            this.localSubject = '';
+            this.localDescription = '';
+            this.localCategory = 'Software';
+            this.localUrgency = 'High';
+            this.localImpact = 'High';
+            this.localPriority = 'Critical';
+            this.localStatus = 'New';
             this.isSuccess = false;
             this.error = '';
         } else {
@@ -170,26 +189,16 @@ export default class IncidentManagementFormLwc extends LightningElement {
         const selectedId = event.currentTarget.dataset.id;
         const selected = this.searchResults.find(item => item.incidentId === selectedId);
         if (selected) {
-            this.incidentId = selected.incidentId;
-            this.incidentNumber = selected.incidentNumber;
+            this.localIncidentId = selected.incidentId;
+            this.localIncidentNumber = selected.incidentNumber;
+            this.localSubject = selected.subject || '';
+            this.localDescription = selected.description || '';
+            this.localCategory = selected.category || 'Software';
+            this.localStatus = selected.status || 'New';
+            this.localUrgency = selected.urgency || 'High';
+            this.localImpact = selected.impact || 'High';
+            this.localPriority = selected.priority || 'Critical';
             this.isEditMode = true;
-            
-            // Populate fields
-            this.fields = this.fields.map(f => {
-                // Check wrapper property mapping
-                // Map fields correctly to values from the wrapper (check case)
-                let val = '';
-                if (f.fieldName === 'Subject') val = selected.subject;
-                else if (f.fieldName === 'Description') val = selected.description;
-                else if (f.fieldName === 'Category') val = selected.category;
-                else if (f.fieldName === 'Status') val = selected.status;
-                else if (f.fieldName === 'Urgency') val = selected.urgency;
-                else if (f.fieldName === 'Impact') val = selected.impact;
-                else if (f.fieldName === 'Priority') val = selected.priority;
-
-                this.fieldValues[f.fieldName] = val || '';
-                return { ...f, value: val || '' };
-            });
             
             this.searchResults = [];
             this.searchKey = '';
@@ -201,35 +210,17 @@ export default class IncidentManagementFormLwc extends LightningElement {
     handleFieldChange(event) {
         const fieldName = event.target.dataset.name;
         const val = event.target.value;
-        this.fieldValues[fieldName] = val;
-
-        this.fields = this.fields.map(f => {
-            if (f.fieldName === fieldName) {
-                return { ...f, value: val };
-            }
-            return f;
-        });
-    }
-
-    get isSubmitDisabled() {
-        if (this.isLoading) return true;
-        for (const field of this.fields) {
-            if (field.isRequired) {
-                const val = this.fieldValues[field.fieldName];
-                if (val === undefined || val === null || String(val).trim() === '') {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    get submitButtonLabel() {
-        return 'Submit';
+        if (fieldName === 'subject') this.localSubject = val;
+        else if (fieldName === 'description') this.localDescription = val;
+        else if (fieldName === 'category') this.localCategory = val;
+        else if (fieldName === 'status') this.localStatus = val;
+        else if (fieldName === 'urgency') this.localUrgency = val;
+        else if (fieldName === 'impact') this.localImpact = val;
+        else if (fieldName === 'priority') this.localPriority = val;
     }
 
     get formHeaderTitle() {
-        return this.isEditMode ? `Update Incident: ${this.incidentNumber}` : 'Report New Incident';
+        return this.isEditMode ? `Update Incident: ${this.localIncidentNumber}` : 'Report New Incident';
     }
 
     get formHeaderSub() {
@@ -271,22 +262,22 @@ export default class IncidentManagementFormLwc extends LightningElement {
         this.isLoading = true;
         this.error = '';
 
-        if (this.isEditMode) {
+        if (this.isEditMode && this.localIncidentId) {
             updateIncident({
-                incidentId: this.incidentId,
-                subject: this.fieldValues.Subject,
-                description: this.fieldValues.Description,
-                urgency: this.fieldValues.Urgency,
-                impact: this.fieldValues.Impact,
-                priority: this.fieldValues.Priority,
-                status: this.fieldValues.Status,
-                category: this.fieldValues.Category
+                incidentId: this.localIncidentId,
+                subject: this.localSubject,
+                description: this.localDescription,
+                urgency: this.localUrgency,
+                impact: this.localImpact,
+                priority: this.localPriority,
+                status: this.localStatus,
+                category: this.localCategory
             })
             .then(result => {
                 this.isLoading = false;
                 this.isSuccess = true;
-                this.incidentId = result.incidentId;
-                this.incidentNumber = result.incidentNumber;
+                this.localIncidentId = result.incidentId;
+                this.localIncidentNumber = result.incidentNumber;
 
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -301,29 +292,22 @@ export default class IncidentManagementFormLwc extends LightningElement {
             .catch(err => {
                 this.isLoading = false;
                 this.error = err.body ? err.body.message : err.message;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Unable to update Incident.',
-                        message: 'Please try again.',
-                        variant: 'error'
-                    })
-                );
             });
         } else {
             createIncident({
-                subject: this.fieldValues.Subject,
-                description: this.fieldValues.Description,
-                urgency: this.fieldValues.Urgency,
-                impact: this.fieldValues.Impact,
-                priority: this.fieldValues.Priority,
-                status: this.fieldValues.Status,
-                category: this.fieldValues.Category
+                subject: this.localSubject,
+                description: this.localDescription,
+                urgency: this.localUrgency,
+                impact: this.localImpact,
+                priority: this.localPriority,
+                status: this.localStatus,
+                category: this.localCategory
             })
             .then(result => {
                 this.isLoading = false;
                 this.isSuccess = true;
-                this.incidentId = result.incidentId;
-                this.incidentNumber = result.incidentNumber;
+                this.localIncidentId = result.incidentId;
+                this.localIncidentNumber = result.incidentNumber;
 
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -338,13 +322,6 @@ export default class IncidentManagementFormLwc extends LightningElement {
             .catch(err => {
                 this.isLoading = false;
                 this.error = err.body ? err.body.message : err.message;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Unable to create Incident.',
-                        message: 'Please try again.',
-                        variant: 'error'
-                    })
-                );
             });
         }
     }
@@ -354,13 +331,13 @@ export default class IncidentManagementFormLwc extends LightningElement {
             new CustomEvent('valuechange', {
                 detail: {
                     value: {
-                        incidentId: this.incidentId,
-                        incidentNumber: this.incidentNumber,
-                        subject: this.fieldValues.Subject,
-                        description: this.fieldValues.Description,
-                        category: this.fieldValues.Category,
-                        urgency: this.fieldValues.Urgency,
-                        impact: this.fieldValues.Impact,
+                        incidentId: this.localIncidentId,
+                        incidentNumber: this.localIncidentNumber,
+                        subject: this.localSubject,
+                        description: this.localDescription,
+                        category: this.localCategory,
+                        urgency: this.localUrgency,
+                        impact: this.localImpact,
                         priority: result.priority,
                         status: result.status
                     }
@@ -380,6 +357,6 @@ export default class IncidentManagementFormLwc extends LightningElement {
     }
 
     get incidentRecordUrl() {
-        return `/lightning/r/Incident/${this.incidentId}/view`;
+        return `/lightning/r/Incident/${this.localIncidentId}/view`;
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="form-card">
+    <div class="form-card slds-is-relative slds-scrollable_none">
         <!-- Navigation Tabs -->
         <div class="form-tabs">
             <button class={createTabClass} data-tab="create" onclick={handleTabChange}>
@@ -12,12 +12,12 @@
 
         <!-- Success State -->
         <template if:true={isSuccess}>
-            <div class="success-container">
-                <div class="success-icon">✔️</div>
+            <div class="success-container slds-text-align_center">
+                <div class="success-icon slds-line-height_reset">✔️</div>
                 <h2>Incident Saved</h2>
-                <p class="success-message">Incident <strong>{incidentNumber}</strong> has been saved successfully.</p>
-                <div class="success-actions">
-                    <a href={incidentRecordUrl} target="_blank" class="view-link-btn">View Incident</a>
+                <p class="success-message">Incident <strong>{localIncidentNumber}</strong> has been saved successfully.</p>
+                <div class="success-actions slds-grid slds-grid_align-center">
+                    <a href={incidentRecordUrl} target="_blank" class="view-link-btn slds-show_inline-block">View Incident</a>
                 </div>
             </div>
         </template>
@@ -59,91 +59,139 @@
                 </div>
             </template>
 
-            <!-- Main Form Card (Visible always in Create, or in Edit tab if an incidentId is set) -->
-            <template if:true={fields.length}>
-                <div class="form-content-area">
-                    <header class="form-header">
-                        <h3>{formHeaderTitle}</h3>
-                        <p>{formHeaderSub}</p>
-                    </header>
+            <!-- Main Form Card -->
+            <div class="form-content-area">
+                <header class="form-header">
+                    <h3>{formHeaderTitle}</h3>
+                    <p class="slds-m-around_none">{formHeaderSub}</p>
+                </header>
 
-                    <main class="form-body">
-                        <!-- Spinner -->
-                        <template if:true={isLoading}>
-                            <div class="spinner-container">
-                                <lightning-spinner alternative-text="Saving Incident..." size="medium"></lightning-spinner>
-                            </div>
-                        </template>
-
-                        <!-- Error Notification -->
-                        <template if:true={error}>
-                            <div class="error-banner">
-                                <div class="error-icon">⚠️</div>
-                                <div class="error-message">
-                                    <strong>Operation failed:</strong> {error}
-                                </div>
-                            </div>
-                        </template>
-
-                        <!-- Form Fields Grid -->
-                        <div class="form-grid">
-                            <template for:each={fields} for:item="field">
-                                <div key={field.fieldName} class={field.gridClass}>
-                                    <!-- Picklist (Combobox) -->
-                                    <template if:true={field.isPicklist}>
-                                        <lightning-combobox
-                                            label={field.label}
-                                            value={field.value}
-                                            data-name={field.fieldName}
-                                            options={field.options}
-                                            onchange={handleFieldChange}
-                                            required={field.isRequired}
-                                            message-when-value-missing="This field is required"
-                                            class="custom-input">
-                                        </lightning-combobox>
-                                    </template>
-
-                                    <!-- Long Text Area (Textarea) -->
-                                    <template if:true={field.isTextarea}>
-                                        <lightning-textarea
-                                            label={field.label}
-                                            value={field.value}
-                                            data-name={field.fieldName}
-                                            onchange={handleFieldChange}
-                                            required={field.isRequired}
-                                            message-when-value-missing="This field is required"
-                                            class="custom-input">
-                                        </lightning-textarea>
-                                    </template>
-
-                                    <!-- Text Input -->
-                                    <template if:true={field.isInput}>
-                                        <lightning-input
-                                            type="text"
-                                            label={field.label}
-                                            value={field.value}
-                                            data-name={field.fieldName}
-                                            onchange={handleFieldChange}
-                                            required={field.isRequired}
-                                            message-when-value-missing="This field is required"
-                                            class="custom-input">
-                                        </lightning-input>
-                                    </template>
-                                </div>
-                            </template>
+                <main class="form-body slds-is-relative">
+                    <!-- Spinner -->
+                    <template if:true={isLoading}>
+                        <div class="spinner-container slds-is-absolute slds-grid slds-grid_align-center slds-grid_vertical-align-center">
+                            <lightning-spinner alternative-text="Saving Incident..." size="medium"></lightning-spinner>
                         </div>
-                    </main>
+                    </template>
 
-                    <footer class="form-footer">
-                        <button class="cancel-button slds-m-right_small" onclick={handleCancel}>
-                            Cancel
-                        </button>
-                        <button class="submit-button" onclick={handleSubmit} disabled={isSubmitDisabled}>
-                            {submitButtonLabel}
-                        </button>
-                    </footer>
-                </div>
-            </template>
+                    <!-- Error Notification -->
+                    <template if:true={error}>
+                        <div class="error-banner slds-grid slds-grid_vertical-align-start">
+                            <div class="error-icon slds-line-height_reset">⚠️</div>
+                            <div class="error-message">
+                                <strong>Operation failed:</strong> {error}
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Form Fields Grid -->
+                    <div class="form-grid">
+                        <!-- Subject -->
+                        <div class="grid-col-12">
+                            <lightning-input 
+                                label="Subject" 
+                                value={localSubject} 
+                                data-name="subject"
+                                onchange={handleFieldChange}
+                                required
+                                message-when-value-missing="Subject is required"
+                                class="custom-input">
+                            </lightning-input>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="grid-col-12">
+                            <lightning-textarea 
+                                label="Detailed Description" 
+                                value={localDescription} 
+                                data-name="description"
+                                onchange={handleFieldChange}
+                                class="custom-input">
+                            </lightning-textarea>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="grid-col-6">
+                            <lightning-combobox 
+                                label="Category" 
+                                value={localCategory} 
+                                options={categoryOptions}
+                                data-name="category"
+                                onchange={handleFieldChange}
+                                class="custom-input">
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="grid-col-6">
+                            <lightning-combobox 
+                                label="Status" 
+                                value={localStatus} 
+                                options={statusOptions}
+                                data-name="status"
+                                onchange={handleFieldChange}
+                                required
+                                message-when-value-missing="Status is required"
+                                class="custom-input">
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Urgency -->
+                        <div class="grid-col-4">
+                            <lightning-combobox 
+                                label="Urgency" 
+                                value={localUrgency} 
+                                options={urgencyOptions}
+                                data-name="urgency"
+                                onchange={handleFieldChange}
+                                required
+                                message-when-value-missing="Urgency is required"
+                                class="custom-input">
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Impact -->
+                        <div class="grid-col-4">
+                            <lightning-combobox 
+                                label="Impact" 
+                                value={localImpact} 
+                                options={impactOptions}
+                                data-name="impact"
+                                onchange={handleFieldChange}
+                                required
+                                message-when-value-missing="Impact is required"
+                                class="custom-input">
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Priority -->
+                        <div class="grid-col-4">
+                            <lightning-combobox 
+                                label="Priority" 
+                                value={localPriority} 
+                                options={priorityOptions}
+                                data-name="priority"
+                                onchange={handleFieldChange}
+                                required
+                                message-when-value-missing="Priority is required"
+                                class="custom-input">
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </main>
+
+                <footer class="form-footer">
+                    <button class="cancel-button slds-m-right_small" onclick={handleCancel}>
+                        Cancel
+                    </button>
+                    <lightning-button 
+                        label="Submit" 
+                        onclick={handleSubmit} 
+                        disabled={isLoading}
+                        class="submit-button">
+                    </lightning-button>
+                </footer>
+            </div>
         </template>
     </div>
 </template>
