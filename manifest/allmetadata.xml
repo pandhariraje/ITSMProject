@@ -7,7 +7,16 @@
     </types>
     <types>
         <members>TechWish_ITSM_Assistant_1</members>
+        <members>Smart_Incident_Agent</members>
         <name>AiAuthoringBundle</name>
+    </types>
+    <types>
+        <members>Smart_Incident_Agent</members>
+        <name>Bot</name>
+    </types>
+    <types>
+        <members>Smart_Incident_Agent_v1</members>
+        <name>GenAiPlannerBundle</name>
     </types>
     <types>
         <members>Incident_Path</members>

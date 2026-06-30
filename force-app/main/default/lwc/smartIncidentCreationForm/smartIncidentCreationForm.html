@@ -1,0 +1,139 @@
+<template>
+    <div class="modal-container">
+        <!-- Header Section -->
+        <header class="modal-header slds-media slds-media_center slds-p-around_medium slds-border_bottom">
+            <div class="slds-media__figure">
+                <span class="icon-wrapper">
+                    <lightning-icon icon-name="standard:incident" alternative-text="Create Incident" size="medium"></lightning-icon>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="modal-title slds-text-heading_medium">Create New Incident</h2>
+                <p class="modal-subtitle slds-text-color_weak slds-m-top_xx-small">Please provide the details below to create a new incident.</p>
+            </div>
+            <button class="close-btn slds-button slds-button_icon slds-button_icon-small" title="Close" onclick={handleCancel}>
+                <lightning-icon icon-name="utility:close" size="x-small" variant="neutral"></lightning-icon>
+            </button>
+        </header>
+
+        <!-- Form Body Section -->
+        <div class="modal-body slds-p-around_medium">
+            <div class="slds-grid slds-wrap slds-gutters_large">
+                <!-- Left Column -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <label class="custom-label required">Subject</label>
+                        <lightning-input
+                            variant="label-hidden"
+                            value={subject}
+                            onchange={handleSubject}
+                            placeholder="Enter a short subject"
+                            required>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <label class="custom-label required">Description</label>
+                        <lightning-textarea
+                            variant="label-hidden"
+                            value={description}
+                            onchange={handleDescription}
+                            placeholder="Please provide a detailed description of the issue..."
+                            required>
+                        </lightning-textarea>
+                    </div>
+
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <label class="custom-label required">
+                            Impact
+                            <lightning-helptext content="Indicate the impact level of the issue on business operations"></lightning-helptext>
+                        </label>
+                        <lightning-combobox
+                            variant="label-hidden"
+                            value={impact}
+                            options={impactOptions}
+                            onchange={handleImpact}
+                            required>
+                        </lightning-combobox>
+                    </div>
+
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <label class="custom-label required">
+                            Category
+                            <lightning-helptext content="Select the most appropriate category for this ticket"></lightning-helptext>
+                        </label>
+                        <lightning-combobox
+                            variant="label-hidden"
+                            value={category}
+                            options={categoryOptions}
+                            onchange={handleCategory}
+                            placeholder="--None--"
+                            required>
+                        </lightning-combobox>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <label class="custom-label required">Status</label>
+                        <lightning-combobox
+                            variant="label-hidden"
+                            value={status}
+                            options={statusOptions}
+                            onchange={handleStatus}
+                            required>
+                        </lightning-combobox>
+                    </div>
+
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <label class="custom-label required">Priority</label>
+                        <lightning-combobox
+                            variant="label-hidden"
+                            value={priority}
+                            options={priorityOptions}
+                            onchange={handlePriority}
+                            required>
+                        </lightning-combobox>
+                        <p class="helper-text slds-m-top_xx-small">Priority is calculated based on Impact and Urgency, but can be adjusted if needed.</p>
+                    </div>
+
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <label class="custom-label required">
+                            Urgency
+                            <lightning-helptext content="Select how quickly the issue needs to be addressed"></lightning-helptext>
+                        </label>
+                        <lightning-combobox
+                            variant="label-hidden"
+                            value={urgency}
+                            options={urgencyOptions}
+                            onchange={handleUrgency}
+                            required>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="modal-footer slds-p-around_medium slds-border_top slds-grid slds-grid_align-end slds-gutters_small">
+            <div class="slds-col">
+                <lightning-button
+                    variant="neutral"
+                    label="Cancel"
+                    onclick={handleCancel}
+                    class="cancel-btn">
+                </lightning-button>
+            </div>
+            <div class="slds-col">
+                <lightning-button
+                    variant="brand"
+                    label="Create Incident"
+                    icon-name="utility:save"
+                    onclick={createIncident}
+                    class="submit-btn">
+                </lightning-button>
+            </div>
+        </footer>
+    </div>
+</template>

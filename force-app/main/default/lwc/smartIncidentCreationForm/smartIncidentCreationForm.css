@@ -1,0 +1,90 @@
+:host {
+    display: block;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #d8dde6;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.modal-container {
+    width: 100%;
+}
+
+.modal-header {
+    background-color: #f3f6f9;
+    position: relative;
+}
+
+.icon-wrapper {
+    background-color: #3b5998;
+    padding: 6px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-title {
+    color: #1b2733;
+    font-size: 1.15rem;
+}
+
+.modal-subtitle {
+    font-size: 0.85rem;
+    color: #647383;
+}
+
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: #647383;
+}
+
+.close-btn:hover {
+    color: #1b2733;
+}
+
+.modal-body {
+    background-color: #ffffff;
+}
+
+.custom-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3e3e3c;
+    margin-bottom: 0.35rem;
+}
+
+.custom-label.required::before {
+    content: "* ";
+    color: #c23934;
+    margin-right: 0.25rem;
+    font-weight: bold;
+}
+
+.custom-label lightning-helptext {
+    margin-left: 0.25rem;
+}
+
+.helper-text {
+    font-size: 0.75rem;
+    color: #647383;
+    line-height: 1.25;
+}
+
+.modal-footer {
+    background-color: #f3f6f9;
+}
+
+.cancel-btn {
+    --slds-c-button-neutral-border-radius: 4px;
+}
+
+.submit-btn {
+    --slds-c-button-brand-border-radius: 4px;
+    --slds-c-button-brand-color-background: #005fb2;
+    --slds-c-button-brand-color-border: #005fb2;
+}

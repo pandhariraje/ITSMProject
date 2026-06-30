@@ -1,0 +1,159 @@
+system:
+    instructions: |
+        You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
+        Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
+
+        WORKFLOW FOR INCIDENT CREATION:
+        1. Welcome: Display "Hello! I'm ITSM Copilot. I'll help you create a new Incident."
+        2. Launch Action: Execute @actions.show_incident_form to present the custom LWC screen collecting Subject, Description, Urgency, Impact, Priority, and Status.
+        3. Process Response (Submit): Display "Your Incident has been created successfully." followed by Incident Number, Subject, Status, and Priority.
+        4. Offer Next Actions: Ask "What would you like to do next?" and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
+        5. Cancel Handling: If cancelled, display "Incident creation has been cancelled. No record was created." then ask "Is there anything else I can help you with?".
+        6. Error Handling: If an error occurs, display "I couldn't create the Incident due to an error. Please review the information and try again." Never expose technical details.
+    messages:
+        welcome: "Hello! I'm ITSM Copilot. I'll help you create a new Incident."
+        error: "I couldn't create the Incident due to an error. Please review the information and try again."
+
+config:
+    agent_label: "Smart Incident Agent"
+    agent_type: "AgentforceEmployeeAgent"
+    description: "Smart Incident Agent capable of launching custom LWC screen for incident creation with full submit, cancel, and error handling."
+    developer_name: "Smart_Incident_Agent"
+
+variables:
+    incident_created: mutable boolean = False
+    incident_id: mutable string = ""
+    incident_number: mutable string = ""
+    incident_subject: mutable string = ""
+    incident_status: mutable string = ""
+    incident_priority: mutable string = ""
+    incident_cancelled: mutable boolean = False
+    incident_error: mutable boolean = False
+    incident_category: mutable string = ""
+
+language:
+    default_locale: "en_US"
+    all_additional_locales: False
+
+start_agent agent_router:
+    description: "Welcome the employee and route to incident creation or relevant topic."
+    reasoning:
+        instructions: ->
+            | You are a router ONLY. Transition immediately based on user request:
+              - Request to create an incident, report an issue, log a ticket, or mentions a problem ("Create an incident", "I have a problem", "My laptop isn't working", "Raise a ticket") -> Transition to @subagent.incident_creation
+              - Out of scope requests -> Transition to @subagent.off_topic
+              - Ambiguous requests -> Transition to @subagent.ambiguous_question
+        actions:
+            go_to_creation: @utils.transition to @subagent.incident_creation
+                description: "Route to incident creation workflow."
+            go_to_off_topic: @utils.transition to @subagent.off_topic
+            go_to_ambiguous_question: @utils.transition to @subagent.ambiguous_question
+
+subagent incident_creation:
+    label: "Incident Creation"
+    description: "Guides user through LWC screen creation, submission response, next action offerings, cancel, and error handling."
+    reasoning:
+        instructions: ->
+            if @variables.incident_created == True:
+                | Your Incident has been created successfully.
+                | 
+                | Incident Number: {!@variables.incident_number}
+                | Subject: {!@variables.incident_subject}
+                | Status: {!@variables.incident_status}
+                | Priority: {!@variables.incident_priority}
+                | 
+                | What would you like to do next?
+                | - Update this Incident
+                | - Check Incident Status
+                | - Create Another Incident
+                | - End Conversation
+                set @variables.incident_created = False
+                transition to @subagent.agent_router
+
+            if @variables.incident_cancelled == True:
+                | Incident creation has been cancelled. No record was created.
+                | Is there anything else I can help you with?
+                set @variables.incident_cancelled = False
+                transition to @subagent.agent_router
+
+            if @variables.incident_error == True:
+                | I couldn't create the Incident due to an error. Please review the information and try again.
+                set @variables.incident_error = False
+                transition to @subagent.agent_router
+
+            | Hello! I'm ITSM Copilot. I'll help you create a new Incident.
+            | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
+              Do NOT ask the user for any details, fields, or confirmation conversationally.
+              Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
+              Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the show_incident_form action input `incidentForm`.
+              Always set status to "New" when calling show_incident_form.
+        actions:
+            show_incident_form: @actions.show_incident_form
+                description: "Launches custom LWC screen to collect incident details."
+                with incidentForm = ...
+                set @variables.incident_id = @outputs.incidentForm.incidentId
+                set @variables.incident_number = @outputs.incidentForm.incidentNumber
+                set @variables.incident_subject = @outputs.incidentForm.subject
+                set @variables.incident_status = @outputs.incidentForm.status
+                set @variables.incident_priority = @outputs.incidentForm.priority
+                set @variables.incident_category = @outputs.incidentForm.category
+                set @variables.incident_created = @outputs.incidentForm.isSuccess
+                set @variables.incident_cancelled = @outputs.incidentForm.isCancelled
+            back_to_router: @utils.transition to @subagent.agent_router
+    actions:
+        show_incident_form:
+            description: "Launches custom LWC screen for Smart Incident Agent."
+            label: "Smart Incident Show Form Action"
+            target: "apex://SmartIncidentShowFormAction"
+            inputs:
+                incidentForm: object
+                    description: "Incident form wrapper data"
+                    label: "Incident Form"
+                    is_required: True
+                    is_user_input: True
+                    complex_data_type_name: "c__smartIncidentFormInputType"
+            outputs:
+                incidentForm: object
+                    label: "Incident Form"
+                    description: "Completed incident form wrapper details"
+                    filter_from_agent: False
+                    complex_data_type_name: "c__smartIncidentFormInputType"
+        create_incident_direct:
+            description: "Creates an Incident record in Salesforce."
+            label: "Smart Incident Create Action"
+            target: "apex://SmartIncidentCreateAction"
+            inputs:
+                subject: string
+                    label: "Subject"
+                    is_required: True
+                description: string
+                    label: "Description"
+                    is_required: True
+                status: string
+                    label: "Status"
+                priority: string
+                    label: "Priority"
+                urgency: string
+                    label: "Urgency"
+                impact: string
+                    label: "Impact"
+                category: string
+                    label: "Category"
+            outputs:
+                incidentForm: object
+                    label: "Incident Form"
+                    complex_data_type_name: "c__smartIncidentFormInputType"
+
+subagent off_topic:
+    label: "Off Topic"
+    description: "Redirect conversation when user request goes off-topic"
+    reasoning:
+        instructions: ->
+            | Politely inform the employee that you are specialized as Smart Incident Agent to assist with IT incidents.
+
+subagent ambiguous_question:
+    label: "Ambiguous Question"
+    description: "Redirect conversation when user request is too ambiguous"
+    reasoning:
+        instructions: ->
+            | Politely guide the user to provide more specific details about their incident request.

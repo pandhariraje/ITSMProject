@@ -28,6 +28,8 @@ publishing, and testing.
 
 This file maps user intent to task domains and relevant reference files in `references/`. Detailed knowledge includes syntax rules, design patterns, CLI commands, debugging workflows, and more.
 
+For custom user interface components (such as picklists and datetime inputs) mapped to Agentforce action inputs, see the [Custom Inputs & Lightning Types](references/custom-inputs-and-lightning-types.md) reference.
+
 Identify user intent from task descriptions. ALWAYS read indicated reference files BEFORE starting work.
 
 ## Rules That Always Apply
@@ -126,6 +128,8 @@ Read [CLI for Agents](references/salesforce-cli-for-agents.md) for exact command
 13. [Discover Reference](references/discover-reference.md) — target discovery CLI
 14. [Scaffold Reference](references/scaffold-reference.md) — stub generation CLI
 15. [Deploy Reference](references/deploy-reference.md) — deployment lifecycle, error recovery
+16. [Custom Inputs & Lightning Types](references/custom-inputs-and-lightning-types.md) — design, configure, and register LWC inputs and Custom Lightning Types for Agentforce
+
 
 ### Comprehend an Existing Agent
 
@@ -518,3 +522,6 @@ Ready-to-use `.agent` templates in `assets/agents/` (hello-world, simple-qa, mul
 | Feature validity by context | [feature-validity.md](references/feature-validity.md) |
 | Instruction resolution model | [instruction-resolution.md](references/instruction-resolution.md) |
 | Complete agent examples | [examples.md](references/examples.md) |
+| Compiled Metadata Deep Dive | [compiled-metadata-deep-dive.md](references/compiled-metadata-deep-dive.md) |
+
+
