@@ -7,7 +7,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__AgentforceInput">
-            <targetType name="c__itsmCopilotIncidentFormInputType" />
+            <targetType name="c__createVisitWrapperType" />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
                 <supportedFormFactor type="Small" />

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BotVersion xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>v13</fullName>
+    <fullName>v23</fullName>
     <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
     <botDialogs>
         <botSteps>
             <botMessages>
                 <message>Hello! I&apos;m ITSM Copilot. I&apos;ll help you create a new Incident.</message>
-                <messageIdentifier>352068e3-3ccd-4b40-a38d-d853b58525cb</messageIdentifier>
+                <messageIdentifier>452ab2df-077b-4192-8d73-4fad2b2019f2</messageIdentifier>
             </botMessages>
-            <stepIdentifier>225c9beb-e1d3-456e-a42e-d33bd2975111</stepIdentifier>
+            <stepIdentifier>53b3aac8-b9ea-4a1b-b300-f05ca940c3a6</stepIdentifier>
             <type>Message</type>
         </botSteps>
         <botSteps>
-            <stepIdentifier>2d910265-8921-4933-a984-7abb68d01bad</stepIdentifier>
+            <stepIdentifier>75979688-b26f-448f-b4ce-16945aba4a02</stepIdentifier>
             <type>Wait</type>
         </botSteps>
         <developerName>Welcome</developerName>
@@ -24,13 +24,13 @@
         <botSteps>
             <botMessages>
                 <message>I couldn&apos;t create the Incident due to an error. Please review the information and try again.</message>
-                <messageIdentifier>3e14f861-dcb8-4362-80ac-5af21182311e</messageIdentifier>
+                <messageIdentifier>1d303fe5-8308-4856-8d56-7230e85c9856</messageIdentifier>
             </botMessages>
-            <stepIdentifier>88177e6f-ab27-456f-83fe-232b0b6bac33</stepIdentifier>
+            <stepIdentifier>37eb8a2b-ec6d-4178-ae0a-7d46af4a8ccc</stepIdentifier>
             <type>Message</type>
         </botSteps>
         <botSteps>
-            <stepIdentifier>67893bfd-c14f-4487-a741-1449671c02f3</stepIdentifier>
+            <stepIdentifier>6c09efc7-a7bc-4c66-a018-9aab69847719</stepIdentifier>
             <type>Wait</type>
         </botSteps>
         <developerName>Rich_Content_Error_Handling</developerName>
@@ -46,7 +46,7 @@
     </botDialogs>
     <citationsEnabled>false</citationsEnabled>
     <conversationDefinitionPlanners>
-        <genAiPlannerName>Smart_Incident_Agent_v13</genAiPlannerName>
+        <genAiPlannerName>Smart_Incident_Agent_v23</genAiPlannerName>
     </conversationDefinitionPlanners>
     <conversationSystemDialogs>
         <dialog>Rich_Content_Error_Handling</dialog>
@@ -54,42 +54,10 @@
     </conversationSystemDialogs>
     <conversationVariables>
         <dataType>Text</dataType>
-        <description>Incident Status</description>
-        <developerName>incident_status</developerName>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
         <includeInPrompt>false</includeInPrompt>
-        <label>Incident Status</label>
-        <visibility>Internal</visibility>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Boolean</dataType>
-        <description>Runtime condition evaluation for if statements</description>
-        <developerName>AgentScriptInternal_condition_1</developerName>
-        <includeInPrompt>false</includeInPrompt>
-        <label>Runtime Condition 1</label>
-        <visibility>Internal</visibility>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <description>Incident Category</description>
-        <developerName>incident_category</developerName>
-        <includeInPrompt>false</includeInPrompt>
-        <label>Incident Category</label>
-        <visibility>Internal</visibility>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <description>Incident Priority</description>
-        <developerName>incident_priority</developerName>
-        <includeInPrompt>false</includeInPrompt>
-        <label>Incident Priority</label>
-        <visibility>Internal</visibility>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <description>Incident Id</description>
-        <developerName>incident_id</developerName>
-        <includeInPrompt>false</includeInPrompt>
-        <label>Incident Id</label>
+        <label>Next Topic</label>
         <visibility>Internal</visibility>
     </conversationVariables>
     <conversationVariables>
@@ -102,22 +70,6 @@
     </conversationVariables>
     <conversationVariables>
         <dataType>Boolean</dataType>
-        <description>Incident Error</description>
-        <developerName>incident_error</developerName>
-        <includeInPrompt>false</includeInPrompt>
-        <label>Incident Error</label>
-        <visibility>Internal</visibility>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <description>The next topic to be visited</description>
-        <developerName>AgentScriptInternal_next_topic</developerName>
-        <includeInPrompt>false</includeInPrompt>
-        <label>Next Topic</label>
-        <visibility>Internal</visibility>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Boolean</dataType>
         <description>Incident Cancelled</description>
         <developerName>incident_cancelled</developerName>
         <includeInPrompt>false</includeInPrompt>
@@ -126,10 +78,10 @@
     </conversationVariables>
     <conversationVariables>
         <dataType>Boolean</dataType>
-        <description>Incident Created</description>
-        <developerName>incident_created</developerName>
+        <description>Runtime condition evaluation for if statements</description>
+        <developerName>AgentScriptInternal_condition_1</developerName>
         <includeInPrompt>false</includeInPrompt>
-        <label>Incident Created</label>
+        <label>Runtime Condition 1</label>
         <visibility>Internal</visibility>
     </conversationVariables>
     <conversationVariables>
@@ -142,10 +94,58 @@
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
+        <description>Incident Id</description>
+        <developerName>incident_id</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Incident Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
         <description>Incident Subject</description>
         <developerName>incident_subject</developerName>
         <includeInPrompt>false</includeInPrompt>
         <label>Incident Subject</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Incident Created</description>
+        <developerName>incident_created</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Incident Created</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Incident Status</description>
+        <developerName>incident_status</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Incident Status</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Incident Priority</description>
+        <developerName>incident_priority</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Incident Priority</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Incident Error</description>
+        <developerName>incident_error</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Incident Error</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Incident Category</description>
+        <developerName>incident_category</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Incident Category</label>
         <visibility>Internal</visibility>
     </conversationVariables>
     <copilotPrimaryLanguage>en_US</copilotPrimaryLanguage>

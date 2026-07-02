@@ -1,15 +1,5 @@
-import { LightningElement, wire, track, api } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
-import INCIDENT_OBJECT from '@salesforce/schema/Incident';
-import STATUS_FIELD from '@salesforce/schema/Incident.Status';
-import PRIORITY_FIELD from '@salesforce/schema/Incident.Priority';
-import URGENCY_FIELD from '@salesforce/schema/Incident.Urgency';
-import IMPACT_FIELD from '@salesforce/schema/Incident.Impact';
-import CATEGORY_FIELD from '@salesforce/schema/Incident.Category';
-
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 
 import createIncident from '@salesforce/apex/SmartIncidentController.createIncident';
 
@@ -72,60 +62,11 @@ export default class SmartIncidentCreationForm extends LightningElement {
         { label: 'Low', value: 'Low' }
     ];
 
-    @track categoryOptions = [];
-
-    @wire(getObjectInfo, { objectApiName: INCIDENT_OBJECT })
-    objectInfo;
-
-    @wire(getPicklistValues, {
-        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
-        fieldApiName: STATUS_FIELD
-    })
-    statusPicklist({ data }) {
-        if (data && data.values && data.values.length > 0) {
-            this.statusOptions = data.values;
-        }
-    }
-
-    @wire(getPicklistValues, {
-        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
-        fieldApiName: PRIORITY_FIELD
-    })
-    priorityPicklist({ data }) {
-        if (data && data.values && data.values.length > 0) {
-            this.priorityOptions = data.values;
-        }
-    }
-
-    @wire(getPicklistValues, {
-        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
-        fieldApiName: URGENCY_FIELD
-    })
-    urgencyPicklist({ data }) {
-        if (data && data.values && data.values.length > 0) {
-            this.urgencyOptions = data.values;
-        }
-    }
-
-    @wire(getPicklistValues, {
-        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
-        fieldApiName: IMPACT_FIELD
-    })
-    impactPicklist({ data }) {
-        if (data && data.values && data.values.length > 0) {
-            this.impactOptions = data.values;
-        }
-    }
-
-    @wire(getPicklistValues, {
-        recordTypeId: '$objectInfo.data.defaultRecordTypeId',
-        fieldApiName: CATEGORY_FIELD
-    })
-    categoryPicklist({ data }) {
-        if (data && data.values && data.values.length > 0) {
-            this.categoryOptions = data.values;
-        }
-    }
+    @track categoryOptions = [
+        { label: 'Network', value: 'Network' },
+        { label: 'Hardware', value: 'Hardware' },
+        { label: 'Software', value: 'Software' }
+    ];
 
     handleSubject(event) {
         this.subject = event.target.value;

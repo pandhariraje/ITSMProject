@@ -2,22 +2,22 @@
 <GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Smart Incident Agent capable of launching custom LWC screen for incident creation with full submit, cancel, and error handling.</description>
     <localTopicLinks>
-        <genAiPluginName>agent_router_16jBi0000026Qd5</genAiPluginName>
+        <genAiPluginName>agent_router_16jBi0000026Og3</genAiPluginName>
     </localTopicLinks>
     <localTopicLinks>
-        <genAiPluginName>ambiguous_question_16jBi0000026Qd5</genAiPluginName>
+        <genAiPluginName>ambiguous_question_16jBi0000026Og3</genAiPluginName>
     </localTopicLinks>
     <localTopicLinks>
-        <genAiPluginName>incident_creation_16jBi0000026Qd5</genAiPluginName>
+        <genAiPluginName>incident_creation_16jBi0000026Og3</genAiPluginName>
     </localTopicLinks>
     <localTopicLinks>
-        <genAiPluginName>off_topic_16jBi0000026Qd5</genAiPluginName>
+        <genAiPluginName>off_topic_16jBi0000026Og3</genAiPluginName>
     </localTopicLinks>
     <localTopics>
-        <fullName>incident_creation_16jBi0000026Qd5</fullName>
+        <fullName>off_topic_16jBi0000026Og3</fullName>
         <canEscalate>false</canEscalate>
-        <description>Guides user through LWC screen creation, submission response, next action offerings, cancel, and error handling.</description>
-        <developerName>incident_creation_16jBi0000026Qd5</developerName>
+        <description>Redirect conversation when user request goes off-topic</description>
+        <developerName>off_topic_16jBi0000026Og3</developerName>
         <genAiPluginInstructions>
             <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
 Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
@@ -29,49 +29,21 @@ WORKFLOW FOR INCIDENT CREATION:
 4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
 5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
 6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
-            <developerName>instruction0_179Bi0000004AYi</developerName>
+            <developerName>instruction0_179Bi0000004As4</developerName>
             <language>en_US</language>
-            <masterLabel>instruction0_179Bi0000004AYi</masterLabel>
+            <masterLabel>instruction0_179Bi0000004As4</masterLabel>
             <sortOrder>1</sortOrder>
         </genAiPluginInstructions>
         <language>en_US</language>
-        <localActionLinks>
-            <functionName>show_incident_form_179Bi0000004AYi</functionName>
-        </localActionLinks>
-        <localActionLinks>
-            <functionName>create_incident_direct_179Bi0000004AYi</functionName>
-        </localActionLinks>
-        <localActions>
-            <fullName>show_incident_form_179Bi0000004AYi</fullName>
-            <description>Launches custom LWC screen for Smart Incident Agent.</description>
-            <developerName>show_incident_form_179Bi0000004AYi</developerName>
-            <invocationTarget>SmartIncidentShowFormAction</invocationTarget>
-            <invocationTargetType>apex</invocationTargetType>
-            <isConfirmationRequired>false</isConfirmationRequired>
-            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
-            <localDeveloperName>show_incident_form</localDeveloperName>
-            <masterLabel>Smart Incident Show Form Action</masterLabel>
-        </localActions>
-        <localActions>
-            <fullName>create_incident_direct_179Bi0000004AYi</fullName>
-            <description>Creates an Incident record in Salesforce.</description>
-            <developerName>create_incident_direct_179Bi0000004AYi</developerName>
-            <invocationTarget>SmartIncidentCreateAction</invocationTarget>
-            <invocationTargetType>apex</invocationTargetType>
-            <isConfirmationRequired>false</isConfirmationRequired>
-            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
-            <localDeveloperName>create_incident_direct</localDeveloperName>
-            <masterLabel>Smart Incident Create Action</masterLabel>
-        </localActions>
-        <localDeveloperName>incident_creation</localDeveloperName>
-        <masterLabel>Incident Creation</masterLabel>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
         <pluginType>Topic</pluginType>
     </localTopics>
     <localTopics>
-        <fullName>agent_router_16jBi0000026Qd5</fullName>
+        <fullName>agent_router_16jBi0000026Og3</fullName>
         <canEscalate>false</canEscalate>
         <description>Welcome the employee and route to incident creation or relevant topic.</description>
-        <developerName>agent_router_16jBi0000026Qd5</developerName>
+        <developerName>agent_router_16jBi0000026Og3</developerName>
         <genAiPluginInstructions>
             <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
 Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
@@ -83,9 +55,9 @@ WORKFLOW FOR INCIDENT CREATION:
 4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
 5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
 6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
-            <developerName>instruction0_179Bi0000004AYh</developerName>
+            <developerName>instruction0_179Bi0000004As3</developerName>
             <language>en_US</language>
-            <masterLabel>instruction0_179Bi0000004AYh</masterLabel>
+            <masterLabel>instruction0_179Bi0000004As3</masterLabel>
             <sortOrder>1</sortOrder>
         </genAiPluginInstructions>
         <language>en_US</language>
@@ -94,10 +66,10 @@ WORKFLOW FOR INCIDENT CREATION:
         <pluginType>Topic</pluginType>
     </localTopics>
     <localTopics>
-        <fullName>ambiguous_question_16jBi0000026Qd5</fullName>
+        <fullName>ambiguous_question_16jBi0000026Og3</fullName>
         <canEscalate>false</canEscalate>
         <description>Redirect conversation when user request is too ambiguous</description>
-        <developerName>ambiguous_question_16jBi0000026Qd5</developerName>
+        <developerName>ambiguous_question_16jBi0000026Og3</developerName>
         <genAiPluginInstructions>
             <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
 Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
@@ -109,9 +81,9 @@ WORKFLOW FOR INCIDENT CREATION:
 4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
 5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
 6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
-            <developerName>instruction0_179Bi0000004AYg</developerName>
+            <developerName>instruction0_179Bi0000004As2</developerName>
             <language>en_US</language>
-            <masterLabel>instruction0_179Bi0000004AYg</masterLabel>
+            <masterLabel>instruction0_179Bi0000004As2</masterLabel>
             <sortOrder>1</sortOrder>
         </genAiPluginInstructions>
         <language>en_US</language>
@@ -120,10 +92,10 @@ WORKFLOW FOR INCIDENT CREATION:
         <pluginType>Topic</pluginType>
     </localTopics>
     <localTopics>
-        <fullName>off_topic_16jBi0000026Qd5</fullName>
+        <fullName>incident_creation_16jBi0000026Og3</fullName>
         <canEscalate>false</canEscalate>
-        <description>Redirect conversation when user request goes off-topic</description>
-        <developerName>off_topic_16jBi0000026Qd5</developerName>
+        <description>Guides user through LWC screen creation, submission response, next action offerings, cancel, and error handling.</description>
+        <developerName>incident_creation_16jBi0000026Og3</developerName>
         <genAiPluginInstructions>
             <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
 Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
@@ -135,14 +107,28 @@ WORKFLOW FOR INCIDENT CREATION:
 4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
 5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
 6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
-            <developerName>instruction0_179Bi0000004AYf</developerName>
+            <developerName>instruction0_179Bi0000004As1</developerName>
             <language>en_US</language>
-            <masterLabel>instruction0_179Bi0000004AYf</masterLabel>
+            <masterLabel>instruction0_179Bi0000004As1</masterLabel>
             <sortOrder>1</sortOrder>
         </genAiPluginInstructions>
         <language>en_US</language>
-        <localDeveloperName>off_topic</localDeveloperName>
-        <masterLabel>Off Topic</masterLabel>
+        <localActionLinks>
+            <functionName>show_incident_form_179Bi0000004As1</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>show_incident_form_179Bi0000004As1</fullName>
+            <description>Launches custom LWC screen for Smart Incident Agent.</description>
+            <developerName>show_incident_form_179Bi0000004As1</developerName>
+            <invocationTarget>SmartIncidentShowFormAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>show_incident_form</localDeveloperName>
+            <masterLabel>Smart Incident Show Form Action</masterLabel>
+        </localActions>
+        <localDeveloperName>incident_creation</localDeveloperName>
+        <masterLabel>Incident Creation</masterLabel>
         <pluginType>Topic</pluginType>
     </localTopics>
     <masterLabel>Smart Incident Agent</masterLabel>

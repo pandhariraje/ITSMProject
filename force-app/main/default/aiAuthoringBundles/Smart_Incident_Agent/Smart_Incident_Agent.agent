@@ -85,6 +85,7 @@ subagent incident_creation:
             | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
               Do NOT ask the user for any details, fields, or confirmation conversationally.
               Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
+              If the user has not provided any details, call show_incident_form with an empty or default incidentForm wrapper.
               Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the show_incident_form action input `incidentForm`.
               Always set status to "New" when calling show_incident_form.
         actions:
@@ -118,32 +119,6 @@ subagent incident_creation:
                     description: "Completed incident form wrapper details"
                     filter_from_agent: False
                     complex_data_type_name: "c__smartIncidentFormInputType"
-        create_incident_direct:
-            description: "Creates an Incident record in Salesforce."
-            label: "Smart Incident Create Action"
-            target: "apex://SmartIncidentCreateAction"
-            inputs:
-                subject: string
-                    label: "Subject"
-                    is_required: True
-                description: string
-                    label: "Description"
-                    is_required: True
-                status: string
-                    label: "Status"
-                priority: string
-                    label: "Priority"
-                urgency: string
-                    label: "Urgency"
-                impact: string
-                    label: "Impact"
-                category: string
-                    label: "Category"
-            outputs:
-                incidentForm: object
-                    label: "Incident Form"
-                    complex_data_type_name: "c__smartIncidentFormInputType"
-
 subagent off_topic:
     label: "Off Topic"
     description: "Redirect conversation when user request goes off-topic"

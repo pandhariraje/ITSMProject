@@ -1,128 +1,187 @@
-import { LightningElement, wire, track } from 'lwc';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { LightningElement, api, wire } from 'lwc';
+import searchAccounts from '@salesforce/apex/CreateVisitAction.searchAccounts';
+import getAccountName from '@salesforce/apex/CreateVisitAction.getAccountName';
+import getPlaceOptions from '@salesforce/apex/CreateVisitAction.getPlaceOptions';
+import getTemplateOptions from '@salesforce/apex/CreateVisitAction.getTemplateOptions';
+import getUserOptions from '@salesforce/apex/CreateVisitAction.getUserOptions';
+import getCurrentUserInfo from '@salesforce/apex/CreateVisitAction.getCurrentUserInfo';
 
-import INCIDENT_OBJECT from '@salesforce/schema/Incident';
-import SUBJECT_FIELD from '@salesforce/schema/Incident.Subject';
-import DESCRIPTION_FIELD from '@salesforce/schema/Incident.Description';
-import STATUS_FIELD from '@salesforce/schema/Incident.Status';
-import PRIORITY_FIELD from '@salesforce/schema/Incident.Priority';
-import URGENCY_FIELD from '@salesforce/schema/Incident.Urgency';
-import IMPACT_FIELD from '@salesforce/schema/Incident.Impact';
+export default class CreateVisitEditor extends LightningElement {
+    @api value; // Input value representing the CreateVisitWrapper
 
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+    isLoading = false;
+    subject = '';
+    accountId = '';
+    plannedStartTime = null;
+    placeId = '';
+    visitTemplateId = '';
+    plannedEndTime = null;
+    isAllDayEvent = false;
+    accountableId = '';
+    
+    responsibleId = '';
+    responsibleName = '';
 
-import createIncident from '@salesforce/apex/IncidentController.createIncident';
+    accountSearchTerm = '';
+    showAccountDropdown = false;
+    isLoadingAccounts = false;
+    filteredAccounts = [];
+    searchTimeout;
 
-export default class IncidentCreationForm extends LightningElement {
+    placeOptions = [];
+    templateOptions = [];
+    userOptions = [];
 
-    subject='';
-    description='';
-    status='';
-    priority='';
-    urgency='';
-    impact='';
-
-    @track statusOptions=[];
-    @track priorityOptions=[];
-    @track urgencyOptions=[];
-    @track impactOptions=[];
-
-    @wire(getObjectInfo,{objectApiName:INCIDENT_OBJECT})
-    objectInfo;
-
-    @wire(getPicklistValues,{
-        recordTypeId:'$objectInfo.data.defaultRecordTypeId',
-        fieldApiName:STATUS_FIELD
-    })
-    statusPicklist({data}){
-        if(data){
-            this.statusOptions=data.values;
+    @wire(getPlaceOptions)
+    wiredPlaces({ error, data }) {
+        if (data) {
+            this.placeOptions = data;
+        } else if (error) {
+            console.error('Error loading Places:', error);
         }
     }
 
-    @wire(getPicklistValues,{
-        recordTypeId:'$objectInfo.data.defaultRecordTypeId',
-        fieldApiName:PRIORITY_FIELD
-    })
-    priorityPicklist({data}){
-        if(data){
-            this.priorityOptions=data.values;
+    @wire(getTemplateOptions)
+    wiredTemplates({ error, data }) {
+        if (data) {
+            this.templateOptions = data;
+        } else if (error) {
+            console.error('Error loading Templates:', error);
         }
     }
 
-    @wire(getPicklistValues,{
-        recordTypeId:'$objectInfo.data.defaultRecordTypeId',
-        fieldApiName:URGENCY_FIELD
-    })
-    urgencyPicklist({data}){
-        if(data){
-            this.urgencyOptions=data.values;
+    @wire(getUserOptions)
+    wiredUsers({ error, data }) {
+        if (data) {
+            this.userOptions = data;
+        } else if (error) {
+            console.error('Error loading Users:', error);
         }
     }
 
-    @wire(getPicklistValues,{
-        recordTypeId:'$objectInfo.data.defaultRecordTypeId',
-        fieldApiName:IMPACT_FIELD
-    })
-    impactPicklist({data}){
-        if(data){
-            this.impactOptions=data.values;
+    @wire(getCurrentUserInfo)
+    wiredCurrentUser({ error, data }) {
+        if (data) {
+            this.responsibleId = data.Id;
+            this.responsibleName = data.Name;
+            this.dispatchChange();
+        } else if (error) {
+            console.error('Error loading Current User:', error);
         }
     }
 
-    handleSubject(event){
-        this.subject=event.target.value;
+    connectedCallback() {
+        // Initialize from value if provided
+        if (this.value) {
+            this.subject = this.value.subject || '';
+            this.accountId = this.value.accountId || '';
+            this.plannedStartTime = this.value.plannedStartTime || null;
+            this.placeId = this.value.placeId || '';
+            this.visitTemplateId = this.value.visitTemplateId || '';
+            this.plannedEndTime = this.value.plannedEndTime || null;
+            this.isAllDayEvent = this.value.isAllDayEvent || false;
+            this.accountableId = this.value.accountableId || '';
+
+            if (this.accountId) {
+                getAccountName({ accountId: this.accountId })
+                    .then(name => {
+                        this.accountSearchTerm = name;
+                    })
+                    .catch(err => {
+                        console.error('Error fetching account name:', err);
+                    });
+            }
+        }
     }
 
-    handleDescription(event){
-        this.description=event.target.value;
+    get isAccountListEmpty() {
+        return !this.isLoadingAccounts && this.filteredAccounts.length === 0;
     }
 
-    handleStatus(event){
-        this.status=event.detail.value;
-    }
+    handleAccountSearch(event) {
+        const term = event.target.value;
+        this.accountSearchTerm = term;
+        
+        if (!term) {
+            this.accountId = '';
+            this.filteredAccounts = [];
+            this.dispatchChange();
+            return;
+        }
 
-    handlePriority(event){
-        this.priority=event.detail.value;
-    }
+        this.isLoadingAccounts = true;
+        this.showAccountDropdown = true;
 
-    handleUrgency(event){
-        this.urgency=event.detail.value;
-    }
-
-    handleImpact(event){
-        this.impact=event.detail.value;
-    }
-
-    createIncident(){
-
-        createIncident({
-            subject:this.subject,
-            description:this.description,
-            status:this.status,
-            priority:this.priority,
-            urgency:this.urgency,
-            impact:this.impact
-        })
-        .then(result=>{
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title:'Success',
-                    message:'Incident Created Successfully',
-                    variant:'success'
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => {
+            searchAccounts({ searchTerm: term })
+                .then(results => {
+                    this.filteredAccounts = results;
+                    this.isLoadingAccounts = false;
                 })
-            );
-        })
-        .catch(error=>{
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title:'Error',
-                    message:error.body.message,
-                    variant:'error'
-                })
-            );
-        });
+                .catch(error => {
+                    console.error('Error searching accounts:', error);
+                    this.isLoadingAccounts = false;
+                });
+        }, 300);
     }
 
+    handleAccountFocus() {
+        this.showAccountDropdown = true;
+        if (this.filteredAccounts.length === 0) {
+            this.isLoadingAccounts = true;
+            searchAccounts({ searchTerm: this.accountSearchTerm })
+                .then(results => {
+                    this.filteredAccounts = results;
+                    this.isLoadingAccounts = false;
+                })
+                .catch(error => {
+                    console.error('Error loading accounts:', error);
+                    this.isLoadingAccounts = false;
+                });
+        }
+    }
+
+    handleAccountBlur() {
+        // Delay closing so that the mousedown event selection registers first
+        setTimeout(() => {
+            this.showAccountDropdown = false;
+        }, 250);
+    }
+
+    handleAccountSelect(event) {
+        this.accountId = event.currentTarget.dataset.id;
+        this.accountSearchTerm = event.currentTarget.dataset.label;
+        this.showAccountDropdown = false;
+        this.dispatchChange();
+    }
+
+    handleFieldChange(event) {
+        const fieldName = event.target.name;
+        this[fieldName] = event.target.value;
+        this.dispatchChange();
+    }
+
+    handleCheckboxChange(event) {
+        this.isAllDayEvent = event.target.checked;
+        this.dispatchChange();
+    }
+
+    dispatchChange() {
+        this.dispatchEvent(new CustomEvent('valuechange', {
+            detail: {
+                value: {
+                    subject: this.subject,
+                    accountId: this.accountId,
+                    plannedStartTime: this.plannedStartTime,
+                    placeId: this.placeId,
+                    visitTemplateId: this.visitTemplateId,
+                    plannedEndTime: this.plannedEndTime,
+                    isAllDayEvent: this.isAllDayEvent,
+                    accountableId: this.accountableId,
+                    responsibleId: this.responsibleId
+                }
+            }
+        }));
+    }
 }
