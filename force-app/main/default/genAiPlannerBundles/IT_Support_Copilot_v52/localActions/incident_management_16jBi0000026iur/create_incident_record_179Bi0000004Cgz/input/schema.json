@@ -1,0 +1,14 @@
+{
+  "required" : [ "incidentData" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "incidentData" : {
+      "title" : "Incident Data",
+      "description" : "The incident details form data containing Subject, Description, Category, Urgency, Impact, Priority, Status.",
+      "lightning:type" : "c__itsmCopilotIncidentFormInputType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

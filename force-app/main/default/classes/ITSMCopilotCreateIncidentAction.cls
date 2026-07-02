@@ -1,29 +1,8 @@
 public with sharing class ITSMCopilotCreateIncidentAction {
 
     public class Request {
-        @InvocableVariable(label='Subject' description='The subject of the incident' required=true)
-        @AuraEnabled
-        public String subject;
-
-        @InvocableVariable(label='Description' description='The detailed description of the incident' required=true)
-        @AuraEnabled
-        public String description;
-
-        @InvocableVariable(label='Status' description='Status of the incident' required=false)
-        @AuraEnabled
-        public String status;
-
-        @InvocableVariable(label='Priority' description='Priority level (Critical, High, Moderate, Low)' required=false)
-        @AuraEnabled
-        public String priority;
-
-        @InvocableVariable(label='Urgency' description='Urgency level (High, Medium, Low)' required=false)
-        @AuraEnabled
-        public String urgency;
-
-        @InvocableVariable(label='Impact' description='Impact level (High, Medium, Low)' required=false)
-        @AuraEnabled
-        public String impact;
+        @InvocableVariable(label='Incident Form Data' description='The incident form data.' required=true)
+        public ITSMCopilotIncidentFormWrapper incidentData;
     }
 
     public class Result {
@@ -64,41 +43,29 @@ public with sharing class ITSMCopilotCreateIncidentAction {
         List<Result> results = new List<Result>();
 
         for (Request req : requests) {
-            Result res = createSingleIncident(req);
+            Result res = new Result();
+            if (req.incidentData == null) {
+                res.isSuccess = false;
+                res.errorMessage = 'Incident data is missing.';
+                results.add(res);
+                continue;
+            }
+            res = createSingleIncident(req.incidentData);
             results.add(res);
         }
         return results;
     }
 
-    @AuraEnabled
-    public static Result createIncident(
-        String subject,
-        String description,
-        String status,
-        String priority,
-        String urgency,
-        String impact
-    ) {
-        Request req = new Request();
-        req.subject = subject;
-        req.description = description;
-        req.status = status;
-        req.priority = priority;
-        req.urgency = urgency;
-        req.impact = impact;
-        return createSingleIncident(req);
-    }
-
-    private static Result createSingleIncident(Request req) {
+    private static Result createSingleIncident(ITSMCopilotIncidentFormWrapper wrapper) {
         Result res = new Result();
         try {
             Incident inc = new Incident();
-            inc.Subject = req.subject;
-            inc.Description = req.description;
-            inc.Status = req.status;
-            inc.Priority = req.priority;
-            inc.Urgency = req.urgency;
-            inc.Impact = req.impact;
+            inc.Subject = wrapper.subject;
+            inc.Description = wrapper.description;
+            inc.Status = wrapper.status;
+            inc.Priority = wrapper.priority;
+            inc.Urgency = wrapper.urgency;
+            inc.Impact = wrapper.impact;
 
             insert inc;
 

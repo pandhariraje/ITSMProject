@@ -1,17 +1,15 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-import createIncident from '@salesforce/apex/SmartIncidentController.createIncident';
-
 export default class SmartIncidentCreationForm extends LightningElement {
 
-    @api subject = '';
-    @api description = '';
-    @api status = 'New';
-    @api priority = 'Moderate';
-    @api urgency = 'Medium';
-    @api impact = 'Medium';
-    @api category = '';
+    subject = '';
+    description = '';
+    status = 'New';
+    priority = 'Moderate';
+    urgency = 'Medium';
+    impact = 'Medium';
+    category = '';
 
     _value;
 
@@ -108,58 +106,22 @@ export default class SmartIncidentCreationForm extends LightningElement {
             return;
         }
 
-        createIncident({
-            subject: this.subject,
-            description: this.description,
-            status: this.status,
-            priority: this.priority,
-            urgency: this.urgency,
-            impact: this.impact,
-            category: this.category
-        })
-        .then(result => {
-            if (result && result.isSuccess) {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Your Incident has been created successfully.',
-                        variant: 'success'
-                    })
-                );
-                // Dispatch custom event for Agentforce session wrapper
-                this.dispatchEvent(new CustomEvent('valuechange', {
-                    detail: {
-                        value: {
-                            incidentId: result.incidentId,
-                            incidentNumber: result.incidentNumber,
-                            subject: result.subject,
-                            status: result.status,
-                            priority: result.priority,
-                            category: result.category,
-                            isSuccess: true,
-                            isCancelled: false
-                        }
-                    }
-                }));
-            } else {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: result?.errorMessage || 'I couldn\'t create the Incident due to an error.',
-                        variant: 'error'
-                    })
-                );
+        // Dispatch valuechange event to Agentforce so the invocable Apex action can perform the DML
+        this.dispatchEvent(new CustomEvent('valuechange', {
+            detail: {
+                value: {
+                    subject: this.subject,
+                    description: this.description,
+                    status: this.status,
+                    priority: this.priority,
+                    urgency: this.urgency,
+                    impact: this.impact,
+                    category: this.category,
+                    isSuccess: true,
+                    isCancelled: false
+                }
             }
-        })
-        .catch(error => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error',
-                    message: 'I couldn\'t create the Incident due to an error. Please review the information and try again.',
-                    variant: 'error'
-                })
-            );
-        });
+        }));
     }
 
     handleCancel() {

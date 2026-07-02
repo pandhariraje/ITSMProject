@@ -1,0 +1,11 @@
+.slds-card {
+    border-radius: 0.5rem;
+}
+
+.slds-p-around_medium {
+    background: #ffffff;
+}
+
+lightning-button {
+    min-width: 140px;
+}

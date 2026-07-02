@@ -81,11 +81,9 @@ subagent incident_creation:
                 set @variables.incident_error = False
                 transition to @subagent.agent_router
 
-            | Hello! I'm ITSM Copilot. I'll help you create a new Incident.
             | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
-              Do NOT ask the user for any details, fields, or confirmation conversationally.
+              Do NOT ask for any details, fields, or confirmation conversationally.
               Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
-              If the user has not provided any details, call show_incident_form with an empty or default incidentForm wrapper.
               Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the show_incident_form action input `incidentForm`.
               Always set status to "New" when calling show_incident_form.
         actions:
@@ -112,13 +110,13 @@ subagent incident_creation:
                     label: "Incident Form"
                     is_required: True
                     is_user_input: True
-                    complex_data_type_name: "c__smartIncidentFormInputType"
+                    complex_data_type_name: "c__smartIncidentFormType"
             outputs:
                 incidentForm: object
                     label: "Incident Form"
                     description: "Completed incident form wrapper details"
                     filter_from_agent: False
-                    complex_data_type_name: "c__smartIncidentFormInputType"
+                    complex_data_type_name: "c__smartIncidentFormType"
 subagent off_topic:
     label: "Off Topic"
     description: "Redirect conversation when user request goes off-topic"

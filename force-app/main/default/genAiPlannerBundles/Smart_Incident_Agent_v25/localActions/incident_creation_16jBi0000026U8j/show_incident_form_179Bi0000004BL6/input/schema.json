@@ -1,0 +1,14 @@
+{
+  "required" : [ "incidentForm" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "incidentForm" : {
+      "title" : "Incident Form",
+      "description" : "Incident form wrapper data",
+      "lightning:type" : "c__smartIncidentFormInputType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -24,13 +24,16 @@ private class ITSMCopilotActionTest {
 
     @isTest
     static void testCreateIncidentAction() {
+        ITSMCopilotIncidentFormWrapper wrapper = new ITSMCopilotIncidentFormWrapper();
+        wrapper.subject = 'Laptop display flickering';
+        wrapper.description = 'Screen blinks off and on randomly';
+        wrapper.urgency = 'High';
+        wrapper.impact = 'Medium';
+        wrapper.priority = 'High';
+        wrapper.status = 'New';
+
         ITSMCopilotCreateIncidentAction.Request req = new ITSMCopilotCreateIncidentAction.Request();
-        req.subject = 'Laptop display flickering';
-        req.description = 'Screen blinks off and on randomly';
-        req.urgency = 'High';
-        req.impact = 'Medium';
-        req.priority = 'High';
-        req.status = 'New';
+        req.incidentData = wrapper;
 
         Test.startTest();
         List<ITSMCopilotCreateIncidentAction.Result> results = ITSMCopilotCreateIncidentAction.createIncident(new List<ITSMCopilotCreateIncidentAction.Request>{ req });
@@ -40,22 +43,5 @@ private class ITSMCopilotActionTest {
         System.assert(results[0].isSuccess, 'Expected creation to succeed');
         System.assertNotEquals(null, results[0].incidentId, 'Incident ID should not be null');
         System.assertEquals('Laptop display flickering', results[0].subject, 'Subject should match');
-    }
-
-    @isTest
-    static void testCreateIncidentLwc() {
-        Test.startTest();
-        ITSMCopilotCreateIncidentAction.Result res = ITSMCopilotCreateIncidentAction.createIncident(
-            'LWC Test Incident',
-            'LWC Test Description',
-            'New',
-            'Medium',
-            'Medium',
-            'Medium'
-        );
-        Test.stopTest();
-
-        System.assert(res.isSuccess, 'Expected LWC creation to succeed');
-        System.assertNotEquals(null, res.incidentId, 'Incident ID should not be null');
     }
 }

@@ -54,4 +54,29 @@ private class SmartIncidentActionTest {
         System.assertEquals(1, results.size(), 'Expected 1 result');
         System.assertNotEquals(null, results[0].incidentForm, 'Form wrapper should not be null');
     }
+
+    @isTest
+    static void testSmartIncidentShowFormActionSubmit() {
+        SmartIncidentShowFormAction.Request req = new SmartIncidentShowFormAction.Request();
+        req.incidentForm = new SmartIncidentFormWrapper();
+        req.incidentForm.subject = 'Test Show Form Submit';
+        req.incidentForm.description = 'Testing DML via Action class';
+        req.incidentForm.status = 'New';
+        req.incidentForm.priority = 'Moderate';
+        req.incidentForm.urgency = 'Medium';
+        req.incidentForm.impact = 'Medium';
+        req.incidentForm.category = 'Software';
+        req.incidentForm.isSuccess = true;
+
+        Test.startTest();
+        List<SmartIncidentShowFormAction.Result> results = SmartIncidentShowFormAction.showForm(
+            new List<SmartIncidentShowFormAction.Request>{ req }
+        );
+        Test.stopTest();
+
+        System.assertEquals(1, results.size(), 'Expected 1 result');
+        System.assert(results[0].incidentForm.isSuccess, 'Expected success flag true');
+        System.assertNotEquals(null, results[0].incidentForm.incidentId, 'Incident ID should be generated');
+        System.assertNotEquals(null, results[0].incidentForm.incidentNumber, 'Incident Number should be populated');
+    }
 }

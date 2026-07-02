@@ -69,36 +69,49 @@ subagent incident_management:
                 set @variables.incident_created = False
                 transition to @subagent.agent_router
 
-            | You must immediately invoke {!@actions.show_incident_form} to present the incident form.
-              Do NOT ask for any details, fields, or confirmation conversationally.
-              Do NOT wait for details to be provided. Show the form immediately by invoking {!@actions.show_incident_form}.
-              Pass any details the user has already mentioned (e.g. subject, description, category, urgency, impact, priority) to pre-populate properties inside the show_incident_form action input `incidentForm`.
-              Always set status to "New" when calling show_incident_form.
+            if @variables.incident_created == False:
+                | You are now in the Incident Management Agent.
+                | Please call the create_incident_record action immediately to present the record creation form to the user.
+                | Do NOT ask the user for any details in text. Let the form collect them.
+                |
+                | If the create_incident_record action returns isSuccess == False, you MUST display the error message returned in the errorMessage output field verbatim: "Failed to create incident: [errorMessage]" and do NOT transition.
+
         actions:
-            show_incident_form: @actions.show_incident_form
-                description: "Displays the Incident Creation form inline to the employee."
-                with incidentForm = ...
-                set @variables.incident_created = True
+            create_incident_record: @actions.create_incident_record
+                description: "Validate fields and create a new Incident record."
+                with incidentData = ...
+                set @variables.incident_created = @outputs.isSuccess
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router when the incident has been created and the user wants help with something else."
     actions:
-        show_incident_form:
-            description: "Presents the Create Incident form popup to the user to collect details."
-            label: "Show Create Incident Form"
-            target: "apex://CopilotShowIncidentFormAction"
+        create_incident_record:
+            description: "Validate fields and create a new Incident record. The incidentData parameter must be populated using the form input."
+            label: "Create Incident Record"
+            target: "apex://ITSMCopilotCreateIncidentAction"
             inputs:
-                incidentForm: object
-                    description: "The pre-populated incident form data structure"
-                    label: "Incident Form"
+                incidentData: object
+                    complex_data_type_name: "c__itsmCopilotIncidentFormInputType"
+                    description: "The incident details form data containing Subject, Description, Category, Urgency, Impact, Priority, Status."
                     is_required: True
                     is_user_input: True
-                    complex_data_type_name: "c__createIncidentFormInputType"
             outputs:
-                incidentForm: object
-                    label: "Incident Form"
-                    description: "The pre-populated incident form data structure"
+                isSuccess: boolean
+                    description: "True if the Incident was successfully created."
+                errorMessage: string
+                    description: "Status message or error message from Salesforce."
+                incidentId: object
+                    description: "The newly created Incident record ID."
+                    complex_data_type_name: "lightning__recordIdType"
+                incidentNumber: string
+                    description: "The Incident ticket number."
+                subject: string
+                    description: "Subject of the created incident."
+                status: string
+                    description: "Status of the created incident."
                     filter_from_agent: False
-                    complex_data_type_name: "c__createIncidentFormInputType"
+                priority: string
+                    description: "Priority of the created incident."
+                    filter_from_agent: False
 
 subagent service_request_management:
     label: "Service Request Management"

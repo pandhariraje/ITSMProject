@@ -1,0 +1,5 @@
+{
+  "title": "Smart Incident Form Type",
+  "description": "Custom lightning type representing the incident form wrapper returning from Apex for Smart Incident Agent.",
+  "lightning:type": "@apexClassType/c__SmartIncidentFormWrapper"
+}

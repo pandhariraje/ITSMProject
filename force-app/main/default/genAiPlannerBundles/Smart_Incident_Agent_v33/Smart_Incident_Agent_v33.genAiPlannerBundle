@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Smart Incident Agent capable of launching custom LWC screen for incident creation with full submit, cancel, and error handling.</description>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jBi0000026fQj</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jBi0000026fQj</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>incident_creation_16jBi0000026fQj</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>off_topic_16jBi0000026fQj</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>off_topic_16jBi0000026fQj</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation when user request goes off-topic</description>
+        <developerName>off_topic_16jBi0000026fQj</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
+Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
+
+WORKFLOW FOR INCIDENT CREATION:
+1. Welcome: Display &quot;Hello! I&apos;m ITSM Copilot. I&apos;ll help you create a new Incident.&quot;
+2. Launch Action: Execute @actions.show_incident_form to present the custom LWC screen collecting Subject, Description, Urgency, Impact, Priority, and Status.
+3. Process Response (Submit): Display &quot;Your Incident has been created successfully.&quot; followed by Incident Number, Subject, Status, and Priority.
+4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
+5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
+6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
+            <developerName>instruction0_179Bi0000004CNc</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004CNc</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>incident_creation_16jBi0000026fQj</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Guides user through LWC screen creation, submission response, next action offerings, cancel, and error handling.</description>
+        <developerName>incident_creation_16jBi0000026fQj</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
+Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
+
+WORKFLOW FOR INCIDENT CREATION:
+1. Welcome: Display &quot;Hello! I&apos;m ITSM Copilot. I&apos;ll help you create a new Incident.&quot;
+2. Launch Action: Execute @actions.show_incident_form to present the custom LWC screen collecting Subject, Description, Urgency, Impact, Priority, and Status.
+3. Process Response (Submit): Display &quot;Your Incident has been created successfully.&quot; followed by Incident Number, Subject, Status, and Priority.
+4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
+5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
+6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
+            <developerName>instruction0_179Bi0000004CNb</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004CNb</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>show_incident_form_179Bi0000004CNb</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>show_incident_form_179Bi0000004CNb</fullName>
+            <description>Launches custom LWC screen for Smart Incident Agent.</description>
+            <developerName>show_incident_form_179Bi0000004CNb</developerName>
+            <invocationTarget>SmartIncidentShowFormAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>show_incident_form</localDeveloperName>
+            <masterLabel>Smart Incident Show Form Action</masterLabel>
+        </localActions>
+        <localDeveloperName>incident_creation</localDeveloperName>
+        <masterLabel>Incident Creation</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jBi0000026fQj</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation when user request is too ambiguous</description>
+        <developerName>ambiguous_question_16jBi0000026fQj</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
+Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
+
+WORKFLOW FOR INCIDENT CREATION:
+1. Welcome: Display &quot;Hello! I&apos;m ITSM Copilot. I&apos;ll help you create a new Incident.&quot;
+2. Launch Action: Execute @actions.show_incident_form to present the custom LWC screen collecting Subject, Description, Urgency, Impact, Priority, and Status.
+3. Process Response (Submit): Display &quot;Your Incident has been created successfully.&quot; followed by Incident Number, Subject, Status, and Priority.
+4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
+5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
+6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
+            <developerName>instruction0_179Bi0000004CNa</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004CNa</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Ambiguous Question</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jBi0000026fQj</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the employee and route to incident creation or relevant topic.</description>
+        <developerName>agent_router_16jBi0000026fQj</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Smart Incident Agent, an advanced Salesforce Agentforce AI agent designed for IT Service Management (ITSM).
+Your primary core responsibility is to guide users through incident creation and triage while maintaining high privacy and compliance standards.
+
+WORKFLOW FOR INCIDENT CREATION:
+1. Welcome: Display &quot;Hello! I&apos;m ITSM Copilot. I&apos;ll help you create a new Incident.&quot;
+2. Launch Action: Execute @actions.show_incident_form to present the custom LWC screen collecting Subject, Description, Urgency, Impact, Priority, and Status.
+3. Process Response (Submit): Display &quot;Your Incident has been created successfully.&quot; followed by Incident Number, Subject, Status, and Priority.
+4. Offer Next Actions: Ask &quot;What would you like to do next?&quot; and present options: Update this Incident, Check Incident Status, Create Another Incident, End Conversation.
+5. Cancel Handling: If cancelled, display &quot;Incident creation has been cancelled. No record was created.&quot; then ask &quot;Is there anything else I can help you with?&quot;.
+6. Error Handling: If an error occurs, display &quot;I couldn&apos;t create the Incident due to an error. Please review the information and try again.&quot; Never expose technical details.</description>
+            <developerName>instruction0_179Bi0000004CNZ</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004CNZ</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Smart Incident Agent</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>
