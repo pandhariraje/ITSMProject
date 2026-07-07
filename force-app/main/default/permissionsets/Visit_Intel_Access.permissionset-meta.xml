@@ -72,6 +72,10 @@
         <apexClass>CopilotEmployeeExceptionHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>CopilotCheckTicketStatusAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Visit Intel Access</label>
     <objectPermissions>
