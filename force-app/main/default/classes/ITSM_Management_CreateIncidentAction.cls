@@ -71,6 +71,37 @@ public with sharing class ITSM_Management_CreateIncidentAction {
             queueMap.put(g.DeveloperName, g.Id);
         }
 
+        // Query the most recently logged-in portal user (Employee Customer profile)
+        Id activePortalUserId = null;
+        List<User> activePortalUsers = [
+            SELECT Id 
+            FROM User 
+            WHERE Profile.Name = 'Employee Customer profile' AND IsActive = true AND LastLoginDate != null
+            ORDER BY LastLoginDate DESC 
+            LIMIT 1
+        ];
+        if (!activePortalUsers.isEmpty()) {
+            activePortalUserId = activePortalUsers[0].Id;
+        }
+
+        // Fallback to AuthSession if no recent login dates found
+        if (activePortalUserId == null) {
+            try {
+                List<AuthSession> portalSessions = [
+                    SELECT UsersId 
+                    FROM AuthSession 
+                    WHERE SessionType = 'ChatterNetworks' 
+                    ORDER BY LastModifiedDate DESC 
+                    LIMIT 1
+                ];
+                if (!portalSessions.isEmpty()) {
+                    activePortalUserId = portalSessions[0].UsersId;
+                }
+            } catch (Exception e) {
+                System.debug('Error querying AuthSession: ' + e.getMessage());
+            }
+        }
+
         for (Request req : requests) {
             Incident inc = new Incident();
             inc.Subject = req.subject;
@@ -81,11 +112,26 @@ public with sharing class ITSM_Management_CreateIncidentAction {
             inc.Impact = req.impact;
             inc.Status = String.isNotBlank(req.status) ? req.status : 'New';
 
-            // Resolve portal user from ContactId, else fall back to running user
+            // Resolve portal user from active session, then ContactId, then running user
             Id reporterUserId = null;
             Boolean isEmployeeCustomer = false;
             
-            if (String.isNotBlank(req.contactId)) {
+            if (activePortalUserId != null) {
+                List<User> portalUsersList = [
+                    SELECT Id, Profile.Name, UserRole.DeveloperName 
+                    FROM User 
+                    WHERE Id = :activePortalUserId AND IsActive = true 
+                    LIMIT 1
+                ];
+                if (!portalUsersList.isEmpty()) {
+                    User u = portalUsersList[0];
+                    reporterUserId = u.Id;
+                    isEmployeeCustomer = (u.Profile != null && u.Profile.Name == 'Employee Customer profile') || 
+                                         (u.UserRole != null && u.UserRole.DeveloperName == 'PAdmiCustomerPersonAccount');
+                }
+            }
+            
+            if (reporterUserId == null && String.isNotBlank(req.contactId)) {
                 List<User> portalUsers = [
                     SELECT Id, Profile.Name, UserRole.DeveloperName 
                     FROM User 
