@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title="Ticket Status Tracker" icon-name="custom:custom19">
+        <div class="slds-p-around_medium">
+            <template if:true={ticket}>
+                <div class="slds-grid slds-wrap slds-m-bottom_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <p class="slds-text-title">Ticket Number</p>
+                        <p class="slds-text-heading_small">{ticket.number}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <p class="slds-text-title">Priority</p>
+                        <lightning-badge label={ticket.priority} class="priority-badge"></lightning-badge>
+                    </div>
+                </div>
+
+                <div class="slds-m-bottom_medium">
+                    <p class="slds-text-title">Subject</p>
+                    <p class="slds-text-body_regular">{ticket.subject}</p>
+                </div>
+
+                <div class="slds-m-bottom_medium">
+                    <p class="slds-text-title">Current Status</p>
+                    <lightning-progress-indicator current-step={ticket.status} type="base" variant="shaded">
+                        <lightning-progress-step label="New" value="New"></lightning-progress-step>
+                        <lightning-progress-step label="In Progress" value="In Progress"></lightning-progress-step>
+                        <lightning-progress-step label="On Hold" value="On Hold"></lightning-progress-step>
+                        <lightning-progress-step label="Resolved" value="Resolved"></lightning-progress-step>
+                    </lightning-progress-indicator>
+                </div>
+            </template>
+            <template if:false={ticket}>
+                <p class="slds-align_absolute-center slds-text-color_weak">No ticket data available.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

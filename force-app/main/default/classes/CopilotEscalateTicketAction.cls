@@ -36,28 +36,36 @@ public with sharing class CopilotEscalateTicketAction {
         // Search Incidents
         Map<String, Incident> incidentMap = new Map<String, Incident>();
         if (!ticketNumbers.isEmpty()) {
-            List<Incident> incidents = [
-                SELECT Id, IncidentNumber, Priority, Category, Status, OwnerId 
-                FROM Incident 
-                WHERE IncidentNumber IN :ticketNumbers
-                WITH USER_MODE
-            ];
-            for (Incident inc : incidents) {
-                incidentMap.put(inc.IncidentNumber, inc);
+            try {
+                List<Incident> incidents = [
+                    SELECT Id, IncidentNumber, Priority, Category, Status, OwnerId 
+                    FROM Incident 
+                    WHERE IncidentNumber IN :ticketNumbers
+                    WITH USER_MODE
+                ];
+                for (Incident inc : incidents) {
+                    incidentMap.put(inc.IncidentNumber, inc);
+                }
+            } catch (Exception e) {
+                System.debug('Error querying Incidents in user mode: ' + e.getMessage());
             }
         }
 
         // Search Service Requests
         Map<String, ServiceRequest> serviceRequestMap = new Map<String, ServiceRequest>();
         if (!ticketNumbers.isEmpty()) {
-            List<ServiceRequest> serviceRequests = [
-                SELECT Id, Name, Priority, Status, OwnerId 
-                FROM ServiceRequest 
-                WHERE Name IN :ticketNumbers
-                WITH USER_MODE
-            ];
-            for (ServiceRequest sr : serviceRequests) {
-                serviceRequestMap.put(sr.Name, sr);
+            try {
+                List<ServiceRequest> serviceRequests = [
+                    SELECT Id, Name, Priority, Status, OwnerId 
+                    FROM ServiceRequest 
+                    WHERE Name IN :ticketNumbers
+                    WITH USER_MODE
+                ];
+                for (ServiceRequest sr : serviceRequests) {
+                    serviceRequestMap.put(sr.Name, sr);
+                }
+            } catch (Exception e) {
+                System.debug('Error querying Service Requests in user mode: ' + e.getMessage());
             }
         }
 

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A customer and employee support assistant capable of handling IT help desk requests, ticket tracking, and knowledge search.</description>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>escalation_management_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>incident_management_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>knowledge_management_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>off_topic_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>service_request_management_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ticket_status_tracking_16jBi0000027E0I</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>off_topic_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+        <developerName>off_topic_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESg</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESg</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+        <developerName>ambiguous_question_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESf</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESf</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Ambiguous Question</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ticket_status_tracking_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Check status, update priority, or close an existing Incident or Service Request using a Ticket Number.</description>
+        <developerName>ticket_status_tracking_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESe</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESe</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>close_ticket_179Bi0000004ESe</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>update_ticket_179Bi0000004ESe</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>check_ticket_status_179Bi0000004ESe</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>close_ticket_179Bi0000004ESe</fullName>
+            <description>Closes an active Incident or Service Request.</description>
+            <developerName>close_ticket_179Bi0000004ESe</developerName>
+            <invocationTarget>CopilotEmployeeCloseIncident</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>close_ticket</localDeveloperName>
+            <masterLabel>Close Ticket</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>update_ticket_179Bi0000004ESe</fullName>
+            <description>Updates the priority and/or status of an existing ticket.</description>
+            <developerName>update_ticket_179Bi0000004ESe</developerName>
+            <invocationTarget>CopilotEmployeeUpdateIncident</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>update_ticket</localDeveloperName>
+            <masterLabel>Update Ticket</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>check_ticket_status_179Bi0000004ESe</fullName>
+            <description>Check the status of an existing Incident or Service Request.</description>
+            <developerName>check_ticket_status_179Bi0000004ESe</developerName>
+            <invocationTarget>CopilotEmployeeSearchIncident</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>check_ticket_status</localDeveloperName>
+            <masterLabel>Check Ticket Status</masterLabel>
+        </localActions>
+        <localDeveloperName>ticket_status_tracking</localDeveloperName>
+        <masterLabel>Ticket Status &amp; Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>service_request_management_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Create Service Request records for access requests, software installation, and password resets.</description>
+        <developerName>service_request_management_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESd</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESd</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>create_service_request_179Bi0000004ESd</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>create_service_request_179Bi0000004ESd</fullName>
+            <description>Creates a ServiceRequest record in Salesforce.</description>
+            <developerName>create_service_request_179Bi0000004ESd</developerName>
+            <invocationTarget>CopilotEmployeeCreateServiceRequest</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>create_service_request</localDeveloperName>
+            <masterLabel>Create Service Request</masterLabel>
+        </localActions>
+        <localDeveloperName>service_request_management</localDeveloperName>
+        <masterLabel>Service Request Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>incident_management_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Handles reporting and logging technical incidents such as network issues, software crashes, and laptop faults.</description>
+        <developerName>incident_management_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESc</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESc</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>create_incident_record_179Bi0000004ESc</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>create_incident_record_179Bi0000004ESc</fullName>
+            <description>Validate fields and create a new Incident record.</description>
+            <developerName>create_incident_record_179Bi0000004ESc</developerName>
+            <invocationTarget>CopilotEmployeeCreateIncident</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>create_incident_record</localDeveloperName>
+            <masterLabel>Create Incident Record</masterLabel>
+        </localActions>
+        <localDeveloperName>incident_management</localDeveloperName>
+        <masterLabel>Incident Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the user and route to the correct subagent based on their support need.</description>
+        <developerName>agent_router_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESb</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESb</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>escalation_management_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Escalate unresolved or critical tickets by transferring the user to a live support agent.</description>
+        <developerName>escalation_management_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESi</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESi</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>escalate_ticket_179Bi0000004ESi</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>escalate_ticket_179Bi0000004ESi</fullName>
+            <description>Escalates a ticket and routes the user&apos;s messaging session to the live agent queue.</description>
+            <developerName>escalate_ticket_179Bi0000004ESi</developerName>
+            <invocationTarget>CopilotEmployeeEscalate</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>escalate_ticket</localDeveloperName>
+            <masterLabel>Escalate Ticket</masterLabel>
+        </localActions>
+        <localDeveloperName>escalation_management</localDeveloperName>
+        <masterLabel>Escalation Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>knowledge_management_16jBi0000027E0I</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Search knowledge articles to troubleshoot common IT questions.</description>
+        <developerName>knowledge_management_16jBi0000027E0I</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Copilot for Employee agent, an IT Help Desk and Customer Support virtual assistant.
+Your responsibilities include:
+- IT Support: Handle issues like laptop problems, VPN, Microsoft Teams, Outlook, and network issues.
+- Incident Management: Create, search, update, and close incident tickets.
+- Service Request Management: Assist with software installation requests, hardware requests, and password reset guidance.
+- Knowledge Search: Search knowledge base articles to resolve issues before suggesting ticket logging.
+- Ticket Status Tracking: Check or update details of existing tickets.
+- Live Agent Transfer: Escalate unresolved or critical support issues to a live support representative.
+
+Always maintain a professional, helpful tone. Collect all required information before performing operations. Confirm details with users before creating any records.</description>
+            <developerName>instruction0_179Bi0000004ESh</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Bi0000004ESh</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>search_knowledge_179Bi0000004ESh</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>search_knowledge_179Bi0000004ESh</fullName>
+            <description>Searches knowledge base articles.</description>
+            <developerName>search_knowledge_179Bi0000004ESh</developerName>
+            <invocationTarget>CopilotEmployeeSearchKnowledge</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>search_knowledge</localDeveloperName>
+            <masterLabel>Search Knowledge</masterLabel>
+        </localActions>
+        <localDeveloperName>knowledge_management</localDeveloperName>
+        <masterLabel>Knowledge Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Copilot for Employee</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

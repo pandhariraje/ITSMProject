@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <description>Autolaunched flow to collect customer satisfaction feedback after agent conversation closure.</description>
+    <interviewLabel>Copilot Employee Feedback {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Copilot Employee Feedback</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+</Flow>

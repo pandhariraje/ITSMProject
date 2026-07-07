@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Knowledge Base Search" icon-name="standard:knowledge">
+        <div class="slds-p-around_medium">
+            <lightning-input
+                type="search"
+                label="Search Articles"
+                placeholder="Enter keywords..."
+                onchange={handleSearchChange}>
+            </lightning-input>
+
+            <div class="slds-m-top_medium">
+                <template if:true={articles.length}>
+                    <ul class="slds-has-dividers_bottom-space">
+                        <template for:each={articles} for:item="art">
+                            <li key={art.id} class="slds-item">
+                                <a href={art.url} target="_blank" class="slds-text-link">{art.title}</a>
+                                <p class="slds-text-color_weak slds-text-body_small">{art.summary}</p>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+                <template if:false={articles.length}>
+                    <p class="slds-text-color_weak slds-align_absolute-center">No articles found.</p>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

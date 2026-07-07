@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="My Open Tickets" icon-name="standard:case">
+        <div class="slds-p-around_medium">
+            <template if:true={tickets.length}>
+                <lightning-datatable
+                    key-field="id"
+                    data={tickets}
+                    columns={columns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+            <template if:false={tickets.length}>
+                <p class="slds-align_absolute-center slds-text-color_weak">You have no open tickets.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

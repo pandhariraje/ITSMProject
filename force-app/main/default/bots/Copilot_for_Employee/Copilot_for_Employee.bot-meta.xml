@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>true</agentDSLEnabled>
+    <agentType>AgentforceEmployeeAgent</agentType>
+    <botMlDomain>
+        <label>Copilot for Employee</label>
+        <name>Copilot_for_Employee</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <description>A customer and employee support assistant capable of handling IT help desk requests, ticket tracking, and knowledge search.</description>
+    <label>Copilot for Employee</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>InternalCopilot</type>
+</Bot>

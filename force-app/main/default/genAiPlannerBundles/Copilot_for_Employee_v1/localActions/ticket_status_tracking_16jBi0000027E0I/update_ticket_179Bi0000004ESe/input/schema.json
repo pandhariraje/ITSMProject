@@ -1,0 +1,28 @@
+{
+  "required" : [ "ticketNumber" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "priority" : {
+      "title" : "Priority",
+      "description" : "The new priority (Low, Medium, High, Critical)",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "status" : {
+      "title" : "Status",
+      "description" : "The new status",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "ticketNumber" : {
+      "title" : "Ticket Number",
+      "description" : "The Incident or Service Request Number to update",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

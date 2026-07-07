@@ -1,0 +1,18 @@
+.status-container {
+    display: inline-flex;
+    align-items: center;
+}
+.status-indicator {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.online {
+    background-color: #2e7d32;
+    box-shadow: 0 0 8px #2e7d32;
+}
+.offline {
+    background-color: #c62828;
+    box-shadow: 0 0 8px #c62828;
+}
