@@ -75,28 +75,23 @@ subagent incident_management:
     description: "Guides the user to create an Incident by collecting all required fields via conversation."
     reasoning:
         instructions: ->
-            if @variables.incident_created == True:
-                set @variables.incident_created = False
-                transition to @subagent.agent_router
-
-            if @variables.incident_created == False:
-                | You are now in the Incident Management Agent.
-                | Your task is to collect the following details from the user to create a new Incident ticket:
-                | - Subject: A short summary of the issue
-                | - Description: A detailed description of what is happening
-                | - Category: Select from Software, Hardware, Network
-                | - Urgency: Select from Low, Medium, High
-                | - Impact: Select from Low, Medium, High
-                | - Status: Select from New, Open, In Progress
-                |
-                | Rules for collection:
-                | 1. Collect these fields one by one through conversational questions. Do not ask for everything at once.
-                | 2. If the user provides a category, urgency, impact, or status that is not in the allowed lists above, politely ask them to choose from the allowed values.
-                | 3. Once all 6 fields are collected, summarize them and ask the user for confirmation: "Would you like me to submit this incident with these details?"
-                | 4. Do NOT invoke create_incident_record until the user explicitly confirms the details (e.g. "yes", "proceed", "go ahead").
-                |
-                | Once successfully created, display the successMessage, ticket details, and a markdown link: `[View Incident <IncidentNumber>](/lightning/r/Incident/<IncidentId>/view)`.
-                | Set @variables.incident_created = True and transition back to @subagent.agent_router.
+            | You are now in the Incident Management Agent.
+            | Your task is to collect the following details from the user to create a new Incident ticket:
+            | - Subject: A short summary of the issue
+            | - Description: A detailed description of what is happening
+            | - Category: Select from Software, Hardware, Network
+            | - Urgency: Select from Low, Medium, High
+            | - Impact: Select from Low, Medium, High
+            | - Status: Select from New, Open, In Progress
+            |
+            | Rules for collection:
+            | 1. Collect these fields one by one through conversational questions. Do not ask for everything at once.
+            | 2. If the user provides a category, urgency, impact, or status that is not in the allowed lists above, politely ask them to choose from the allowed values.
+            | 3. Once all 6 fields are collected, summarize them and ask the user for confirmation: "Would you like me to submit this incident with these details?"
+            | 4. Do NOT invoke create_incident_record until the user explicitly confirms the details (e.g. "yes", "proceed", "go ahead").
+            |
+            | Once successfully created, display the successMessage, ticket details, and a markdown link: `[View Incident <IncidentNumber>](/lightning/r/Incident/<IncidentId>/view)`.
+            | Set @variables.incident_created = True and transition back to @subagent.agent_router.
 
         actions:
             create_incident_record: @actions.create_incident_record
@@ -111,6 +106,10 @@ subagent incident_management:
                 set @variables.incident_created = @outputs.isSuccess
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router."
+    after_reasoning:
+        if @variables.incident_created == True:
+            set @variables.incident_created = False
+            transition to @subagent.agent_router
     actions:
         create_incident_record:
             description: "Creates an Incident record in Salesforce with the collected details."

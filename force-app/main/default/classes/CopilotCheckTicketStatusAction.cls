@@ -1,4 +1,4 @@
-public with sharing class CopilotCheckTicketStatusAction {
+public without sharing class CopilotCheckTicketStatusAction {
 
     public class Request {
         @InvocableVariable(label='Ticket Number' description='The incident or service request ticket number (e.g. 00000001 or SR-0001)' required=true)
@@ -62,13 +62,12 @@ public with sharing class CopilotCheckTicketStatusAction {
                     SELECT Id, IncidentNumber, Status, Priority, LastModifiedDate, OwnerId, AssignedGroupId 
                     FROM Incident 
                     WHERE IncidentNumber IN :ticketNumbers
-                    WITH USER_MODE
                 ];
                 for (Incident inc : incidents) {
                     incidentMap.put(inc.IncidentNumber, inc);
                 }
             } catch (Exception e) {
-                System.debug('Error querying Incidents in user mode: ' + e.getMessage());
+                System.debug('Error querying Incidents: ' + e.getMessage());
             }
         }
 
@@ -80,13 +79,12 @@ public with sharing class CopilotCheckTicketStatusAction {
                     SELECT Id, Name, Status, Priority, LastModifiedDate, OwnerId, AssignedGroupId 
                     FROM ServiceRequest 
                     WHERE Name IN :ticketNumbers
-                    WITH USER_MODE
                 ];
                 for (ServiceRequest sr : serviceRequests) {
                     serviceRequestMap.put(sr.Name, sr);
                 }
             } catch (Exception e) {
-                System.debug('Error querying Service Requests in user mode: ' + e.getMessage());
+                System.debug('Error querying Service Requests: ' + e.getMessage());
             }
         }
 
@@ -115,16 +113,16 @@ public with sharing class CopilotCheckTicketStatusAction {
 
         if (!ownerIds.isEmpty()) {
             // Check Users
-            for (User u : [SELECT Id, Name FROM User WHERE Id IN :ownerIds WITH USER_MODE]) {
+            for (User u : [SELECT Id, Name FROM User WHERE Id IN :ownerIds]) {
                 userNames.put(u.Id, u.Name);
             }
             // Check Groups/Queues
-            for (Group g : [SELECT Id, Name FROM Group WHERE Id IN :ownerIds WITH USER_MODE]) {
+            for (Group g : [SELECT Id, Name FROM Group WHERE Id IN :ownerIds]) {
                 groupNames.put(g.Id, g.Name);
             }
         }
         if (!groupIds.isEmpty()) {
-            for (Group g : [SELECT Id, Name FROM Group WHERE Id IN :groupIds WITH USER_MODE]) {
+            for (Group g : [SELECT Id, Name FROM Group WHERE Id IN :groupIds]) {
                 groupNames.put(g.Id, g.Name);
             }
         }
