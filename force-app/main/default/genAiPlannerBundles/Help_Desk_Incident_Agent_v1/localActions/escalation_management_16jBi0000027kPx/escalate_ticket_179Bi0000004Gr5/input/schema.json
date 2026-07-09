@@ -1,0 +1,21 @@
+{
+  "required" : [ "ticketNumber" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "escalationReason" : {
+      "title" : "Escalation Reason",
+      "description" : "Reason for escalation",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "ticketNumber" : {
+      "title" : "Ticket Number",
+      "description" : "The Incident or Service Request Number to escalate",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

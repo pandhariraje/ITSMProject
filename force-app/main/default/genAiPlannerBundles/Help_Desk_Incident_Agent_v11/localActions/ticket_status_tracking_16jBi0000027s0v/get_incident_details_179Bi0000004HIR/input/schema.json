@@ -1,0 +1,14 @@
+{
+  "required" : [ "ticketNumber" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "ticketNumber" : {
+      "title" : "Incident Number or ID",
+      "description" : "The Incident ticket number or ID",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

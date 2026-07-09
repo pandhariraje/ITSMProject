@@ -2,7 +2,14 @@
   "packageDirectories": [
     {
       "path": "force-app",
-      "default": true
+      "default": true,
+      "replacements": [
+        {
+          "filename": "force-app/main/default/aiAuthoringBundles/Help_Desk_Incident_Agent/Help_Desk_Incident_Agent.agent",
+          "stringToReplace": "PLACEHOLDER_DEFAULT_AGENT_USER",
+          "replaceWithEnv": "DEFAULT_AGENT_USER"
+        }
+      ]
     }
   ],
   "name": "ITSMProject",

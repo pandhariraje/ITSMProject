@@ -1,0 +1,5 @@
+{
+  "title" : "Help Desk Incident Management Form Input Type",
+  "description" : "Custom lightning type representing the incident management form wrapper for Help Desk.",
+  "lightning:type" : "@apexClassType/c__HelpDeskIncidentManagementFormWrapper"
+}
