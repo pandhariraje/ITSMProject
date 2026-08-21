@@ -1,5 +1,4 @@
 import { LightningElement, api, track } from 'lwc';
-import createIncidentLwc from '@salesforce/apex/CopilotCreateIncidentAction.createIncidentLwc';
 
 export default class CreateIncidentFormLwc extends LightningElement {
     // Inputs (pre-populated by flow/agent)
@@ -46,6 +45,7 @@ export default class CreateIncidentFormLwc extends LightningElement {
             this.localRequesterEmail = val.requesterEmail || '';
             this.localSubCategory = val.subCategory || '';
             this.localType = val.type || 'Normal';
+            this.notifyValueChange();
         }
     }
 
@@ -63,16 +63,8 @@ export default class CreateIncidentFormLwc extends LightningElement {
             this.localSubCategory = this.subCategory || '';
             this.localType = this.type || 'Normal';
         }
+        this.notifyValueChange();
     }
-
-    // Outputs (returned to flow/agent)
-    @api incidentId = '';
-    @api incidentNumber = '';
-    @api isSuccess = false;
-    @api errorMessage = '';
-
-    @track isLoading = false;
-    @track customError = '';
 
     categoryOptions = [
         { label: 'Network', value: 'Network' },
@@ -109,95 +101,47 @@ export default class CreateIncidentFormLwc extends LightningElement {
 
     handleFieldChange(event) {
         const fieldName = event.target.dataset.name;
+        const val = event.target.value;
         if (fieldName === 'subject') {
-            this.localSubject = event.target.value;
+            this.localSubject = val;
         } else if (fieldName === 'description') {
-            this.localDescription = event.target.value;
+            this.localDescription = val;
         } else if (fieldName === 'category') {
-            this.localCategory = event.target.value;
+            this.localCategory = val;
         } else if (fieldName === 'status') {
-            this.localStatus = event.target.value;
+            this.localStatus = val;
         } else if (fieldName === 'urgency') {
-            this.localUrgency = event.target.value;
+            this.localUrgency = val;
         } else if (fieldName === 'impact') {
-            this.localImpact = event.target.value;
+            this.localImpact = val;
         } else if (fieldName === 'priority') {
-            this.localPriority = event.target.value;
+            this.localPriority = val;
         } else if (fieldName === 'requesterEmail') {
-            this.localRequesterEmail = event.target.value;
+            this.localRequesterEmail = val;
         } else if (fieldName === 'subCategory') {
-            this.localSubCategory = event.target.value;
+            this.localSubCategory = val;
         } else if (fieldName === 'type') {
-            this.localType = event.target.value;
+            this.localType = val;
         }
+        this.notifyValueChange();
     }
 
-    handleSubmit() {
-        const isInputsValid = [...this.template.querySelectorAll('lightning-input, lightning-textarea, lightning-combobox')]
-            .reduce((validSoFar, inputField) => {
-                inputField.reportValidity();
-                return validSoFar && inputField.checkValidity();
-            }, true);
-
-        if (!isInputsValid) {
-            return;
-        }
-
-        this.isLoading = true;
-        this.customError = '';
-
-        createIncidentLwc({
-            subject: this.localSubject,
-            description: this.localDescription,
-            category: this.localCategory,
-            urgency: this.localUrgency,
-            impact: this.localImpact,
-            requesterEmail: this.localRequesterEmail,
-            subCategory: this.localSubCategory,
-            type: this.localType,
-            status: this.localStatus,
-            priority: this.localPriority
-        })
-        .then((result) => {
-            this.isLoading = false;
-            if (result.isSuccess) {
-                this.incidentId = result.incidentId;
-                this.incidentNumber = result.incidentNumber;
-                this.isSuccess = true;
-                this.errorMessage = '';
-
-                // Dispatch Custom Event valuechange to notify the Atlas Reasoner of input completion
-                this.dispatchEvent(new CustomEvent('valuechange', {
-                    detail: {
-                        value: {
-                            subject: this.localSubject,
-                            description: this.localDescription,
-                            category: this.localCategory,
-                            urgency: this.localUrgency,
-                            impact: this.localImpact,
-                            status: this.localStatus,
-                            priority: this.localPriority,
-                            requesterEmail: this.localRequesterEmail,
-                            subCategory: this.localSubCategory,
-                            type: this.localType
-                        }
-                    }
-                }));
-            } else {
-                this.isSuccess = false;
-                this.errorMessage = result.errorMessage;
-                this.customError = result.errorMessage;
+    notifyValueChange() {
+        this.dispatchEvent(new CustomEvent('valuechange', {
+            detail: {
+                value: {
+                    subject: this.localSubject,
+                    description: this.localDescription,
+                    category: this.localCategory,
+                    urgency: this.localUrgency,
+                    impact: this.localImpact,
+                    status: this.localStatus,
+                    priority: this.localPriority,
+                    requesterEmail: this.localRequesterEmail,
+                    subCategory: this.localSubCategory,
+                    type: this.localType
+                }
             }
-        })
-        .catch((error) => {
-            this.isLoading = false;
-            this.isSuccess = false;
-            this.errorMessage = error.body ? error.body.message : error.message;
-            this.customError = this.errorMessage;
-        });
-    }
-
-    get incidentRecordUrl() {
-        return `/lightning/r/Incident/${this.incidentId}/view`;
+        }));
     }
 }
