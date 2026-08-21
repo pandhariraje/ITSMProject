@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>ITSM_Management_CreateIncidentAction</apexClass>
+        <apexClass>CopilotCheckTicketStatusAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IncidentController</apexClass>
+        <apexClass>CopilotCreateServiceRequestAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SmartIncidentController</apexClass>
+        <apexClass>CopilotEmployeeCloseIncident</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SmartIncidentFormWrapper</apexClass>
+        <apexClass>CopilotEscalateTicketAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SmartIncidentCreateAction</apexClass>
+        <apexClass>CopilotIncidentFormWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SmartIncidentShowFormAction</apexClass>
+        <apexClass>CopilotSearchKnowledgeAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SmartIncidentActionTest</apexClass>
+        <apexClass>CopilotUpdateTicketAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ITSMCopilotCreateIncidentAction</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ITSMCopilotIncidentFormWrapper</apexClass>
+        <apexClass>GetIncidentDetailsAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -45,27 +41,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CopilotEmployeeSearchIncident</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CopilotEmployeeUpdateIncident</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CopilotEmployeeCloseIncident</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CopilotEmployeeSearchKnowledge</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CopilotEmployeeEscalate</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CopilotEmployeeWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -73,11 +49,23 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CopilotCheckTicketStatusAction</apexClass>
+        <apexClass>CopilotEmployeeSearchIncident</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HelpDeskIncidentFormWrapper</apexClass>
+        <apexClass>CopilotEmployeeSearchKnowledge</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CopilotEmployeeUpdateIncident</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CopilotEmployeeWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HelpDeskCheckTicketStatusAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -89,15 +77,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HelpDeskCheckTicketStatusAction</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HelpDeskUpdateTicketAction</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HelpDeskIncidentManagementFormWrapper</apexClass>
+        <apexClass>HelpDeskEscalateTicketAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -105,15 +85,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HelpDeskShowIncidentManagementFormAction</apexClass>
+        <apexClass>HelpDeskIncidentActionTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HelpDeskSearchKnowledgeAction</apexClass>
+        <apexClass>HelpDeskIncidentFormWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HelpDeskEscalateTicketAction</apexClass>
+        <apexClass>HelpDeskIncidentManagementController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HelpDeskIncidentManagementFormWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -121,7 +105,67 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HelpDeskIncidentManagementController</apexClass>
+        <apexClass>HelpDeskSearchKnowledgeAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HelpDeskShowIncidentManagementFormAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HelpDeskUpdateTicketAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ITSMCopilotCreateIncidentAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ITSMCopilotIncidentFormWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ITSM_Copilot_CreateIncidentAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ITSM_Copilot_NewIncidentFormWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ITSM_Copilot_ShowIncidentFormAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IncidentController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IncidentManagementFormWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ShowIncidentManagementFormAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SmartIncidentActionTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SmartIncidentController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SmartIncidentCreateAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SmartIncidentFormWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SmartIncidentShowFormAction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>

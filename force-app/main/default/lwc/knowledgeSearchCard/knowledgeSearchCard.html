@@ -1,0 +1,47 @@
+<template>
+    <lightning-card title="Knowledge Article Search" icon-name="utility:knowledge">
+        <div class="slds-var-p-around_medium">
+            <div class="slds-grid slds-grid_align-center slds-var-m-bottom_medium">
+                <div class="slds-col slds-size_8-of-12">
+                    <lightning-input
+                        type="search"
+                        onchange={handleSearchChange}
+                        label="Search Help Articles"
+                        placeholder="Enter search term (e.g. VPN, Password Reset)..."
+                        value={searchKey}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_4-of-12 slds-var-p-top_large slds-var-p-left_small">
+                    <lightning-button
+                        label="Search"
+                        variant="brand"
+                        onclick={handleSearch}>
+                    </lightning-button>
+                </div>
+            </div>
+            
+            <template if:true={loading}>
+                <lightning-spinner alt-text="Searching articles..." size="small"></lightning-spinner>
+            </template>
+
+            <template if:true={articles}>
+                <template if:false={hasArticles}>
+                    <p class="slds-text-align_center">No articles found matching "{searchKey}".</p>
+                </template>
+                <template if:true={hasArticles}>
+                    <div class="slds-var-m-top_medium">
+                        <template for:each={articles} for:item="art">
+                            <div key={art.Id} class="slds-box slds-var-m-bottom_small">
+                                <h3 class="slds-text-heading_small slds-text-color_weak">{art.Title}</h3>
+                                <p class="slds-var-m-top_xx-small"><strong>Summary:</strong> {art.Summary}</p>
+                                <template if:true={art.Answer__c}>
+                                    <p class="slds-var-m-top_xx-small"><strong>Answer:</strong> {art.Answer__c}</p>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

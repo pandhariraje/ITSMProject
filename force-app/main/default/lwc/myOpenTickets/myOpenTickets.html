@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="My Open Tickets" icon-name="utility:case">
+        <div class="slds-var-p-around_medium">
+            <template if:true={tickets}>
+                <template if:false={hasTickets}>
+                    <p class="slds-text-align_center">You currently have no open incidents or service requests.</p>
+                </template>
+                <template if:true={hasTickets}>
+                    <lightning-datatable
+                        key-field="id"
+                        data={tickets}
+                        columns={columns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </template>
+            </template>
+            <template if:true={error}>
+                <p class="slds-text-color_error">Error loading tickets: {error}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

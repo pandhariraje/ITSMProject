@@ -1,8 +1,8 @@
 {
-  "editor": {
-    "componentOverrides": {
-      "$": {
-        "definition": "c/createIncidentFormLwc"
+  "editor" : {
+    "componentOverrides" : {
+      "$" : {
+        "definition" : "c/createIncidentFormLwc"
       }
     }
   }

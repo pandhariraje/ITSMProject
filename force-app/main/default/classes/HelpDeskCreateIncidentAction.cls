@@ -136,35 +136,39 @@ public without sharing class HelpDeskCreateIncidentAction {
                 inc.ReportedById = UserInfo.getUserId();
             }
 
-            // Calculate Priority
-            String calculatedPriority = 'Medium';
-            if (wrapper.impact == 'High') {
-                if (wrapper.urgency == 'High') calculatedPriority = 'Critical';
-                else if (wrapper.urgency == 'Medium') calculatedPriority = 'High';
-            } else if (wrapper.impact == 'Medium') {
-                if (wrapper.urgency == 'High') calculatedPriority = 'High';
-                else if (wrapper.urgency == 'Medium') calculatedPriority = 'Medium';
-                else calculatedPriority = 'Low';
+            // Calculate Priority or use user-provided priority
+            String finalPriority = 'Medium';
+            if (String.isNotBlank(wrapper.priority)) {
+                finalPriority = wrapper.priority;
             } else {
-                if (wrapper.urgency == 'High') calculatedPriority = 'Medium';
-                else calculatedPriority = 'Low';
+                if (wrapper.impact == 'High') {
+                    if (wrapper.urgency == 'High') finalPriority = 'Critical';
+                    else if (wrapper.urgency == 'Medium') finalPriority = 'High';
+                } else if (wrapper.impact == 'Medium') {
+                    if (wrapper.urgency == 'High') finalPriority = 'High';
+                    else if (wrapper.urgency == 'Medium') finalPriority = 'Medium';
+                    else finalPriority = 'Low';
+                } else {
+                    if (wrapper.urgency == 'High') finalPriority = 'Medium';
+                    else finalPriority = 'Low';
+                }
             }
-            inc.Priority = calculatedPriority;
+            inc.Priority = finalPriority;
 
             // Route dynamic queue
             String queueDevName = '';
             String cat = String.isNotBlank(wrapper.category) ? wrapper.category : 'Software';
             if (cat == 'Hardware') {
-                if (calculatedPriority == 'Critical') queueDevName = 'Hardware_Major_Incident_Queue';
-                else if (calculatedPriority == 'High') queueDevName = 'Hardware_High_Incident_Queue';
+                if (finalPriority == 'Critical') queueDevName = 'Hardware_Major_Incident_Queue';
+                else if (finalPriority == 'High') queueDevName = 'Hardware_High_Incident_Queue';
                 else queueDevName = 'Hardware_Normal_Incident_Queue';
             } else if (cat == 'Network') {
-                if (calculatedPriority == 'Critical') queueDevName = 'Network_Major_Incident_Queue';
-                else if (calculatedPriority == 'High') queueDevName = 'Network_High_Incident_Queue';
+                if (finalPriority == 'Critical') queueDevName = 'Network_Major_Incident_Queue';
+                else if (finalPriority == 'High') queueDevName = 'Network_High_Incident_Queue';
                 else queueDevName = 'Network_Normal_Incident_Queue';
             } else {
-                if (calculatedPriority == 'Critical') queueDevName = 'Software_Major_Incident_Queue';
-                else if (calculatedPriority == 'High') queueDevName = 'Software_High_Incident_Queue';
+                if (finalPriority == 'Critical') queueDevName = 'Software_Major_Incident_Queue';
+                else if (finalPriority == 'High') queueDevName = 'Software_High_Incident_Queue';
                 else queueDevName = 'Software_Normal_Incident_Queue';
             }
 

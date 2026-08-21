@@ -1,8 +1,8 @@
 {
-  "editor": {
-    "componentOverrides": {
-      "$": {
-        "definition": "c/smartIncidentCreationForm"
+  "editor" : {
+    "componentOverrides" : {
+      "$" : {
+        "definition" : "c/smartIncidentCreationForm"
       }
     }
   }

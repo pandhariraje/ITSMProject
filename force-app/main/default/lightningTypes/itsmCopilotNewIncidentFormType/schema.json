@@ -1,0 +1,5 @@
+{
+  "title" : "ITSM Copilot New Incident Form Type",
+  "description" : "Custom lightning type representing the new incident form wrapper for ITSM Copilot.",
+  "lightning:type" : "@apexClassType/c__ITSM_Copilot_NewIncidentFormWrapper"
+}

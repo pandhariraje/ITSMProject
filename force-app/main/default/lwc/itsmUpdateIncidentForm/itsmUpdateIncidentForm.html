@@ -1,0 +1,96 @@
+<template>
+    <lightning-card title="Update Incident Form" icon-name="standard:case">
+        <div class="slds-var-p-around_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Updating..." size="medium"></lightning-spinner>
+            </template>
+
+            <template if:true={customError}>
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error slds-var-m-bottom_medium" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{customError}</h2>
+                </div>
+            </template>
+
+            <div class="slds-form slds-form_stacked">
+                <lightning-input 
+                    label="Incident Record ID or Number" 
+                    value={localIdentifier} 
+                    data-name="identifier" 
+                    onchange={handleFieldChange} 
+                    required>
+                </lightning-input>
+
+                <lightning-input 
+                    label="Subject" 
+                    value={localSubject} 
+                    data-name="subject" 
+                    onchange={handleFieldChange}>
+                </lightning-input>
+
+                <lightning-textarea 
+                    label="Description" 
+                    value={localDescription} 
+                    data-name="description" 
+                    onchange={handleFieldChange}>
+                </lightning-textarea>
+
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox 
+                            label="Urgency" 
+                            value={localUrgency} 
+                            options={urgencyOptions} 
+                            data-name="urgency" 
+                            onchange={handleFieldChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox 
+                            label="Impact" 
+                            value={localImpact} 
+                            options={impactOptions} 
+                            data-name="impact" 
+                            onchange={handleFieldChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-gutters slds-var-m-top_small">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox 
+                            label="Priority" 
+                            value={localPriority} 
+                            options={priorityOptions} 
+                            data-name="priority" 
+                            onchange={handleFieldChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox 
+                            label="Status" 
+                            value={localStatus} 
+                            options={statusOptions} 
+                            data-name="status" 
+                            onchange={handleFieldChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-var-m-top_large slds-text-align_right">
+                <lightning-button 
+                    label="Cancel" 
+                    variant="neutral" 
+                    onclick={handleCancel} 
+                    class="slds-var-m-right_x-small">
+                </lightning-button>
+                <lightning-button 
+                    label="Update Incident" 
+                    variant="brand" 
+                    onclick={handleSubmit}>
+                </lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

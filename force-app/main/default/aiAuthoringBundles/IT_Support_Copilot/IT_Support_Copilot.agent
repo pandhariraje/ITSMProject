@@ -65,24 +65,17 @@ subagent incident_management:
     description: "Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident."
     reasoning:
         instructions: ->
-            if @variables.incident_created == True:
-                set @variables.incident_created = False
-                transition to @subagent.agent_router
-
-            if @variables.incident_created == False:
-                | You are now in the Incident Management Agent.
-                | Please call the create_incident_record action immediately to present the record creation form to the user.
-                | Do NOT ask the user for any details in text. Let the form collect them.
-                |
-                | If the create_incident_record action returns isSuccess == False, you MUST display the error message returned in the errorMessage output field verbatim: "Failed to create incident: [errorMessage]" and do NOT transition.
+            | When the user requests to creation on an incident use the tool {!@actions.create_incident_record} to call the action {!@actions.create_incident_record} and invoke user_input tool to present the incident creation form to the user.
+            | Do NOT execute the create_incident_record action directly, and do NOT populate incidentData yourself from the conversation or from inference. Only the submitted form supplies incidentData.
+            | Do NOT ask the user for any details in text. The action's user_input tool collects every field.
+            | If the create_incident_record action returns isSuccess == False, you MUST display the error message returned in the errorMessage output field verbatim: "Failed to create incident: [errorMessage]" and do NOT transition.
+            | If the create_incident_record action returns isSuccess == True, you MUST display a message that incident has been created successfully with the incident details.
 
         actions:
             create_incident_record: @actions.create_incident_record
                 description: "Validate fields and create a new Incident record."
                 with incidentData = ...
-                set @variables.incident_created = @outputs.isSuccess
-            back_to_router: @utils.transition to @subagent.agent_router
-                description: "Return to the main router when the incident has been created and the user wants help with something else."
+
     actions:
         create_incident_record:
             description: "Validate fields and create a new Incident record. The incidentData parameter must be populated using the form input."

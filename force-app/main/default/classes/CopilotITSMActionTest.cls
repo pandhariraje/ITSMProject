@@ -362,4 +362,3 @@ public class CopilotITSMActionTest {
         System.assertNotEquals(null, results[2].errorMessage);
     }
 }
-

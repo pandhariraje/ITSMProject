@@ -1,0 +1,85 @@
+<template>
+    <div class="slds-is-relative">
+        <!-- Success State -->
+        <template if:true={isSuccess}>
+            <div class="slds-text-align_center slds-p-around_medium">
+                <div class="slds-text-heading_large slds-m-bottom_small">✔️</div>
+                <h2 class="slds-text-heading_medium">Incident Logged</h2>
+                <p class="slds-m-bottom_medium slds-m-top_small">Incident <strong>{incidentNumber}</strong> has been created successfully.</p>
+                <div>
+                    <a href={incidentRecordUrl} target="_blank" class="slds-button slds-button_brand">View Incident</a>
+                </div>
+            </div>
+        </template>
+
+        <!-- Form Content -->
+        <template if:false={isSuccess}>
+            <lightning-card title="Submit New Incident" icon-name="standard:incident">
+                <div class="slds-p-around_medium">
+                    <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="Submitting Incident..." size="medium"></lightning-spinner>
+                    </template>
+
+                    <lightning-input
+                        label="Subject"
+                        value={subject}
+                        onchange={handleSubjectChange}
+                        required
+                        placeholder="A short summary of the issue">
+                    </lightning-input>
+
+                    <lightning-textarea
+                        label="Description"
+                        value={description}
+                        onchange={handleDescriptionChange}
+                        class="slds-m-top_small"
+                        required
+                        placeholder="A detailed description of what is happening">
+                    </lightning-textarea>
+
+                    <lightning-combobox
+                        label="Category"
+                        value={category}
+                        options={categoryOptions}
+                        onchange={handleCategoryChange}
+                        class="slds-m-top_small"
+                        required>
+                    </lightning-combobox>
+
+                    <lightning-combobox
+                        label="Urgency"
+                        value={urgency}
+                        options={urgencyOptions}
+                        onchange={handleUrgencyChange}
+                        class="slds-m-top_small"
+                        required>
+                    </lightning-combobox>
+
+                    <lightning-combobox
+                        label="Impact"
+                        value={impact}
+                        options={impactOptions}
+                        onchange={handleImpactChange}
+                        class="slds-m-top_small"
+                        required>
+                    </lightning-combobox>
+
+                    <template if:true={customError}>
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error slds-m-top_small" role="alert">
+                            <h2>{customError}</h2>
+                        </div>
+                    </template>
+
+                    <div class="slds-m-top_medium slds-text-align_right">
+                        <lightning-button 
+                            label="Submit Incident" 
+                            variant="brand"
+                            onclick={handleSubmit} 
+                            disabled={isLoading}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </lightning-card>
+        </template>
+    </div>
+</template>

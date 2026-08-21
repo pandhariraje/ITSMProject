@@ -56,39 +56,41 @@ export default class HelpDeskCreateIncidentForm extends LightningElement {
         }
     }
 
-    connectedCallback() {
-        // Dispatch initial default values to ensure the agent receives them on load
-        this.dispatchChange();
-    }
-
     handleSubject(event) {
         this.subject = event.target.value;
-        this.dispatchChange();
     }
 
     handleDescription(event) {
         this.description = event.target.value;
-        this.dispatchChange();
     }
 
     handleStatus(event) {
         this.status = event.detail.value;
-        this.dispatchChange();
     }
 
     handlePriority(event) {
         this.priority = event.detail.value;
-        this.dispatchChange();
     }
 
     handleUrgency(event) {
         this.urgency = event.detail.value;
-        this.dispatchChange();
     }
 
     handleImpact(event) {
         this.impact = event.detail.value;
-        this.dispatchChange();
+    }
+
+    handleSubmit() {
+        const allValid = [
+            ...this.template.querySelectorAll('lightning-input, lightning-textarea, lightning-combobox')
+        ].reduce((validSoFar, inputField) => {
+            inputField.reportValidity();
+            return validSoFar && inputField.checkValidity();
+        }, true);
+
+        if (allValid) {
+            this.dispatchChange();
+        }
     }
 
     dispatchChange() {
