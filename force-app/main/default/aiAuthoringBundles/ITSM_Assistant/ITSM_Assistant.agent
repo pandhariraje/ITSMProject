@@ -60,73 +60,32 @@ start_agent agent_router:
 
 subagent incident_management:
     label: "Incident Management"
-    description: "Create Incident records for VPN, login, email, software, printer, hardware, or network issues. Use this to collect details, confirm incident info, and submit the ticket."
+    description: "Presents the Incident Creation Form (LWC) to the employee when they request to report or create an incident."
     reasoning:
         instructions: ->
-            | You help users report IT issues.
-              Follow this procedure:
-              - First, gather the following details:
-                - Subject (short summary of the issue)
-                - Description (detailed problem description)
-                - Category (optional, select from: Network, Hardware, Software)
-                - Priority (required, select from: Low, Medium, High, Critical)
-                - Urgency (required, select from: Low, Medium, High)
-                - Impact (required, select from: Low, Medium, High)
-                - Requester Email (optional)
-              - Once all details are gathered:
-                - If the user has NOT yet explicitly confirmed the creation of the incident (i.e. they haven't replied to a confirmation prompt with yes/confirm/proceed):
-                  Present a clear summary of all the gathered details and explicitly ask the user: "Would you like me to submit this incident with these details?"
-                - If the user has just confirmed, says "yes", "confirm", "proceed", "go ahead", or requests to create/submit the incident:
-                  Immediately invoke {!@actions.create_incident}. Do NOT ask for confirmation again and do NOT output any conversational text; immediately run the create_incident tool.
-              
-              Once created, present the created Incident details, including a Markdown hyperlink to open the record, formatted exactly as: `[View Incident <IncidentNumber>](/lightning/r/Incident/<IncidentId>/view)`.
-              Do NOT use the show_command tool. Always compose your response as direct text.
+            | When the user requests to create or report an incident, invoke the action {!@actions.create_incident} with user_input to present the Incident Creation LWC form to the user.
+            | Do NOT execute the create_incident action directly without form input, and do NOT populate incidentData yourself from the conversation or from inference. Only the submitted form supplies incidentData.
+            | Do NOT ask the user for any details in chat text. The form will collect all required fields (Subject, Description, Category, Priority, Urgency, Impact, Requester Email).
+            | If the create_incident action returns isSuccess == False, display the error message returned in errorMessage verbatim: "Failed to create incident: [errorMessage]".
+            | If the create_incident action returns isSuccess == True, present the created Incident details, including a Markdown hyperlink to open the record, formatted exactly as: `[View Incident <IncidentNumber>](/lightning/r/Incident/<IncidentId>/view)`.
+            | Do NOT use the show_command tool. Always compose your response as direct text.
         actions:
             create_incident: @actions.create_incident
-                description: "Creates an incident record in Salesforce. Call this tool immediately when the user confirms incident details."
-                with subject = ...
-                with description = ...
-                with category = ...
-                with priority = ...
-                with urgency = ...
-                with impact = ...
-                with requesterEmail = ...
+                description: "Presents the LWC form to create a new Incident record."
+                with incidentData = ...
             back_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to the main router when the incident has been created and the user wants help with something else."
     actions:
         create_incident:
-            description: "Creates an Incident record with automated categorization and priority assignment."
+            description: "Creates an Incident record in Salesforce. The incidentData parameter must be populated using the form input."
             label: "Create Incident"
             target: "apex://CreateIncidentAction"
             inputs:
-                subject: string
-                    description: "Subject of the incident"
-                    label: "Subject"
+                incidentData: object
+                    complex_data_type_name: "c__createIncidentFormInputType"
+                    description: "The incident form data containing Subject, Description, Category, Urgency, Impact, Priority, Status."
                     is_required: True
-                description: string
-                    description: "Detailed description of the issue"
-                    label: "Description"
-                    is_required: True
-                category: string
-                    description: "Optional category"
-                    label: "Category"
-                    is_required: False
-                priority: string
-                    description: "Priority level: Low, Medium, High, Critical"
-                    label: "Priority"
-                    is_required: True
-                urgency: string
-                    description: "Urgency level: Low, Medium, High"
-                    label: "Urgency"
-                    is_required: True
-                impact: string
-                    description: "Impact level: Low, Medium, High"
-                    label: "Impact"
-                    is_required: True
-                requesterEmail: string
-                    description: "Email of the requester"
-                    label: "Requester Email"
-                    is_required: False
+                    is_user_input: True
             outputs:
                 isSuccess: boolean
                     label: "Is Success"

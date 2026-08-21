@@ -7,7 +7,7 @@ The `ITSM_Assistant` is an employee agent designed to help internal employees re
 ## Behavioral Intent
 
 - **Identity & Tone**: TechWish ITSM Assistant, professional and helpful.
-- **Incident Creation**: Collects Subject, Description, Priority, Urgency, Impact, and optional Category. Presents a summary and requests user confirmation before creating. Once created, displays details with a markdown hyperlink (`/lightning/r/Incident/<Id>/view`).
+- **Incident Creation**: Prompts the user with an interactive Lightning Web Component (LWC) form (`c/createIncidentFormLwc` via `c__createIncidentFormInputType`) to collect incident details. Once created, displays details with a markdown hyperlink (`/lightning/r/Incident/<Id>/view`).
 - **Service Request Creation**: Collects Subject and Description. Presents a summary and requests user confirmation before creating. Once created, displays details with a markdown hyperlink (`/lightning/r/ServiceRequest/<Id>/view`).
 - **Ticket Status Tracking**: Checks status of Incidents/Service Requests by ticket number. Lists or counts user incidents if no ticket number is provided. Displays clickable links to records.
 - **Knowledge Search**: Searches knowledge base to recommend troubleshooting steps first.
@@ -39,6 +39,7 @@ No custom session variables are persisted.
 ### create_incident (incident_management)
 - **Target:** `apex://CreateIncidentAction`
 - **Backing Status:** EXISTS
+- **Input Custom Lightning Type:** `c__createIncidentFormInputType` (LWC Editor: `c/createIncidentFormLwc`)
 
 ### create_service_request (service_request_management)
 - **Target:** `apex://CreateServiceRequestAction`

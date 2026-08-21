@@ -1,10 +1,13 @@
 public with sharing class CreateIncidentAction {
 
     public class Request {
-        @InvocableVariable(label='Subject' description='The subject of the incident' required=true)
+        @InvocableVariable(label='Incident Form Data' description='The incident form data.' required=false)
+        public CopilotIncidentFormWrapper incidentData;
+
+        @InvocableVariable(label='Subject' description='The subject of the incident' required=false)
         public String subject;
 
-        @InvocableVariable(label='Description' description='The detailed description of the incident' required=true)
+        @InvocableVariable(label='Description' description='The detailed description of the incident' required=false)
         public String description;
 
         @InvocableVariable(label='Category' description='Optional category override' required=false)
@@ -59,8 +62,9 @@ public with sharing class CreateIncidentAction {
         // Resolve Requesters in bulk if emails are provided
         Set<String> emails = new Set<String>();
         for (Request req : requests) {
-            if (String.isNotBlank(req.requesterEmail)) {
-                emails.add(req.requesterEmail.trim());
+            String reqEmail = req.incidentData != null && String.isNotBlank(req.incidentData.requesterEmail) ? req.incidentData.requesterEmail : req.requesterEmail;
+            if (String.isNotBlank(reqEmail)) {
+                emails.add(reqEmail.trim());
             }
         }
 
@@ -80,17 +84,25 @@ public with sharing class CreateIncidentAction {
         }
 
         for (Request req : requests) {
+            String reqSubject = req.incidentData != null && String.isNotBlank(req.incidentData.subject) ? req.incidentData.subject : req.subject;
+            String reqDescription = req.incidentData != null && String.isNotBlank(req.incidentData.description) ? req.incidentData.description : req.description;
+            String reqCategory = req.incidentData != null && String.isNotBlank(req.incidentData.category) ? req.incidentData.category : req.category;
+            String reqPriority = req.incidentData != null && String.isNotBlank(req.incidentData.priority) ? req.incidentData.priority : req.priority;
+            String reqUrgency = req.incidentData != null && String.isNotBlank(req.incidentData.urgency) ? req.incidentData.urgency : req.urgency;
+            String reqImpact = req.incidentData != null && String.isNotBlank(req.incidentData.impact) ? req.incidentData.impact : req.impact;
+            String reqEmail = req.incidentData != null && String.isNotBlank(req.incidentData.requesterEmail) ? req.incidentData.requesterEmail : req.requesterEmail;
+
             Incident inc = new Incident();
-            inc.Subject = req.subject;
-            inc.Description = req.description;
+            inc.Subject = reqSubject;
+            inc.Description = reqDescription;
             inc.Status = 'New';
 
             // 1. Auto-Categorization Logic
             String resolvedCategory = 'Software'; // Default
-            String textToAnalyze = (req.subject + ' ' + req.description).toLowerCase();
+            String textToAnalyze = ((reqSubject != null ? reqSubject : '') + ' ' + (reqDescription != null ? reqDescription : '')).toLowerCase();
             
-            if (String.isNotBlank(req.category)) {
-                resolvedCategory = req.category;
+            if (String.isNotBlank(reqCategory)) {
+                resolvedCategory = reqCategory;
             } else {
                 if (textToAnalyze.contains('vpn') || textToAnalyze.contains('wi-fi') || textToAnalyze.contains('wifi') || textToAnalyze.contains('network') || textToAnalyze.contains('outage') || textToAnalyze.contains('internet')) {
                     resolvedCategory = 'Network';
@@ -102,8 +114,8 @@ public with sharing class CreateIncidentAction {
 
             // 2. Auto-Priority Assignment Logic
             String resolvedPriority = 'Medium'; // Default
-            if (String.isNotBlank(req.priority)) {
-                resolvedPriority = req.priority;
+            if (String.isNotBlank(reqPriority)) {
+                resolvedPriority = reqPriority;
             } else {
                 if (textToAnalyze.contains('outage') || textToAnalyze.contains('critical') || textToAnalyze.contains('down') || textToAnalyze.contains('cannot work') || textToAnalyze.contains('emergency') || textToAnalyze.contains('blocked')) {
                     resolvedPriority = 'Critical';
@@ -115,8 +127,8 @@ public with sharing class CreateIncidentAction {
 
             // 2b. Auto-Urgency Assignment (required field)
             String resolvedUrgency = 'High'; // Default
-            if (String.isNotBlank(req.urgency)) {
-                resolvedUrgency = req.urgency;
+            if (String.isNotBlank(reqUrgency)) {
+                resolvedUrgency = reqUrgency;
             } else {
                 if (resolvedPriority == 'Critical') {
                     resolvedUrgency = 'High';
@@ -128,8 +140,8 @@ public with sharing class CreateIncidentAction {
 
             // 2c. Auto-Impact Assignment (required field)
             String resolvedImpact = 'High'; // Default
-            if (String.isNotBlank(req.impact)) {
-                resolvedImpact = req.impact;
+            if (String.isNotBlank(reqImpact)) {
+                resolvedImpact = reqImpact;
             } else {
                 if (textToAnalyze.contains('entire team') || textToAnalyze.contains('all users') || textToAnalyze.contains('company-wide') || textToAnalyze.contains('outage') || textToAnalyze.contains('everyone')) {
                     resolvedImpact = 'High';
@@ -148,8 +160,8 @@ public with sharing class CreateIncidentAction {
 
             // 3. Resolve Requester
             Id requesterId = UserInfo.getUserId(); // Default
-            if (String.isNotBlank(req.requesterEmail) && emailToReporterId.containsKey(req.requesterEmail.toLowerCase())) {
-                requesterId = emailToReporterId.get(req.requesterEmail.toLowerCase());
+            if (String.isNotBlank(reqEmail) && emailToReporterId.containsKey(reqEmail.toLowerCase())) {
+                requesterId = emailToReporterId.get(reqEmail.toLowerCase());
             }
             inc.ReportedById = requesterId;
 

@@ -1,0 +1,21 @@
+{
+  "required" : [ "subject", "description" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "description" : {
+      "title" : "Description",
+      "description" : "Details of the service request",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "subject" : {
+      "title" : "Subject",
+      "description" : "Subject of the service request",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

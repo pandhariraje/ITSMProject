@@ -1,0 +1,34 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "errorMessage" : {
+      "title" : "Error Message",
+      "description" : "Details of any error",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "incidents" : {
+      "title" : "Incidents",
+      "description" : "List of retrieved incidents",
+      "maxItems" : 2000,
+      "items" : {
+        "lightning:type" : "@apexClassType/c__ListUserIncidentsAction$IncidentDetails"
+      },
+      "lightning:type" : "lightning__listType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "isSuccess" : {
+      "title" : "Is Success",
+      "description" : "Whether the query succeeded",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
